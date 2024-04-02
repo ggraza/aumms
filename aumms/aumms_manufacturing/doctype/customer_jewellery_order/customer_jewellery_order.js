@@ -19,6 +19,12 @@ frappe.ui.form.on("Customer Jewellery Order", {
  					 }
  			 }
  	 });
+   if(!frm.is_new){
+     frm.set_df_property('status', 'readonly', 0)
+   }
+   else{
+     frm.set_df_property('status', 'readonly', 1)
+   }
   }
 });
 

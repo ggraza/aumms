@@ -7,13 +7,14 @@
  "engine": "InnoDB",
  "field_order": [
   "item_category",
-  "item_quantity",
   "item_type",
+  "item_quantity",
   "column_break_poky",
+  "purity",
   "expected_weight_per_quantity",
-  "feasible",
+  "amount",
   "description_section",
-  "item_design_attachment",
+  "design",
   "item_design_description"
  ],
  "fields": [
@@ -48,19 +49,6 @@
    "reqd": 1
   },
   {
-   "default": "0",
-   "fieldname": "feasible",
-   "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Feasible"
-  },
-  {
-   "fieldname": "item_design_attachment",
-   "fieldtype": "Attach",
-   "in_list_view": 1,
-   "label": "Item Design Attachment"
-  },
-  {
    "fieldname": "item_design_description",
    "fieldtype": "Text Editor",
    "label": "Design Description"
@@ -73,12 +61,29 @@
    "fieldname": "description_section",
    "fieldtype": "Section Break",
    "label": "Description"
+  },
+  {
+   "fieldname": "design",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Design"
+  },
+  {
+   "fieldname": "purity",
+   "fieldtype": "Link",
+   "label": "Purity",
+   "options": "Purity"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-03-16 14:04:39.973604",
+ "modified": "2024-04-01 16:59:15.409695",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order Details",

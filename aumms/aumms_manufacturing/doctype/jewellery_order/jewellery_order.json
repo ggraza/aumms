@@ -12,12 +12,13 @@
   "uom",
   "purity",
   "category",
-  "column_break_yko9",
   "type",
+  "column_break_yko9",
   "customer_expected_total_weight",
   "customer_expected_amount",
   "design_attachment",
   "quantity",
+  "status",
   "stock_available",
   "available_quantity_in_stock",
   "section_break_oyix",
@@ -60,14 +61,12 @@
    "fieldname": "customer_expected_total_weight",
    "fieldtype": "Float",
    "label": "Customer Expected Total Weight",
-   "precision": "2",
-   "reqd": 1
+   "precision": "2"
   },
   {
    "fieldname": "customer_expected_amount",
    "fieldtype": "Currency",
-   "label": "Customer Expected Amount",
-   "reqd": 1
+   "label": "Customer Expected Amount"
   },
   {
    "fieldname": "column_break_yko9",
@@ -149,12 +148,20 @@
    "label": "Type",
    "options": "Item Type",
    "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nCompleted\nCancelled"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-03-28 10:44:24.201920",
+ "modified": "2024-04-02 10:00:16.741457",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Order",

@@ -11,6 +11,16 @@ class JewelleryOrder(Document):
 		if self.quantity > self.available_quantity_in_stock:
 			self.create_manufacturing_request()
 
+	def on_update(self):
+		self.update_status()
+
+	def update_status(self):
+	    if frappe.db.exists('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'status': 'Open'}):
+	        customer_jewellery_order_status = frappe.get_doc('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'status': 'Open'})
+	        if customer_jewellery_order_status:
+	            if customer_jewellery_order_status.status != self.status:
+	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'status', self.status)
+	           
 	def create_manufacturing_request(self):
 		"""Create Manufacturing Request For Jewellery Order"""
 		manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})

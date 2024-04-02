@@ -28,11 +28,17 @@ frappe.ui.form.on("Jewellery Order", {
 				}
 			}
 		});
-		},
-
+		if(!frm.is_new){
+			frm.set_df_property('status', 'readonly', 0)
+		 }
+		else{
+			frm.set_df_property('status', 'readonly', 1)
+		 }
+  	},
 		available_quantity_in_stock: function(frm) {
 			limit_item_details(frm)
 		}
+
 });
 
 frappe.ui.form.on("Jewellery Order Items",{
