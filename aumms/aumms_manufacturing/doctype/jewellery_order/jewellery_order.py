@@ -8,7 +8,7 @@ from frappe.model.document import Document
 class JewelleryOrder(Document):
 
 	def on_submit(self):
-		if self.quantity > self.available_quantity_in_stock:
+		# if self.quantity > self.quantity_of_available_item:
 			self.create_manufacturing_request()
 
 	def on_update(self):
@@ -20,7 +20,7 @@ class JewelleryOrder(Document):
 	        if customer_jewellery_order_status:
 	            if customer_jewellery_order_status.status != self.status:
 	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'status', self.status)
-	           
+
 	def create_manufacturing_request(self):
 		"""Create Manufacturing Request For Jewellery Order"""
 		manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})
@@ -29,24 +29,24 @@ class JewelleryOrder(Document):
 				new_manufacturing_request = frappe.new_doc('Manufacturing Request')
 				new_manufacturing_request.raw_material_request_type = "Jewellery Order"
 				new_manufacturing_request.jewellery_order = self.name
-				new_manufacturing_request.jewellery_order_design = self.design_attachment
+				new_manufacturing_request.jewellery_order_design = self.design
 				new_manufacturing_request.required_date = self.required_date
-				new_manufacturing_request.item_name = item.item_code
-				if self.customer_expected_total_weight >=  self.total_weight:
-					new_manufacturing_request.total_weight = self.customer_expected_total_weight - self.total_weight
+				new_manufacturing_request.item_name = item.item
+				if self.expected_total_weight >=  self.total_weight:
+					new_manufacturing_request.total_weight = self.expected_total_weight - self.total_weight
 				else :
-					new_manufacturing_request.total_weight = self.total_weight - self.customer_expected_total_weight
-				new_manufacturing_request.uom = self.uom
+					new_manufacturing_request.total_weight = self.total_weight - self.expected_total_weight
+				# new_manufacturing_request.uom = self.uom
 				new_manufacturing_request.purity = self.purity
 				new_manufacturing_request.type = self.type
-				if self.stock_available:
-					if self.quantity >= self.available_quantity_in_stock:
-						total_quantity = self.quantity - self.available_quantity_in_stock
-					else:
-						total_quantity = self.available_quantity_in_stock - self.quantity
-				else:
-					total_quantity = self.quantity
-				new_manufacturing_request.quantity = total_quantity
+				# if self.stock_available:
+				# 	if self.quantity >= self.quantity_of_available_item:
+				# 		total_quantity = self.quantity - self.quantity_of_available_item
+				# 	else:
+				# 		total_quantity = self.quantity_of_available_item - self.quantity
+				# else:
+				# 	total_quantity = self.quantity
+				new_manufacturing_request.quantity = self.quantity
 				new_manufacturing_request.category = self.category
 				new_manufacturing_request.insert(ignore_permissions=True)
 				frappe.msgprint(f"Manufacturing Request {new_manufacturing_request.name} Created.", indicator="green", alert=1)

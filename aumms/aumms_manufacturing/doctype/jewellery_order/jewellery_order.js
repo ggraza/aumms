@@ -7,11 +7,11 @@ frappe.ui.form.on("Jewellery Order", {
 			frm.set_df_property('customer_jewellery_order', 'read_only', 1)
 			frm.set_df_property('customer', 'read_only', 1)
 			frm.set_df_property('required_date', 'read_only', 1)
-			frm.set_df_property('customer_expected_total_weight', 'read_only', 1)
-			frm.set_df_property('customer_expected_amount', 'read_only', 1)
+			frm.set_df_property('expected_total_weight', 'read_only', 1)
+			// frm.set_df_property('customer_expected_amount', 'read_only', 1)
 			frm.set_df_property('total_weight', 'read_only', 1)
 			frm.set_df_property('quantity', 'read_only', 1)
-			frm.set_df_property('design_attachment', 'read_only', 1)
+			frm.set_df_property('design', 'read_only', 1)
 		}
 		frm.set_query('uom',()=>{
 			return {
@@ -20,7 +20,7 @@ frappe.ui.form.on("Jewellery Order", {
 				}
 			}
 		});
-		frm.set_query("item_code", "item_details", ()=> {
+		frm.set_query("item", "item_details", ()=> {
 			return {
 				filters: {
 					"item_type": frm.doc.type,
@@ -28,14 +28,8 @@ frappe.ui.form.on("Jewellery Order", {
 				}
 			}
 		});
-		if(!frm.is_new){
-			frm.set_df_property('status', 'readonly', 0)
-		 }
-		else{
-			frm.set_df_property('status', 'readonly', 1)
-		 }
   	},
-		available_quantity_in_stock: function(frm) {
+		quantity_of_available_item: function(frm) {
 			limit_item_details(frm)
 		}
 
@@ -63,13 +57,13 @@ frappe.ui.form.on("Jewellery Order Items",{
 });
 
 function limit_item_details(frm) {
-	if(frm.doc.quantity <= frm.doc.available_quantity_in_stock){
+	if(frm.doc.quantity <= frm.doc.quantity_of_available_item){
 		availa_quantity = frm.doc.quantity
 	}
-	else if(frm.doc.quantity >= frm.doc.available_quantity_in_stock){
-		availa_quantity = frm.doc.available_quantity_in_stock
+	else if(frm.doc.quantity >= frm.doc.quantity_of_available_item){
+		availa_quantity = frm.doc.quantity_of_available_item
 	}
-  // limit = frm.doc.quantity - frm.doc.available_quantity_in_stock
+  // limit = frm.doc.quantity - frm.doc.quantity_of_available_item
 	limit = availa_quantity
   if (frm.doc.item_details.length >= limit)  {
     $(".btn.btn-xs.btn-secondary.grid-add-row").hide();
