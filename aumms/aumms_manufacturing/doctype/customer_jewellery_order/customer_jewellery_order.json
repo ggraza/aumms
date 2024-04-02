@@ -8,13 +8,11 @@
  "field_order": [
   "customer",
   "required_date",
-  "uom",
-  "purity",
-  "column_break_r1uk",
-  "making_chargein_percentage",
   "expected_total_weight",
-  "expected_total_amount",
+  "column_break_r1uk",
+  "purity",
   "expected_making_charge",
+  "expected_total_amount",
   "out_for_delivery",
   "order_item_details_section",
   "order_item",
@@ -58,14 +56,6 @@
    "search_index": 1
   },
   {
-   "default": "Gram",
-   "fieldname": "uom",
-   "fieldtype": "Link",
-   "label": "UOM",
-   "options": "UOM",
-   "reqd": 1
-  },
-  {
    "fieldname": "purity",
    "fieldtype": "Link",
    "label": "Purity",
@@ -78,14 +68,12 @@
    "label": "Order Item Details"
   },
   {
-   "fieldname": "making_chargein_percentage",
-   "fieldtype": "Percent",
-   "label": "Making Charge(In Percentage)"
-  },
-  {
    "fieldname": "expected_making_charge",
    "fieldtype": "Percent",
-   "label": "Expected Making Charge"
+   "label": "Expected Making Charge",
+   "precision": "1",
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "expected_total_weight",
@@ -93,6 +81,7 @@
    "in_list_view": 1,
    "label": " Expected Total Weight",
    "precision": "2",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -107,13 +96,14 @@
    "in_list_view": 1,
    "label": "Expected Total Amount",
    "precision": "2",
+   "read_only": 1,
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-01 15:38:03.735034",
+ "modified": "2024-04-02 13:27:59.939083",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",
