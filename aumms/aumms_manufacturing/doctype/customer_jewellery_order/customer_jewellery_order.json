@@ -7,16 +7,17 @@
  "engine": "InnoDB",
  "field_order": [
   "customer",
-  "customer_name",
   "required_date",
-  "column_break_r1uk",
-  "customer_expected_total_weight",
   "uom",
   "purity",
-  "customer_expected_amount",
+  "column_break_r1uk",
+  "making_chargein_percentage",
+  "expected_total_weight",
+  "expected_total_amount",
+  "expected_making_charge",
+  "out_for_delivery",
   "order_item_details_section",
   "order_item",
-  "total_expected_weight_per_quantity",
   "amended_from"
  ],
  "fields": [
@@ -36,31 +37,8 @@
    "reqd": 1
   },
   {
-   "fieldname": "customer_expected_total_weight",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Customer Expected Total Weight",
-   "precision": "2",
-   "reqd": 1
-  },
-  {
-   "fieldname": "customer_expected_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Customer Expected Amount",
-   "precision": "2",
-   "reqd": 1
-  },
-  {
    "fieldname": "column_break_r1uk",
    "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.customer",
-   "fetch_from": "customer.customer_name",
-   "fieldname": "customer_name",
-   "fieldtype": "Data",
-   "label": "Customer Name"
   },
   {
    "fieldname": "order_item",
@@ -78,13 +56,6 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
-  },
-  {
-   "fieldname": "total_expected_weight_per_quantity",
-   "fieldtype": "Float",
-   "label": "Total Expected Weight Per Quantity",
-   "precision": "2",
-   "read_only": 1
   },
   {
    "default": "Gram",
@@ -105,12 +76,44 @@
    "fieldname": "order_item_details_section",
    "fieldtype": "Section Break",
    "label": "Order Item Details"
+  },
+  {
+   "fieldname": "making_chargein_percentage",
+   "fieldtype": "Percent",
+   "label": "Making Charge(In Percentage)"
+  },
+  {
+   "fieldname": "expected_making_charge",
+   "fieldtype": "Percent",
+   "label": "Expected Making Charge"
+  },
+  {
+   "fieldname": "expected_total_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": " Expected Total Weight",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "out_for_delivery",
+   "fieldtype": "Check",
+   "label": "Out For Delivery"
+  },
+  {
+   "fieldname": "expected_total_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Expected Total Amount",
+   "precision": "2",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-03-28 10:18:46.791134",
+ "modified": "2024-04-01 15:38:03.735034",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",

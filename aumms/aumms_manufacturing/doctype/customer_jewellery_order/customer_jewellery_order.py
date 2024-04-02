@@ -21,6 +21,7 @@ class CustomerJewelleryOrder(Document):
     def on_submit(self):
         self.create_jewellery_order()
 
+
     def create_jewellery_order(self):
         jewellery_order_exist = frappe.db.exists(
             "Jewellery Order", {"customer_jewellery_order": self.name}
@@ -49,6 +50,7 @@ class CustomerJewelleryOrder(Document):
                 new_jewellery_order.category = item.item_category
                 new_jewellery_order.type = item.item_type
                 new_jewellery_order.quantity = item.item_quantity
+                new_jewellery_order.status = self.status
                 new_jewellery_order.expected_weight_per_quantity = (
                     item.expected_weight_per_quantity
                 )
