@@ -49,6 +49,7 @@ class JewelleryOrder(Document):
 				new_manufacturing_request.quantity = self.quantity
 				new_manufacturing_request.category = self.category
 				new_manufacturing_request.insert(ignore_permissions=True)
+				item.requested_for_manufacturing = 1
 				frappe.msgprint(f"Manufacturing Request {new_manufacturing_request.name} Created.", indicator="green", alert=1)
 		else:
 			frappe.throw(_('Manufacturing request for Jewellery Order {0} already exists'.format(self.name)))
