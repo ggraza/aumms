@@ -12,6 +12,7 @@
   "required_date",
   "raw_material_bundle",
   "bundle_id",
+  "status",
   "column_break_bonn",
   "required_quantity",
   "item_name",
@@ -138,12 +139,18 @@
    "fieldtype": "Link",
    "label": "Supplier",
    "options": "Supplier"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nCompleted\nCancel"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-03-28 10:31:30.917990",
+ "modified": "2024-04-01 11:18:25.773687",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Raw Material Request",

@@ -89,6 +89,9 @@ after_migrate = [
 fixtures = [{"dt": "Role","filters": [["name", "in", ["Design Analyst", "Supervisor","Smith","Head of Smith", "AuMMS Manager"]]]},
             {"dt":"Designation","filters":[["name","in",["Smith"]]]},
             {"dt":"Email Template","filters":[["name","in",["Design Request Assignment"]]]},
+			{"dt":"Workflow","filters":[["name","in",["Feasibility check"]]]},
+			{"dt":"Workflow Action Master","filters":[["name","in",["Feasibility check","Submit","Submit for Feasibility check"]]]},
+			{"dt":"Workflow State","filters":[["name","in",["Feasibility check","Submit","Cancel","Submit","Submit for Feasibility check","Feasible","Not Feasible"]]]},
 			]
 # before_uninstall = "aumms.uninstall.before_uninstall"
 # after_uninstall = "aumms.uninstall.after_uninstall"
