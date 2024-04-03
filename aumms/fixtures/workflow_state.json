@@ -1,0 +1,47 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-04-02 10:25:54.477942",
+  "name": "Submit for Feasibility check",
+  "style": "Primary",
+  "workflow_state_name": "Submit for Feasibility check"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-04-02 10:26:56.909469",
+  "name": "Not Feasible",
+  "style": "",
+  "workflow_state_name": "Not Feasible"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-04-02 10:27:24.428127",
+  "name": "Feasible",
+  "style": "",
+  "workflow_state_name": "Feasible"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-04-02 10:28:29.199983",
+  "name": "Submit",
+  "style": "",
+  "workflow_state_name": "Submit"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-04-02 11:12:55.656862",
+  "name": "Cancel",
+  "style": "",
+  "workflow_state_name": "Cancel"
+ }
+]
