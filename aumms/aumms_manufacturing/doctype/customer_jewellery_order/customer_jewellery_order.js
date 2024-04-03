@@ -24,7 +24,7 @@ frappe.ui.form.on("Customer Jewellery Order", {
        frappe.model.set_value(item.doctype, item.name, 'making_chargein_percentage', frm.doc.making_chargein_percentage);
      });
    }
-   frm.refresh_fields();
+   frm.refresh_field('order_item');
  }
 });
 
@@ -58,6 +58,9 @@ frappe.ui.form.on("Customer Jewellery Order Details", {
   },
   order_item_remove: function (frm, cdt, cdn) {
     calculate_totals(frm)
+  },
+  order_item_add : function(frm, cdt, cdn){
+    frm.events.update_order_item_table(frm);
   }
 });
 
