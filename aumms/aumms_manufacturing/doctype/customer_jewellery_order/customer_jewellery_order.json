@@ -9,6 +9,7 @@
   "customer",
   "required_date",
   "expected_total_weight",
+  "making_chargein_percentage",
   "column_break_r1uk",
   "purity",
   "expected_making_charge",
@@ -98,12 +99,18 @@
    "precision": "2",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "fieldname": "making_chargein_percentage",
+   "fieldtype": "Percent",
+   "label": "Making Charge(In Percentage)",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-02 13:27:59.939083",
+ "modified": "2024-04-03 14:44:02.145925",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",
