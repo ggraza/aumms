@@ -24,8 +24,8 @@
   "section_break_mem2",
   "design",
   "design_description",
-  "item_details_tab",
-  "item_details",
+  "jewellery_order_item_details_tab",
+  "jewellery_order_item",
   "total_weight",
   "amended_from"
  ],
@@ -41,6 +41,7 @@
    "search_index": 1
   },
   {
+   "depends_on": "eval:doc.order_from == 'Customer Jewellery Order'",
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -72,14 +73,6 @@
    "fieldname": "quantity",
    "fieldtype": "Int",
    "label": "Quantity ",
-   "reqd": 1
-  },
-  {
-   "fieldname": "item_details",
-   "fieldtype": "Table",
-   "label": "Item Details",
-   "mandatory_depends_on": "stock_available",
-   "options": "Jewellery Order Items",
    "reqd": 1
   },
   {
@@ -151,7 +144,8 @@
    "fetch_from": ".expected_total_weight",
    "fieldname": "weight_of_available_item",
    "fieldtype": "Data",
-   "label": "Weight of Available Item"
+   "label": "Weight of Available Item",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.order_from == 'Customer Jewellery Order'",
@@ -171,9 +165,16 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "item_details_tab",
+   "fieldname": "jewellery_order_item",
+   "fieldtype": "Table",
+   "label": "Jewellery Order Item",
+   "mandatory_depends_on": "stock_available",
+   "options": "Jewellery Order Items"
+  },
+  {
+   "fieldname": "jewellery_order_item_details_tab",
    "fieldtype": "Tab Break",
-   "label": "Item Details"
+   "label": "Jewellery Order Item Details"
   }
  ],
  "index_web_pages_for_search": 1,

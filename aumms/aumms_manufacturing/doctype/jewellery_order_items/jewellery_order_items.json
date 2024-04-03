@@ -6,16 +6,16 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "is_available",
   "item",
   "weight",
-  "is_available",
   "column_break_djjz",
   "requested_for_manufacturing",
   "manufacturing_request_finished"
  ],
  "fields": [
   {
-   "fetch_from": "item_code.gold_weight",
+   "fetch_from": "item.weight_per_unit",
    "fieldname": "weight",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -31,11 +31,13 @@
    "label": "Is Available"
   },
   {
+   "depends_on": "eval:doc.is_available",
    "fieldname": "item",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Item",
    "options": "AuMMS Item",
+   "reqd": 1,
    "width": "2"
   },
   {
