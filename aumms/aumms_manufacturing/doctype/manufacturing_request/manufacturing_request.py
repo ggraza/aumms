@@ -13,17 +13,6 @@ class ManufacturingRequest(Document):
 	def before_submit(self):
 		self.send_notification_to_owner()
 
-	def on_update(self):
-		self.update_jewellery_order_status()
-
-	def update_jewellery_order_status(self):
-		if frappe.db.exists('Jewellery Order', {'name': self.jewellery_order, 'status' : 'Open'}):
-			jewellery_order_status = frappe.get_doc('Jewellery Order', {'name': self.jewellery_order, 'status' : 'Open'})
-			if jewellery_order_status:
-				if jewellery_order_status != self.status:
-					frappe.db.set_value('Jewellery Order', self.jewellery_order, 'status', self.status)
-
-
 	def update_manufacturing_stages(self):
 		if self.category:
 			category_doc = frappe.get_doc('Item Category', self.category)
