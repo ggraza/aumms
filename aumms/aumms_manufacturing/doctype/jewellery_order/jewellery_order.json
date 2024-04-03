@@ -18,8 +18,8 @@
   "category",
   "type",
   "quantity",
+  "available_item_quantity",
   "weight_of_available_item",
-  "quantity_of_available_item",
   "finished",
   "section_break_mem2",
   "design",
@@ -79,8 +79,7 @@
    "fieldtype": "Table",
    "label": "Item Details",
    "mandatory_depends_on": "stock_available",
-   "options": "Jewellery Order Items",
-   "reqd": 1
+   "options": "Jewellery Order Items"
   },
   {
    "depends_on": "eval:doc.stock_available",
@@ -154,13 +153,6 @@
    "label": "Weight of Available Item"
   },
   {
-   "depends_on": "eval:doc.order_from == 'Customer Jewellery Order'",
-   "fetch_from": ".",
-   "fieldname": "quantity_of_available_item",
-   "fieldtype": "Data",
-   "label": "Quantity of Available Item"
-  },
-  {
    "default": "0",
    "fieldname": "finished",
    "fieldtype": "Check",
@@ -174,12 +166,18 @@
    "fieldname": "item_details_tab",
    "fieldtype": "Tab Break",
    "label": "Item Details"
+  },
+  {
+   "depends_on": "eval:doc.order_from == 'Customer Jewellery Order'",
+   "fieldname": "available_item_quantity",
+   "fieldtype": "Int",
+   "label": "Available Item Quantity"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-02 16:54:10.261118",
+ "modified": "2024-04-03 10:38:45.896199",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Order",

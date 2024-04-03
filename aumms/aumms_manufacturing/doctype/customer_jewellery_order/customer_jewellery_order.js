@@ -10,7 +10,22 @@ frappe.ui.form.on("Customer Jewellery Order", {
  					 }
  			 }
  	 })
-  }
+ },
+ purity : function(frm){
+   frm.events.update_order_item_table(frm);
+ },
+ making_chargein_percentage : function(frm){
+   frm.events.update_order_item_table(frm);
+ },
+ update_order_item_table: function(frm){
+   if(frm.doc.order_item){
+     frm.doc.order_item.forEach(function(item){
+       frappe.model.set_value(item.doctype, item.name, 'purity', frm.doc.purity);
+       frappe.model.set_value(item.doctype, item.name, 'making_chargein_percentage', frm.doc.making_chargein_percentage);
+     });
+   }
+   frm.refresh_fields();
+ }
 });
 
 frappe.ui.form.on("Customer Jewellery Order Details", {

@@ -8,18 +8,11 @@ from frappe.model.document import Document
 class JewelleryOrder(Document):
 
 	def on_submit(self):
-		# if self.quantity > self.quantity_of_available_item:
+		if self.quantity > self.available_item_quantity:
 			self.create_manufacturing_request()
 
 	def on_update(self):
-		self.update_status()
-
-	def update_status(self):
-	    if frappe.db.exists('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'status': 'Open'}):
-	        customer_jewellery_order_status = frappe.get_doc('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'status': 'Open'})
-	        if customer_jewellery_order_status:
-	            if customer_jewellery_order_status.status != self.status:
-	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'status', self.status)
+		self.out_for_delivery_check()
 
 	def create_manufacturing_request(self):
 		"""Create Manufacturing Request For Jewellery Order"""
@@ -36,19 +29,31 @@ class JewelleryOrder(Document):
 					new_manufacturing_request.total_weight = self.expected_total_weight - self.total_weight
 				else :
 					new_manufacturing_request.total_weight = self.total_weight - self.expected_total_weight
-				# new_manufacturing_request.uom = self.uom
 				new_manufacturing_request.purity = self.purity
 				new_manufacturing_request.type = self.type
-				# if self.stock_available:
-				# 	if self.quantity >= self.quantity_of_available_item:
-				# 		total_quantity = self.quantity - self.quantity_of_available_item
-				# 	else:
-				# 		total_quantity = self.quantity_of_available_item - self.quantity
-				# else:
-				# 	total_quantity = self.quantity
 				new_manufacturing_request.quantity = self.quantity
 				new_manufacturing_request.category = self.category
 				new_manufacturing_request.insert(ignore_permissions=True)
 				frappe.msgprint(f"Manufacturing Request {new_manufacturing_request.name} Created.", indicator="green", alert=1)
 		else:
 			frappe.throw(_('Manufacturing request for Jewellery Order {0} already exists'.format(self.name)))
+
+	def out_for_delivery_check(self):
+	    if frappe.db.exists('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'out_for_delivery': 0}):
+	        customer_jewellery_order = frappe.get_doc('Customer Jewellery Order', self.customer_jewellery_order)
+	        if customer_jewellery_order:
+	            jewellery_order_list = frappe.db.sql("""
+	                SELECT
+	                    name,
+	                    finished
+	                FROM
+	                    `tabJewellery Order`
+	                WHERE
+	                    customer_jewellery_order = %s
+	            """, (self.customer_jewellery_order,), as_dict=True)
+
+	            all_finished = all(jewellery_order['finished'] == 1 for jewellery_order in jewellery_order_list)
+	            if all_finished:
+	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'out_for_delivery', 1)
+	            else:
+	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'out_for_delivery', 0)
