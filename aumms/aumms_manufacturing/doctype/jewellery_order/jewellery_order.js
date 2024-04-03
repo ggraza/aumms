@@ -8,7 +8,6 @@ frappe.ui.form.on("Jewellery Order", {
 			frm.set_df_property('customer', 'read_only', 1)
 			frm.set_df_property('required_date', 'read_only', 1)
 			frm.set_df_property('expected_total_weight', 'read_only', 1)
-			// frm.set_df_property('customer_expected_amount', 'read_only', 1)
 			frm.set_df_property('total_weight', 'read_only', 1)
 			frm.set_df_property('quantity', 'read_only', 1)
 			frm.set_df_property('design', 'read_only', 1)
@@ -32,7 +31,6 @@ frappe.ui.form.on("Jewellery Order", {
 		quantity_of_available_item: function(frm) {
 			limit_item_details(frm)
 		}
-
 });
 
 frappe.ui.form.on("Jewellery Order Items",{
@@ -53,7 +51,18 @@ frappe.ui.form.on("Jewellery Order Items",{
    },
    item_details_add: function(frm)  {
     limit_item_details(frm)
-   }
+	},
+	is_available: function(frm, cdt, cdn) {
+        let allfinished = true;
+        let childTable = frm.doc.item_details;
+        for (let i = 0; i < childTable.length; i++) {
+            if (!childTable[i].is_available) {
+                allfinished = false;
+                break;
+            }
+        }
+        frm.set_value('finished', allfinished ? 1 : 0);
+    }
 });
 
 function limit_item_details(frm) {
