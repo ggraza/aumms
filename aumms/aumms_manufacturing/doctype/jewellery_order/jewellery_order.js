@@ -28,7 +28,7 @@ frappe.ui.form.on("Jewellery Order", {
 			}
 		});
   	},
-		quantity_of_available_item: function(frm) {
+		quantity: function(frm) {
 			limit_item_details(frm)
 		}
 });
@@ -52,7 +52,7 @@ frappe.ui.form.on("Jewellery Order Items",{
      })
      frm.set_value("weight_of_available_item",total_weightage)
    },
-   item_details_add: function(frm)  {
+   jewellery_order_item_add: function(frm)  {
     limit_item_details(frm)
 	},
 	is_available: function(frm, cdt, cdn) {
@@ -69,13 +69,9 @@ frappe.ui.form.on("Jewellery Order Items",{
 });
 
 function limit_item_details(frm) {
-	if(frm.doc.quantity <= frm.doc.quantity_of_available_item){
+	if(frm.doc.quantity){
 		availa_quantity = frm.doc.quantity
 	}
-	else if(frm.doc.quantity >= frm.doc.quantity_of_available_item){
-		availa_quantity = frm.doc.quantity_of_available_item
-	}
-  // limit = frm.doc.quantity - frm.doc.quantity_of_available_item
 	limit = availa_quantity
   if (frm.doc.jewellery_order_item.length >= limit)  {
     $(".btn.btn-xs.btn-secondary.grid-add-row").hide();

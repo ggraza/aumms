@@ -89,7 +89,8 @@
    "default": "0",
    "fieldname": "out_for_delivery",
    "fieldtype": "Check",
-   "label": "Out For Delivery"
+   "label": "Out For Delivery",
+   "read_only": 1
   },
   {
    "fieldname": "expected_total_amount",
@@ -110,7 +111,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-03 14:44:02.145925",
+ "modified": "2024-04-04 10:55:34.811720",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",
