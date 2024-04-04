@@ -33,20 +33,12 @@ frappe.ui.form.on("Jewellery Order", {
 					"item_type": frm.doc.type,
 					"item_category": frm.doc.category
 				}
-			};
+			}
 		});
-<<<<<<< Updated upstream
   	},
 		quantity: function(frm) {
 			limit_item_details(frm)
 		}
-=======
-	},
-
-	quantity_of_available_item: function(frm) {
-		limit_item_details(frm);
-	}
->>>>>>> Stashed changes
 });
 
 
