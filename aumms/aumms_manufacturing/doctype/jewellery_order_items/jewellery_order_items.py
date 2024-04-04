@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class JewelleryOrderItems(Document):
+class JewelleryOrderItem(Document):
 	pass

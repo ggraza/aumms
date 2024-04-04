@@ -18,7 +18,7 @@ class JewelleryOrder(Document):
 		"""Create Manufacturing Request For Jewellery Order"""
 		manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})
 		if not manufacturing_request_exists:
-			for item in self.jewellery_order_item:
+			for item in self.jewellery_order_items:
 				new_manufacturing_request = frappe.new_doc('Manufacturing Request')
 				new_manufacturing_request.raw_material_request_type = "Jewellery Order"
 				new_manufacturing_request.jewellery_order = self.name
