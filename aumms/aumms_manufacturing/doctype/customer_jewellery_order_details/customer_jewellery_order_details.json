@@ -117,19 +117,21 @@
    "default": "0",
    "fieldname": "jewellery_order_created",
    "fieldtype": "Check",
-   "label": "Jewellery Order Created"
+   "label": "Jewellery Order Created",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "jewellery_order_finished",
    "fieldtype": "Check",
-   "label": "Jewellery Order Finished"
+   "label": "Jewellery Order Finished",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-02 15:58:19.233585",
+ "modified": "2024-04-04 10:59:25.073203",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order Details",
