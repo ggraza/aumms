@@ -3,6 +3,24 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "",
+  "modified": "2024-03-19 15:18:22.775660",
+  "name": "Draft",
+  "style": "",
+  "workflow_state_name": "Draft"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-04-03 16:41:50.343879",
+  "name": "Submitted for feasibility",
+  "style": "Info",
+  "workflow_state_name": "Submitted for feasibility"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
   "modified": "2024-04-03 16:38:15.882848",
   "name": "Cancelled",
   "style": "Danger",
