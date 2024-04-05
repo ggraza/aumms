@@ -40,7 +40,7 @@ frappe.ui.form.on("Jewellery Order", {
 		}
 });
 
-frappe.ui.form.on("Jewellery Order Items",{
+frappe.ui.form.on("Jewellery Order Item",{
   weight: function(frm, cdt, cdn){
    let d = locals[cdt][cdn];
    var total_weightage = 0
