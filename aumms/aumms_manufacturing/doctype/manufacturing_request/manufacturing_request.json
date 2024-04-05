@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "MR-.####",
  "creation": "2024-03-14 10:03:40.820137",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -17,7 +16,6 @@
   "status",
   "purity",
   "uom",
-  "item_name",
   "category",
   "type",
   "amended_from",
@@ -140,12 +138,6 @@
    "options": "Manufacturing Request Stage"
   },
   {
-   "fieldname": "item_name",
-   "fieldtype": "Link",
-   "label": "Item name",
-   "options": "Item"
-  },
-  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -155,11 +147,10 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-03-28 16:30:54.188555",
+ "modified": "2024-04-05 12:11:22.371274",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
- "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
