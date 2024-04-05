@@ -4,11 +4,10 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 
-
 class JewelleryOrder(Document):
 
 	def on_submit(self):
-		if self.quantity > self.available_item_quantity:
+		# if self.quantity > self.available_item_quantity:
 			self.create_manufacturing_request()
 
 	def on_update(self):
