@@ -142,11 +142,6 @@
    "options": "Manufacturing Request Stage"
   },
   {
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item name"
-  },
-  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -168,7 +163,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-05 15:04:07.689855",
+ "modified": "2024-04-06 10:21:06.665338",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
