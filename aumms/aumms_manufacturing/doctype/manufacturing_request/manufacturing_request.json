@@ -100,7 +100,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": ".uom",
    "fieldname": "uom",
    "fieldtype": "Link",
    "label": "UOM",
@@ -108,7 +107,6 @@
   },
   {
    "depends_on": "eval:doc.raw_material_request_type == \"Jewellery Order\"",
-   "fetch_from": ".purity",
    "fieldname": "purity",
    "fieldtype": "Link",
    "label": "Purity",
@@ -116,14 +114,12 @@
   },
   {
    "depends_on": "eval:doc.raw_material_request_type == \"Jewellery Order\"",
-   "fetch_from": ".category",
    "fieldname": "category",
    "fieldtype": "Link",
    "label": "Category",
    "options": "Item Category"
   },
   {
-   "fetch_from": ".type",
    "fieldname": "type",
    "fieldtype": "Link",
    "label": "Type",
@@ -140,11 +136,6 @@
    "label": "Manufacturing Request Stage",
    "mandatory_depends_on": "eval:doc.category",
    "options": "Manufacturing Request Stage"
-  },
-  {
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item name"
   },
   {
    "fieldname": "status",
