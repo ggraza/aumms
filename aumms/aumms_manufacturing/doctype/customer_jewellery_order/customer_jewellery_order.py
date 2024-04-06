@@ -25,7 +25,7 @@ class CustomerJewelleryOrder(Document):
                 new_jewellery_order.required_date = self.required_date
                 new_jewellery_order.uom = item.stock_uom
                 new_jewellery_order.expected_total_weight = (
-                    item.expected_weight_per_quantity
+                    item.weight
                 )
                 latest_board_rate = frappe.get_last_doc(
                     "Board Rate", {"purity": self.purity, "uom": "Gram"}
@@ -37,11 +37,11 @@ class CustomerJewelleryOrder(Document):
                 new_jewellery_order.design_description = item.item_design_description
                 new_jewellery_order.type = item.item_type
                 new_jewellery_order.quantity = item.qty
-                new_jewellery_order.expected_weight_per_quantity = (
-                    item.expected_weight_per_quantity
+                new_jewellery_order.weight = (
+                    item.weight
                 )
                 new_jewellery_order.insert(ignore_permissions=True)
-                item.jewellery_order_created = 1
+                frappe.db.set_value(item.doctype, item.name, 'jewellery_order_created', 1)
                 jewellery_order_count += 1
             frappe.msgprint(
                 f"{jewellery_order_count} Jewellery Orders Created.",

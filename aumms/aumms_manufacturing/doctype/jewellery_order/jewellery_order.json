@@ -7,12 +7,10 @@
  "engine": "InnoDB",
  "field_order": [
   "order_from",
+  "order_item",
   "column_break_brrz",
   "customer_jewellery_order",
   "jewellery_stock_request",
-  "section_break_bfta",
-  "order_item",
-  "column_break_ddfm",
   "required_date",
   "section_break_eqq9",
   "type",
@@ -159,7 +157,8 @@
    "depends_on": "eval:doc.order_from == 'Customer Jewellery Order'",
    "fieldname": "available_item_quantity",
    "fieldtype": "Int",
-   "label": "Available Item Quantity"
+   "label": "Available Item Quantity",
+   "read_only": 1
   },
   {
    "fieldname": "jewellery_order_item_details_tab",
@@ -180,19 +179,11 @@
    "options": "UOM"
   },
   {
-   "fieldname": "section_break_bfta",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "section_break_eqq9",
    "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_brrz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_ddfm",
    "fieldtype": "Column Break"
   },
   {
@@ -207,7 +198,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-05 13:49:01.329342",
+ "modified": "2024-04-06 12:36:25.399082",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Order",
