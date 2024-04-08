@@ -8,6 +8,9 @@
  "engine": "InnoDB",
  "field_order": [
   "stage",
+  "default_workstation",
+  "expected_execution_timein_hours",
+  "column_break_oofw",
   "raw_material_available",
   "previous_stage_completion",
   "raw_material_from_previous_stage"
@@ -36,11 +39,26 @@
    "fieldname": "raw_material_from_previous_stage",
    "fieldtype": "Check",
    "label": "Is Raw Material from Previous Stage"
+  },
+  {
+   "fieldname": "default_workstation",
+   "fieldtype": "Link",
+   "label": "Default Workstation",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "expected_execution_timein_hours",
+   "fieldtype": "Float",
+   "label": "Expected Execution Time(In Hours)"
+  },
+  {
+   "fieldname": "column_break_oofw",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-08 09:57:58.521571",
+ "modified": "2024-04-08 11:14:42.191777",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Stage",
