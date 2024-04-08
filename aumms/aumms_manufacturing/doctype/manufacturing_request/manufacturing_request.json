@@ -25,7 +25,7 @@
   "design_attachment",
   "amended_from",
   "section_break_sjns",
-  "manufacturing_request_stage"
+  "manufacturing_stages"
  ],
  "fields": [
   {
@@ -130,14 +130,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.category",
-   "fieldname": "manufacturing_request_stage",
-   "fieldtype": "Table",
-   "label": "Manufacturing Request Stage",
-   "mandatory_depends_on": "eval:doc.category",
-   "options": "Manufacturing Request Stage"
-  },
-  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -154,12 +146,20 @@
   {
    "fieldname": "column_break_jclf",
    "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.category",
+   "fieldname": "manufacturing_stages",
+   "fieldtype": "Table",
+   "label": "Manufacturing Stages",
+   "mandatory_depends_on": "eval:doc.category",
+   "options": "Manufacturing Request Stage"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-06 10:21:06.665338",
+ "modified": "2024-04-08 12:15:56.712822",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",

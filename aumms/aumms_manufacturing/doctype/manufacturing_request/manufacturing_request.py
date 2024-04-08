@@ -18,7 +18,7 @@ class ManufacturingRequest(Document):
 		if self.category:
 			category_doc = frappe.get_doc('Item Category', self.category)
 			for stage in category_doc.stages:
-				self.append('manufacturing_request_stage', {
+				self.append('manufacturing_stages', {
 					'manufacturing_stage': stage.stage,
 					'required_time': stage.required_time,
 					'workstation': stage.default_workstation
@@ -26,7 +26,7 @@ class ManufacturingRequest(Document):
 
 
 	def send_notification_to_owner(self):
-		for manufacturing_request in self.manufacturing_request_stage:
+		for manufacturing_request in self.manufacturing_stages:
 			if manufacturing_request.assigned_to:
 				subject = "Manufacturing Stage Assigned"
 				content = f"Manufacturing Stage {manufacturing_request.manufacturing_stage} is Assigned to {manufacturing_request.assigned_to}"
@@ -36,17 +36,17 @@ class ManufacturingRequest(Document):
 
 	@frappe.whitelist()
 	def update_previous_stage(self, idx):
-		for stage in self.manufacturing_request_stage:
+		for stage in self.manufacturing_stages:
 			if stage.idx == idx:
-				if stage.awaiting_raw_material:
+				if stage.is_raw_material_from_previous_stage:
 					prev_row = stage.idx - 1
-					for row in self.manufacturing_request_stage:
+					for row in self.manufacturing_stages:
 						if row.idx == prev_row:
-							return row.manufacturing_stage
+							return row.manufacturing_stages
 
 	@frappe.whitelist()
 	def create_jewellery_job_card(self, stage_row_id):
-		stage = frappe.get_doc('Manufacturing Request Stage', stage_row_id)
+		stage = frappe.get_doc('Manufacturing Stages', stage_row_id)
 		jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.manufacturing_request,'manufacturing_stage': stage.manufacturing_stage })
 		if not jewellery_job_card_exists:
 			smith_email = frappe.db.get_value('Smith', stage.assigned_to, 'email')
