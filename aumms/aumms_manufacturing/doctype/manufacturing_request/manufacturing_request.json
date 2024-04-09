@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{MR}-{#####}-{purity}-{uom}-{category}-{type}-{expected_weight}",
+ "autoname": "MR.#####",
  "creation": "2024-03-14 10:03:40.820137",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "request_form",
-  "jewellery_order_item",
+  "title",
+  "raw_material_request_type",
+  "raw_material_request",
   "column_break_i3eg",
   "jewellery_order",
   "manufacturing_request",
@@ -163,16 +164,29 @@
    "fieldtype": "Link",
    "label": "UOM",
    "options": "UOM"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
  "modified": "2024-04-08 14:38:15.313305",
+ "modified": "2024-04-06 15:18:19.962048",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -188,7 +202,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }
