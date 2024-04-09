@@ -26,7 +26,8 @@
   "design",
   "design_description",
   "section_break_sjns",
-  "manufacturing_stages"
+  "manufacturing_request_stages",
+  "amended_from"
  ],
  "fields": [
   {
