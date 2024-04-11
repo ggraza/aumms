@@ -10,7 +10,7 @@ frappe.ui.form.on("Manufacturing Request", {
 				}
 			}
 		});
-    frm.set_query('assigned_to', 'manufacturing_request_stages', () =>{
+    frm.set_query('assigned_to', 'manufacturing_stages', () =>{
       return{
         filters :{
           "designation" : "Smith"
@@ -20,7 +20,7 @@ frappe.ui.form.on("Manufacturing Request", {
   }
 });
 
-frappe.ui.form.on("Manufacturing Request Stage", {
+frappe.ui.form.on("Manufacturing  Stage", {
   create_raw_material_bundle: function(frm, cdt , cdn) {
     let row = locals[cdt][cdn]
     frappe.new_doc('Raw Material Bundle', {
