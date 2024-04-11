@@ -31,7 +31,7 @@
    "label": "Is Available"
   },
   {
-   "depends_on": "eval:doc.is_available",
+   "depends_on": "eval:doc.is_available == 1",
    "fieldname": "item",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -62,7 +62,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-08 15:30:53.073336",
+ "modified": "2024-04-09 16:58:15.884508",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Order Item",
