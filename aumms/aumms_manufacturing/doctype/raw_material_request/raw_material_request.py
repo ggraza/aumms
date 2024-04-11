@@ -19,7 +19,7 @@ class RawMaterialRequest(Document):
             manufacturing_request.required_date = self.required_date
             manufacturing_request.quantity = self.required_quantity
             manufacturing_request.total_weight = self.weight
-            manufacturing_request.item_name = self.item_name
+            # manufacturing_request.item_name = self.item_name
             manufacturing_request.uom = self.uom
             manufacturing_request.type = self.item_type
             manufacturing_request.insert(ignore_permissions=True)
