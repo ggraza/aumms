@@ -1,14 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "MR.#####",
+ "autoname": "format:{MR}-{#####}-{purity}-{uom}-{category}-{type}-{expected_weight}",
  "creation": "2024-03-14 10:03:40.820137",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "title",
-  "raw_material_request_type",
-  "raw_material_request",
+  "request_form",
+  "jewellery_order_item",
   "column_break_i3eg",
   "jewellery_order",
   "manufacturing_request",
@@ -27,7 +26,7 @@
   "design",
   "design_description",
   "section_break_sjns",
-  "manufacturing_request_stages",
+  "manufacturing_stages",
   "amended_from"
  ],
  "fields": [
@@ -100,14 +99,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.category",
-   "fieldname": "manufacturing_request_stages",
-   "fieldtype": "Table",
-   "label": "Manufacturing Request Stages",
-   "mandatory_depends_on": "eval:doc.category",
-   "options": "Manufacturing Request Stage"
-  },
-  {
    "fieldname": "request_form",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -166,27 +157,22 @@
    "options": "UOM"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Open\nCompleted\nCancelled"
-  },
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Title"
+   "depends_on": "eval:doc.category",
+   "fieldname": "manufacturing_stages",
+   "fieldtype": "Table",
+   "label": "Manufacturing Stages",
+   "mandatory_depends_on": "eval:doc.category",
+   "options": "Manufacturing  Stage"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-08 14:38:15.313305",
- "modified": "2024-04-06 15:18:19.962048",
+ "modified": "2024-04-11 12:21:51.686391",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -202,9 +188,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "title"
+ "states": []
 }

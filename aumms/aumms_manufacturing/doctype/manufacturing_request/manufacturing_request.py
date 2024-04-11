@@ -9,7 +9,7 @@ from frappe.desk.form.assign_to import add as add_assignment
 class ManufacturingRequest(Document):
 
 	def autoname(self):
-		self.title = f"{self.purity}  {self.total_weight}{self.uom}  {self.type}  {self.category}"
+		self.title = f"{self.purity}  {self.expected_weight}{self.uom}  {self.type}  {self.category}"
 
 	def before_insert(self):
 		self.update_manufacturing_stages()
@@ -32,7 +32,7 @@ class ManufacturingRequest(Document):
 		for manufacturing_request in self.manufacturing_stages:
 			if manufacturing_request.smith:
 				subject = "Manufacturing Stage Assigned"
-				content = f"Manufacturing Stage {manufacturing_request.manufacturing_stage} is Assigned to {manufacturing_request.smith}"
+				content = f"Manufacturing Stage {manufacturing_request.manufacturing_stages} is Assigned to {manufacturing_request.smith}"
 				for_user = self.owner
 				create_notification_log(self.doctype, self.name, for_user, subject, content, 'Alert')
 
@@ -49,7 +49,7 @@ class ManufacturingRequest(Document):
 
 	@frappe.whitelist()
 	def create_jewellery_job_card(self, stage_row_id):
-		stage = frappe.get_doc('Manufacturing Stages', stage_row_id)
+		stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
 		jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.manufacturing_request,'manufacturing_stage': stage.manufacturing_stage })
 		if not jewellery_job_card_exists:
 			smith_email = frappe.db.get_value('Smith', stage.smith, 'email')

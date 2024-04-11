@@ -17,11 +17,11 @@ class CustomerJewelleryOrder(Document):
         )
         if not jewellery_order_exist:
             jewellery_order_count = 0
-            for item in self.order_item:
+            for item in self.order_items:
                 new_jewellery_order = frappe.new_doc("Jewellery Order")
                 new_jewellery_order.order_from = "Customer Jewellery Order"
                 new_jewellery_order.customer_jewellery_order = self.name
-                new_jewellery_order.order_item = f"{item.item_category}-{item.item_type}-{item.qty}"
+                new_jewellery_order.order_items = f"{item.item_category}-{item.item_type}-{item.qty}"
                 new_jewellery_order.required_date = self.required_date
                 new_jewellery_order.uom = item.stock_uom
                 new_jewellery_order.expected_total_weight = (
