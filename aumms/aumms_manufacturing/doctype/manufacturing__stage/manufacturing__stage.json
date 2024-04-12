@@ -13,14 +13,13 @@
   "is_raw_material_from_previous_stage",
   "previous_stage",
   "create_raw_material_bundle",
-  "available_raw_material",
+  "raw_material_available",
   "custom_column_break_lwydq",
   "smith",
   "create_job_card",
   "completed",
   "workstation",
-  "required_time",
-  "assigned_to"
+  "required_time"
  ],
  "fields": [
   {
@@ -34,13 +33,6 @@
   {
    "fieldname": "custom_column_break_lwydq",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "assigned_to",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Assigned To",
-   "options": "Employee"
   },
   {
    "fetch_from": "manufacturing_stage.default_workstation",
@@ -89,18 +81,14 @@
    "label": "Create Job Card"
   },
   {
-   "fieldname": "available_raw_material",
-   "fieldtype": "Data",
-   "label": "Available Raw Material"
-  },
-  {
    "fieldname": "smith",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Smith",
-   "options": "Smith"
+   "options": "Employee"
   },
   {
+   "depends_on": "eval:doc.is_raw_material_from_previous_stage == 0",
    "fieldname": "create_raw_material_bundle",
    "fieldtype": "Button",
    "label": "Create Raw Material Bundle"
@@ -126,12 +114,20 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Is Raw Material from Previous Stage"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.is_raw_material_from_previous_stage == 0",
+   "fieldname": "raw_material_available",
+   "fieldtype": "Check",
+   "label": "Raw Material Available",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-11 13:09:34.867875",
+ "modified": "2024-04-12 09:55:35.779886",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing  Stage",
