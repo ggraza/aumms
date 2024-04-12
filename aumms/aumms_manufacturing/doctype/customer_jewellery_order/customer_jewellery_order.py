@@ -21,7 +21,7 @@ class CustomerJewelleryOrder(Document):
                 new_jewellery_order = frappe.new_doc("Jewellery Order")
                 new_jewellery_order.order_from = "Customer Jewellery Order"
                 new_jewellery_order.customer_jewellery_order = self.name
-                new_jewellery_order.order_items = f"{item.item_category}-{item.item_type}-{item.qty}"
+                new_jewellery_order.order_item = f"{item.item_category}-{item.item_type}-{item.qty}"
                 new_jewellery_order.required_date = self.required_date
                 new_jewellery_order.uom = item.stock_uom
                 new_jewellery_order.expected_total_weight = (
