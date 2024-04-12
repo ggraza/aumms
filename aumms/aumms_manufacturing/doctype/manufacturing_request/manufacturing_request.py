@@ -9,7 +9,7 @@ from frappe.desk.form.assign_to import add as add_assignment
 class ManufacturingRequest(Document):
 
 	def autoname(self):
-		self.title = f"{self.purity}  {self.expected_weight}{self.uom}  {self.type}  {self.category}"
+		self.title = f"{self.purity}  {self.expected_weight} {self.uom}  {self.type}  {self.category}"
 
 	def before_insert(self):
 		self.update_manufacturing_stages()
@@ -45,14 +45,14 @@ class ManufacturingRequest(Document):
 					prev_row = stage.idx - 1
 					for row in self.manufacturing_stages:
 						if row.idx == prev_row:
-							return row.manufacturing_stages
+							return row.manufacturing_stage
 
 	@frappe.whitelist()
 	def create_jewellery_job_card(self, stage_row_id):
-		stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
+		stage = frappe.get_doc('Manufacturing Stage', stage_row_id)
 		jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.manufacturing_request,'manufacturing_stage': stage.manufacturing_stage })
 		if not jewellery_job_card_exists:
-			smith_email = frappe.db.get_value('Smith', stage.smith, 'email')
+			smith_email = frappe.db.get_value('Employee', stage.smith, 'email')
 			new_jewellery_job_card = frappe.new_doc('Jewellery Job Card')
 			new_jewellery_job_card.manufacturing_request = self.name
 			new_jewellery_job_card.assign_to = stage.smith

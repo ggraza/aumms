@@ -10,7 +10,7 @@ frappe.ui.form.on("Manufacturing Request", {
 				}
 			}
 		});
-    frm.set_query('assigned_to', 'manufacturing_stages', () =>{
+    frm.set_query('smith', 'manufacturing_stages', () =>{
       return{
         filters :{
           "designation" : "Smith"
