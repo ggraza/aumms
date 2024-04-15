@@ -9,7 +9,7 @@
  "field_order": [
   "stage",
   "default_workstation",
-  "expected_execution_timein_hours",
+  "expected_execution_timein_minutes",
   "column_break_oofw",
   "raw_material_available",
   "previous_stage_completion",
@@ -47,18 +47,18 @@
    "options": "Workstation"
   },
   {
-   "fieldname": "expected_execution_timein_hours",
-   "fieldtype": "Float",
-   "label": "Expected Execution Time(In Hours)"
-  },
-  {
    "fieldname": "column_break_oofw",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expected_execution_timein_minutes",
+   "fieldtype": "Float",
+   "label": "Expected Execution Time(In Minutes)"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-08 11:14:42.191777",
+ "modified": "2024-04-15 12:50:06.986402",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Stage",

@@ -32,7 +32,7 @@ class ManufacturingRequest(Document):
 		for manufacturing_request in self.manufacturing_stages:
 			if manufacturing_request.smith:
 				subject = "Manufacturing Stage Assigned"
-				content = f"Manufacturing Stage {manufacturing_request.manufacturing_stages} is Assigned to {manufacturing_request.smith}"
+				content = f"Manufacturing Stage {manufacturing_request.manufacturing_stage} is Assigned to {manufacturing_request.smith}"
 				for_user = self.owner
 				create_notification_log(self.doctype, self.name, for_user, subject, content, 'Alert')
 
@@ -49,17 +49,19 @@ class ManufacturingRequest(Document):
 
 	@frappe.whitelist()
 	def create_jewellery_job_card(self, stage_row_id):
-		stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
-		jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.manufacturing_request,'manufacturing_stages': stage.manufacturing_stage })
-		if not jewellery_job_card_exists:
-			smith_email = frappe.db.get_value('Employee', stage.smith, 'user_id')
-			new_jewellery_job_card = frappe.new_doc('Jewellery Job Card')
-			new_jewellery_job_card.manufacturing_request = self.name
-			new_jewellery_job_card.assign_to = stage.smith
-			new_jewellery_job_card.work_station = stage.workstation
-			new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
-			new_jewellery_job_card.flags.ignore_mandatory = True
-			new_jewellery_job_card.save(ignore_permissions=True)
-			if smith_email:
-				add_assignment({"doctype": "Jewellery Job Card", "name": new_jewellery_job_card.name, "assign_to": [smith_email]})
-			frappe.msgprint("Jewellery Job Card Orders Created.", indicator="green", alert=1)
+	    stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
+	    jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.name,'manufacturing_stage': stage.manufacturing_stage})
+	    if not jewellery_job_card_exists:
+	        smith_email = frappe.db.get_value('Employee', stage.smith, 'user_id')
+	        new_jewellery_job_card = frappe.new_doc('Jewellery Job Card')
+	        new_jewellery_job_card.manufacturing_request = self.name
+	        new_jewellery_job_card.assign_to = stage.smith
+	        new_jewellery_job_card.work_station = stage.workstation
+	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
+	        new_jewellery_job_card.flags.ignore_mandatory = True
+	        new_jewellery_job_card.save(ignore_permissions=True)
+	        if smith_email:
+	            add_assignment({"doctype": "Jewellery Job Card", "name": new_jewellery_job_card.name, "assign_to": [smith_email]})
+	        frappe.msgprint("Jewellery Job Card Orders Created.", indicator="green", alert=1)
+	    else:
+	        frappe.throw(_("Job card already exists for this stage"))
