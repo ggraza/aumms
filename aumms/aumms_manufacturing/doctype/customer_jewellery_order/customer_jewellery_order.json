@@ -24,6 +24,7 @@
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Customer",
    "options": "Customer",
    "reqd": 1
@@ -32,6 +33,7 @@
    "fieldname": "required_date",
    "fieldtype": "Date",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Required Date",
    "reqd": 1
   },
@@ -111,8 +113,17 @@
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-04-11 12:28:38.882392",
+ "links": [
+  {
+   "link_doctype": "Jewellery Order",
+   "link_fieldname": "customer_jewellery_order"
+  },
+  {
+   "link_doctype": "Manufacturing Request",
+   "link_fieldname": "jewellery_order"
+  }
+ ],
+ "modified": "2024-04-15 09:51:03.366263",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",

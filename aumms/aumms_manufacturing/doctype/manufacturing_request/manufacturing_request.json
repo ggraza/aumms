@@ -6,7 +6,6 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "title",
   "request_form",
   "jewellery_order_item",
   "column_break_i3eg",
@@ -28,7 +27,8 @@
   "design_description",
   "section_break_sjns",
   "manufacturing_stages",
-  "amended_from"
+  "amended_from",
+  "connections_tab"
  ],
  "fields": [
   {
@@ -68,6 +68,8 @@
   {
    "fieldname": "required_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Required Date"
   },
   {
@@ -103,6 +105,7 @@
    "fieldname": "request_form",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Request From",
    "options": "\nJewellery Order\nRaw Material Request",
    "reqd": 1
@@ -166,16 +169,26 @@
    "options": "Manufacturing  Stage"
   },
   {
-   "fieldname": "title",
-   "fieldtype": "Data",
+   "fieldname": "connections_tab",
+   "fieldtype": "Tab Break",
    "hidden": 1,
-   "label": "Title"
+   "label": "Connections ",
+   "show_dashboard": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-04-11 16:11:22.304221",
+ "links": [
+  {
+   "link_doctype": "Raw Material Bundle",
+   "link_fieldname": "manufacturing_request"
+  },
+  {
+   "link_doctype": "Raw Material Request",
+   "link_fieldname": "manufacturing_request"
+  }
+ ],
+ "modified": "2024-04-12 15:52:33.706017",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
@@ -195,9 +208,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "title"
+ "states": []
 }

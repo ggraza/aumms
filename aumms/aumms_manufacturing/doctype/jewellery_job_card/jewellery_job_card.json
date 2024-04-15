@@ -10,7 +10,7 @@
   "naming_series",
   "manufacturing_request",
   "posting_date",
-  "manufacturing_stage",
+  "manufacturing_stages",
   "column_break_ymuw",
   "company",
   "assign_to",
@@ -33,7 +33,6 @@
    "default": "J-JOB.#####",
    "fieldname": "naming_series",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Naming Series",
    "options": "J-JOB.#####",
    "reqd": 1
@@ -41,6 +40,7 @@
   {
    "fieldname": "manufacturing_request",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Manufacturing Request",
    "options": "Manufacturing Request",
    "reqd": 1
@@ -49,6 +49,7 @@
    "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Posting Date",
    "reqd": 1
   },
@@ -143,6 +144,7 @@
   {
    "fieldname": "work_station",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Work Station",
    "options": "Workstation",
    "reqd": 1
@@ -150,6 +152,7 @@
   {
    "fieldname": "manufacturing_stage",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Manufacturing Stage",
    "options": "Manufacturing Stage",
    "reqd": 1
@@ -157,7 +160,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-11 16:35:05.409498",
+ "modified": "2024-04-12 11:06:40.507448",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
