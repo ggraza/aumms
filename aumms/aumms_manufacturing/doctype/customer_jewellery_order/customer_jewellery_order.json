@@ -6,11 +6,13 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "title",
   "customer",
   "required_date",
   "expected_total_weight",
   "making_chargein_percentage",
   "column_break_r1uk",
+  "type",
   "purity",
   "expected_making_charge",
   "expected_total_amount",
@@ -54,6 +56,7 @@
   {
    "fieldname": "purity",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Purity",
    "options": "Purity",
    "reqd": 1
@@ -109,6 +112,20 @@
    "label": "Order Item",
    "options": "Customer Jewellery Order Detail",
    "reqd": 1
+  },
+  {
+   "fetch_from": "amended_from.customer",
+   "fieldname": "title",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Title",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Link",
+   "label": "Type",
+   "options": "Item Type"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -123,7 +140,7 @@
    "link_fieldname": "jewellery_order"
   }
  ],
- "modified": "2024-04-15 09:51:03.366263",
+ "modified": "2024-04-15 10:47:21.223303",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",

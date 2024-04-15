@@ -13,17 +13,8 @@ class JewelleryOrder(Document):
 		self.out_for_delivery_check()
 
 
-	def autoname(self):
-	    item_id = []
-	    items = self.get("jewellery_order_items")
-	    if items:
-	        for item in items:
-	            item.item_id = f"{self.type}-{self.category}-{item.weight}"
-	            print('item.item_id', item.item_id)
-
 	def create_manufacturing_request(self):
 	    """Create Manufacturing Request For Jewellery Order"""
-	    self.autoname()
 	    manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})
 	    if not manufacturing_request_exists:
 	        for item in self.jewellery_order_items:
@@ -40,7 +31,7 @@ class JewelleryOrder(Document):
 	                new_manufacturing_request.quantity = self.quantity
 	                new_manufacturing_request.category = self.category
 	                new_manufacturing_request.design_description = self.design_description
-	                new_manufacturing_request.jewellery_order_item = item.item_id
+	                new_manufacturing_request.jewellery_order_item = item.name
 	                new_manufacturing_request.insert(ignore_permissions=True)
 	                frappe.db.set_value(item.doctype, item.name, 'requested_for_manufacturing', 1)
 	                frappe.msgprint(f"Manufacturing Request {new_manufacturing_request.name} Created.", indicator="green", alert=1)

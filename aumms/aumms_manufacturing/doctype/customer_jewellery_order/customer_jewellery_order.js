@@ -14,15 +14,19 @@ frappe.ui.form.on("Customer Jewellery Order", {
   making_chargein_percentage : function(frm){
     frm.events.update_order_item_table(frm);
   },
+  type : function(frm){
+    frm.events.update_order_item_table(frm);
+  },
   update_order_item_table: function update_order_item_table(frm){
     if(frm.doc.order_items){
       frm.doc.order_items.forEach(function(item){
         frappe.model.set_value(item.doctype, item.name, 'purity', frm.doc.purity);
         frappe.model.set_value(item.doctype, item.name, 'making_chargein_percentage', frm.doc.making_chargein_percentage);
+        frappe.model.set_value(item.doctype, item.name, 'item_type', frm.doc.type);
       });
     }
     frm.refresh_fields();
-  }
+  },
 });
 
 frappe.ui.form.on("Customer Jewellery Order Detail", {
