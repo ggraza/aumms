@@ -38,6 +38,7 @@
    "fieldname": "raw_material_request_type",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Raw Material Request Type",
    "options": "\nStock\nManufacturing Request\nRaw Material Request\nJewellery Order",
    "reqd": 1
@@ -74,6 +75,7 @@
   {
    "fieldname": "required_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Required Date"
   },
   {
@@ -118,6 +120,8 @@
   {
    "fieldname": "raw_material_bundle",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Raw Material Bundle",
    "options": "Raw Material Bundle"
   },
@@ -149,7 +153,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-06 12:33:31.810387",
+ "modified": "2024-04-12 11:16:41.279760",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Raw Material Request",

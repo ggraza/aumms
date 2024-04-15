@@ -62,6 +62,7 @@
    "fieldname": "manufacturing_stage",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Manufacturing Stage",
    "options": "Manufacturing Stage",
    "reqd": 1
@@ -70,7 +71,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-03-28 10:51:55.280068",
+ "modified": "2024-04-12 11:17:22.535295",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Raw Material Bundle",

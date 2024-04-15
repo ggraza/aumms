@@ -59,6 +59,7 @@
    "fieldname": "customer_jewellery_order",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Customer Jewellery Order",
    "options": "Customer Jewellery Order",
    "reqd": 1
@@ -92,6 +93,8 @@
   {
    "fieldname": "order_from",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Order From",
    "options": "\nCustomer Jewellery Order\nJewellery Stock Request"
   },
@@ -188,8 +191,17 @@
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-04-06 14:14:48.548281",
+ "links": [
+  {
+   "link_doctype": "Manufacturing Request",
+   "link_fieldname": "jewellery_order"
+  },
+  {
+   "link_doctype": "Raw Material Request",
+   "link_fieldname": "jewellery_order"
+  }
+ ],
+ "modified": "2024-04-15 09:53:12.706734",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Order",
