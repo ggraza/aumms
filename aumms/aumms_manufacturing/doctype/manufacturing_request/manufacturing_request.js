@@ -31,7 +31,7 @@ frappe.ui.form.on("Manufacturing  Stage", {
 
   create_job_card: function(frm, cdt, cdn) {
     frm.call('create_jewellery_job_card', { 'stage_row_id': cdn }).then(r => {
-        frm.refresh_fields();
+      frm.refresh_fields();
     });
   },
 
@@ -79,5 +79,5 @@ frappe.ui.form.on("Manufacturing  Stage", {
           frm.refresh_field('manufacturing_stages');
         }
       }
-    }
+    },
 });

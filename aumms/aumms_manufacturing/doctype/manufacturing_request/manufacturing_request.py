@@ -36,7 +36,6 @@ class ManufacturingRequest(Document):
 				for_user = self.owner
 				create_notification_log(self.doctype, self.name, for_user, subject, content, 'Alert')
 
-
 	@frappe.whitelist()
 	def update_previous_stage(self, idx):
 		for stage in self.manufacturing_stages:
@@ -60,6 +59,7 @@ class ManufacturingRequest(Document):
 	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
 	        new_jewellery_job_card.flags.ignore_mandatory = True
 	        new_jewellery_job_card.save(ignore_permissions=True)
+	        frappe.db.set_value(stage.doctype, stage.name, 'job_card_created', 1)
 	        if smith_email:
 	            add_assignment({"doctype": "Jewellery Job Card", "name": new_jewellery_job_card.name, "assign_to": [smith_email]})
 	        frappe.msgprint("Jewellery Job Card Orders Created.", indicator="green", alert=1)
