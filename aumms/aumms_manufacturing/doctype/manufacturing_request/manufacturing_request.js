@@ -27,6 +27,7 @@ frappe.ui.form.on("Manufacturing  Stage", {
       'manufacturing_request': frm.doc.name,
       'manufacturing_stage' : row.manufacturing_stages,
     })
+    row.raw_material_bundle_created = 1;
   },
 
   create_job_card: function(frm, cdt, cdn) {
