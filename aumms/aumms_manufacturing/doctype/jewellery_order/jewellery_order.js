@@ -29,6 +29,7 @@ frappe.ui.form.on("Jewellery Order", {
                 }
             }
         });
+				limit_item_details(frm)
     },
     quantity: function(frm) {
         limit_item_details(frm)
@@ -36,9 +37,6 @@ frappe.ui.form.on("Jewellery Order", {
     total_weight: function(frm) {
 			update_intro(frm)
     },
-		// on_save: function(frm) {
-		// 	update_intro(frm)
-		// }
 });
 
 
