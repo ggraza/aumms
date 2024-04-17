@@ -138,7 +138,6 @@
    "default": "0",
    "fieldname": "raw_material_bundle_created",
    "fieldtype": "Check",
-   "hidden": 1,
    "label": "Raw Material Bundle Created",
    "read_only": 1
   }
