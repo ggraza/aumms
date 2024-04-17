@@ -3,17 +3,22 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from frappe.model.naming import make_autoname
 
 class JewelleryOrder(Document):
+    def on_submit(self):
+        self.create_manufacturing_request()
+    def on_update(self):
+        self.out_for_delivery_check()
+    def autoname(self):
+        if self.order_from == "Customer Jewellery Order":
+            naming_series ='JO-CJO-' + '.####'
+            self.name = make_autoname(naming_series)
+        elif self.order_from == "Jewellery Stock Request":
+            naming_series ='JO-JSR-' + '.####'
+            self.name = make_autoname(naming_series)
 
-	def on_submit(self):
-		self.create_manufacturing_request()
-
-	def on_update(self):
-		self.out_for_delivery_check()
-
-
-	def create_manufacturing_request(self):
+    def create_manufacturing_request(self):
 	    """Create Manufacturing Request For Jewellery Order"""
 	    manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})
 	    if not manufacturing_request_exists:
@@ -39,8 +44,8 @@ class JewelleryOrder(Document):
 	        frappe.throw(_('Manufacturing request for Jewellery Order {0} already exists'.format(self.name)))
 
 
-	def out_for_delivery_check(self):
-	    if frappe.db.exists('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'out_for_delivery': 0}):
+    def out_for_delivery_check(self):
+        if frappe.db.exists('Customer Jewellery Order', {'name': self.customer_jewellery_order, 'out_for_delivery': 0}):
 	        customer_jewellery_order = frappe.get_doc('Customer Jewellery Order', self.customer_jewellery_order)
 	        if customer_jewellery_order:
 	            jewellery_order_list = frappe.db.sql("""
