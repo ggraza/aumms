@@ -17,6 +17,9 @@ class ManufacturingRequest(Document):
 	def before_submit(self):
 		self.send_notification_to_owner()
 
+	def on_update_after_submit(self):
+		self.mark_as_finished()
+
 	def update_manufacturing_stages(self):
 		if self.category:
 			category_doc = frappe.get_doc('Item Category', self.category)
@@ -29,12 +32,21 @@ class ManufacturingRequest(Document):
 
 
 	def send_notification_to_owner(self):
-		for manufacturing_request in self.manufacturing_stages:
-			if manufacturing_request.smith:
+		for stage in self.manufacturing_stages:
+			if stage.smith:
 				subject = "Manufacturing Stage Assigned"
-				content = f"Manufacturing Stage {manufacturing_request.manufacturing_stage} is Assigned to {manufacturing_request.smith}"
+				content = f"Manufacturing Stage {stage.manufacturing_stage} is Assigned to {stage.smith}"
 				for_user = self.owner
 				create_notification_log(self.doctype, self.name, for_user, subject, content, 'Alert')
+
+	def mark_as_finished(self):
+		finished = 1
+		for stage in self.manufacturing_stages:
+			if not stage.completed:
+				finished = 0
+				break
+		frappe.db.set_value('Manufacturing Request', self.name, 'finished', finished)
+
 
 	@frappe.whitelist()
 	def update_previous_stage(self, idx):
