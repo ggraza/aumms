@@ -138,10 +138,12 @@
    "options": "Item Category"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "finished",
    "fieldtype": "Check",
-   "label": "Finished"
+   "label": "Finished",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_1l2l",
@@ -200,7 +202,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-04-17 10:11:28.444001",
+ "modified": "2024-04-17 14:51:10.697957",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",

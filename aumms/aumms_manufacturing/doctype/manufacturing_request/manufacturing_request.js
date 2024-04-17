@@ -45,40 +45,21 @@ frappe.ui.form.on("Manufacturing  Stage", {
       })
     }
   },
-
-  completed: function(frm, cdt, cdn) {
-      let d = frm.doc.manufacturing_stages;
-      let current_index = -1;
-      for (let i = 0; i < d.length; i++) {
-        if (d[i].name === cdn) {
-          current_index = i;
-          break;
-        }
+  raw_material_available: function(frm, cdt, cdn) {
+    let d = frm.doc.manufacturing_stages;
+    let current_index = -1;
+    for (let i = 0; i < d.length; i++) {
+      if (d[i].name === cdn) {
+        current_index = i;
+        break;
       }
-      if (frm.doc.manufacturing_stages[current_index].completed) {
-        if (current_index < d.length - 1) {
-          let next_row = d[current_index + 1];
-          next_row.start_on_previous_stage_completion = 1;
-          frm.refresh_field('manufacturing_stages');
-        }
+    }
+    if (frm.doc.manufacturing_stages[current_index].raw_material_available) {
+      if (current_index < d.length - 1) {
+        let next_row = d[current_index + 1];
+        next_row.allow_to_start_only_if_raw_material_available = 1;
+        frm.refresh_field('manufacturing_stages');
       }
-    },
-
-    raw_material_available: function(frm, cdt, cdn) {
-      let d = frm.doc.manufacturing_stages;
-      let current_index = -1;
-      for (let i = 0; i < d.length; i++) {
-        if (d[i].name === cdn) {
-          current_index = i;
-          break;
-        }
-      }
-      if (frm.doc.manufacturing_stages[current_index].raw_material_available) {
-        if (current_index < d.length - 1) {
-          let next_row = d[current_index + 1];
-          next_row.allow_to_start_only_if_raw_material_available = 1;
-          frm.refresh_field('manufacturing_stages');
-        }
-      }
-    },
+    }
+  },
 });
