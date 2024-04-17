@@ -13,7 +13,7 @@ class RawMaterialRequest(Document):
         manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {'raw_material_request': self.name})
         if not manufacturing_request_exists:
             manufacturing_request = frappe.new_doc('Manufacturing Request')
-            manufacturing_request.raw_material_request_type = 'Raw Material Request'
+            manufacturing_request.request_form = 'Raw Material Request'
             manufacturing_request.raw_material_request = self.name
             manufacturing_request.jewellery_order = self.jewellery_order
             manufacturing_request.required_date = self.required_date

@@ -10,7 +10,10 @@ class JewelleryJobCard(Document):
         self.update_item_table()
 
     def on_submit(self):
-        self.check_completed_check_box()
+        self.check_completed_check_box(completed=1)
+
+    def on_cancel(self):
+        self.check_completed_check_box(completed=0)
 
     def update_item_table(self):
         if frappe.db.exists('Raw Material Bundle', {'manufacturing_request': self.manufacturing_request}):
@@ -20,13 +23,17 @@ class JewelleryJobCard(Document):
                     'item_code': raw_material.item_name,
                     'raw_material_id' : raw_material.raw_material_id,
                     'item_type': raw_material.item_type,
-                    'required_quantity': raw_material.quantity
+                    'required_quantity': raw_material.quantity,
                 })
 
-    def check_completed_check_box(self):
-        if frappe.db.exists('Manufacturing Request', self.manufacturing_request,{'manufacturing_stage' : self.manufacturing_stage}):
-            manufacturing_request = frappe.get_doc('Manufacturing Request', self.manufacturing_request, {'manufacturing_stage' : self.manufacturing_stage})
+    def check_completed_check_box(self, completed):
+        if frappe.db.exists('Manufacturing Request', self.manufacturing_request):
+            manufacturing_request = frappe.get_doc('Manufacturing Request', self.manufacturing_request)
             if manufacturing_request:
+                updated = False
                 for stage in manufacturing_request.manufacturing_stages:
                     if stage.manufacturing_stage == self.manufacturing_stage:
-                        frappe.db.set_value('Manufacturing  Stage', stage.name, 'completed', 1)
+                        stage.completed = completed
+                        frappe.db.set_value('Manufacturing  Stage', stage.name, 'completed', completed)
+                        manufacturing_request.mark_as_finished()
+                        break
