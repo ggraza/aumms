@@ -7,7 +7,6 @@
  "engine": "InnoDB",
  "field_order": [
   "item_category",
-  "manufacturing_stage_template",
   "stages"
  ],
  "fields": [
@@ -18,12 +17,6 @@
    "unique": 1
   },
   {
-   "fieldname": "manufacturing_stage_template",
-   "fieldtype": "Link",
-   "label": "Manufacturing Stage Template",
-   "options": "Manufacturing Stage Template"
-  },
-  {
    "fieldname": "stages",
    "fieldtype": "Table",
    "label": "Stages",
@@ -32,7 +25,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-22 16:44:06.331704",
+ "modified": "2024-04-17 16:00:30.565884",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Item Category",

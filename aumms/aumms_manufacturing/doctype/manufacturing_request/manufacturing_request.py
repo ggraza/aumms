@@ -40,7 +40,7 @@ class ManufacturingRequest(Document):
 				create_notification_log(self.doctype, self.name, for_user, subject, content, 'Alert')
 
 	def mark_as_finished(self):
-		finished = 1
+		finished=1
 		for stage in self.manufacturing_stages:
 			if not stage.completed:
 				finished = 0

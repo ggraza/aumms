@@ -6,7 +6,6 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "title",
   "customer",
   "required_date",
   "expected_total_weight",
@@ -114,18 +113,11 @@
    "reqd": 1
   },
   {
-   "fetch_from": "amended_from.customer",
-   "fieldname": "title",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Title",
-   "options": "Customer"
-  },
-  {
    "fieldname": "type",
    "fieldtype": "Link",
    "label": "Type",
-   "options": "Item Type"
+   "options": "Item Type",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -140,7 +132,7 @@
    "link_fieldname": "jewellery_order"
   }
  ],
- "modified": "2024-04-15 10:47:21.223303",
+ "modified": "2024-04-17 16:16:15.412538",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",
