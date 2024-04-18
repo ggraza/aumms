@@ -26,7 +26,7 @@ class JewelleryOrder(Document):
 	        for item in self.jewellery_order_items:
 	            if item.is_available == 0:
 	                new_manufacturing_request = frappe.new_doc('Manufacturing Request')
-	                new_manufacturing_request.request_form = "Jewellery Order"
+	                new_manufacturing_request.request_from = "Jewellery Order"
 	                new_manufacturing_request.jewellery_order = self.name
 	                new_manufacturing_request.design = self.design
 	                new_manufacturing_request.required_date = self.required_date
