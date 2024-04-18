@@ -7,28 +7,27 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
-  "request_form",
+  "request_from",
   "jewellery_order_item",
   "column_break_i3eg",
   "jewellery_order",
-  "required_date",
   "manufacturing_request",
   "raw_material_request",
-  "section_break_1jdd",
+  "section_break_hpbr",
   "type",
   "category",
-  "column_break_9nub",
-  "uom",
   "purity",
+  "uom",
   "column_break_1l2l",
+  "required_date",
   "expected_weight",
   "quantity",
   "finished",
-  "section_break_hpbr",
-  "manufacturing_stages",
-  "section_break_sjns",
+  "section_break_1jdd",
   "design",
   "design_description",
+  "section_break_sjns",
+  "manufacturing_stages",
   "amended_from",
   "connections_tab"
  ],
@@ -104,15 +103,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "request_form",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Request From",
-   "options": "\nJewellery Order\nRaw Material Request",
-   "reqd": 1
-  },
-  {
    "depends_on": "eval:doc.request_form ==\"Jewellery Order\"",
    "fieldname": "jewellery_order_item",
    "fieldtype": "Data",
@@ -186,8 +176,13 @@
    "label": "Title"
   },
   {
-   "fieldname": "column_break_9nub",
-   "fieldtype": "Column Break"
+   "fieldname": "request_from",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Request From",
+   "options": "\nJewellery Order\nRaw Material Request",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,

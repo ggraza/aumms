@@ -88,8 +88,9 @@
   },
   {
    "fieldname": "expected_tim_requiredin_min",
-   "fieldtype": "Time",
-   "label": "Expected Tim Required(In Min)"
+   "fieldtype": "Float",
+   "label": "Expected Tim Required(In Min)",
+   "precision": "2"
   },
   {
    "fieldname": "column_break_pwsq",
@@ -157,7 +158,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-15 13:02:26.596641",
+ "modified": "2024-04-17 13:20:12.738304",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
