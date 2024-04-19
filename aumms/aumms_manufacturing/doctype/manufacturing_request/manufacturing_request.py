@@ -29,8 +29,7 @@ class ManufacturingRequest(Document):
 					'required_time': stage.required_time,
 					'workstation': stage.default_workstation,
 					'allow_to_start_only_if_raw_material_available': stage.allow_to_start_only_if_raw_material_available,
-					'start_on_previous_stage_completion': stage.start_on_previous_stage_completion,
-					'is_raw_material_from_previous_stage': stage.is_raw_material_from_previous_stage
+					'start_on_previous_stage_completion': stage.start_on_previous_stage_completion
 		        })
 
 	def send_notification_to_owner(self):
