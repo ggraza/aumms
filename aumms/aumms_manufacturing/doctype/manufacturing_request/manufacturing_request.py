@@ -28,9 +28,8 @@ class ManufacturingRequest(Document):
 					'manufacturing_stage': stage.stage,
 					'required_time': stage.required_time,
 					'workstation': stage.default_workstation,
-					'allow_to_start_only_if_raw_material_available' : stage.allow_to_start_only_if_raw_material_available,
-					'start_on_previous_stage_completion' : stage.start_on_previous_stage_completion
-
+					'allow_to_start_only_if_raw_material_available' : 1,
+					'start_on_previous_stage_completion' : 1
 				})
 
 

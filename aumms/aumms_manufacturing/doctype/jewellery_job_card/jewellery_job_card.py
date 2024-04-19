@@ -10,10 +10,10 @@ class JewelleryJobCard(Document):
         self.update_item_table()
 
     def on_submit(self):
-        self.check_completed_check_box(completed=1)
+        self.mark_as_completed(completed=1)
 
     def on_cancel(self):
-        self.check_completed_check_box(completed=0)
+        self.mark_as_completed(completed=0)
 
     def update_item_table(self):
         if frappe.db.exists('Raw Material Bundle', {'manufacturing_request': self.manufacturing_request}):
@@ -26,7 +26,7 @@ class JewelleryJobCard(Document):
                     'required_quantity': raw_material.quantity,
                 })
 
-    def check_completed_check_box(self, completed):
+    def mark_as_completed(self, completed):
         if frappe.db.exists('Manufacturing Request', self.manufacturing_request):
             manufacturing_request = frappe.get_doc('Manufacturing Request', self.manufacturing_request)
             if manufacturing_request:
