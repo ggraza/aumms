@@ -9,8 +9,8 @@
  "field_order": [
   "manufacturing_stage",
   "previous_stage_completed",
-  "is_raw_material_from_previous_stage_only",
   "previous_stage",
+  "is_raw_material_from_previous_stage_only",
   "create_raw_material_bundle",
   "raw_material_bundle_created",
   "raw_material_available",
@@ -61,7 +61,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Previous Stage",
-   "options": "Manufacturing Stage"
+   "options": "Manufacturing Stage",
+   "read_only": 1
   },
   {
    "fieldname": "required_time",
@@ -75,7 +76,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Previous Stage",
-   "options": "Manufacturing Stage"
+   "options": "Manufacturing Stage",
+   "read_only": 1
   },
   {
    "depends_on": "eval:(doc.raw_material_available == 1 && doc.previous_stage_completed == 1)",
@@ -91,7 +93,7 @@
    "options": "Employee"
   },
   {
-   "depends_on": "eval:(doc.is_raw_material_from_previous_stage_only == 0 || doc.raw_material_bundle_created == 0)",
+   "depends_on": "eval:(doc.is_raw_material_from_previous_stage_only ==0 && doc.raw_material_bundle_created == 0)",
    "fieldname": "create_raw_material_bundle",
    "fieldtype": "Button",
    "label": "Create Raw Material Bundle"
@@ -137,7 +139,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-23 09:49:18.713551",
+ "modified": "2024-04-23 12:13:44.972736",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing  Stage",

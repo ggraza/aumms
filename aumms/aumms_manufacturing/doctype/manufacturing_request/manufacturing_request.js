@@ -17,6 +17,16 @@ frappe.ui.form.on("Manufacturing Request", {
         }
       }
     });
+    if(frm.doc.manufacturing_stages && frm.doc.manufacturing_stages.length > 0){
+      frm.doc.manufacturing_stages[0].previous_stage_completed = 1;
+      refresh_field('manufacturing_stages')
+    }
+  },
+  setup: function(frm) {
+    if(frm.doc.manufacturing_stages && frm.doc.manufacturing_stages.length > 0){
+      frm.doc.manufacturing_stages[0].previous_stage_completed = 1;
+      refresh_field('manufacturing_stages')
+    }
   }
 });
 
