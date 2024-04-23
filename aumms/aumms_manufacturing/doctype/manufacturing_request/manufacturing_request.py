@@ -20,6 +20,9 @@ class ManufacturingRequest(Document):
 	def on_update_after_submit(self):
 		self.mark_as_finished()
 
+	def on_submit(self):
+	    self.mark_as_finished_in_jewellery_order()
+
 	def update_manufacturing_stages(self):
 		if self.category:
 			category_doc = frappe.get_doc('Item Category', self.category)
@@ -46,6 +49,21 @@ class ManufacturingRequest(Document):
 				break
 		frappe.db.set_value('Manufacturing Request', self.name, 'finished', finished)
 
+	def mark_as_finished_in_jewellery_order(self):
+	    if frappe.db.exists('Jewellery Order', self.jewellery_order):
+	        jewellery_order_doc = frappe.get_doc('Jewellery Order', self.jewellery_order)
+	        if self.docstatus == 1:
+	            linked_manufacturing_requests = frappe.get_all(
+	                'Manufacturing Request',
+	                filters={'jewellery_order': self.jewellery_order},
+	                fields=['name', 'docstatus']
+	            )
+	            all_submitted = all(mr['docstatus'] == 1 for mr in linked_manufacturing_requests)
+	            if all_submitted:
+	                frappe.db.set_value('Jewellery Order', self.jewellery_order, 'finished', 1)
+	                frappe.db.commit()
+	            else:
+	                frappe.msgprint("Not all Manufacturing Requests are submitted yet.")
 
 	@frappe.whitelist()
 	def update_previous_stage(self, idx):
