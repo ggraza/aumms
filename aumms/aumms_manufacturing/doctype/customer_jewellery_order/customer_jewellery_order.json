@@ -67,7 +67,7 @@
   },
   {
    "fieldname": "expected_making_charge",
-   "fieldtype": "Percent",
+   "fieldtype": "Float",
    "label": "Expected Making Charge",
    "precision": "1",
    "read_only": 1,
@@ -102,7 +102,7 @@
    "fieldname": "making_chargein_percentage",
    "fieldtype": "Percent",
    "label": "Making Charge(In Percentage)",
-   "precision": "1",
+   "precision": "0",
    "reqd": 1
   },
   {
@@ -132,7 +132,7 @@
    "link_fieldname": "jewellery_order"
   }
  ],
- "modified": "2024-04-17 16:16:15.412538",
+ "modified": "2024-04-23 09:45:09.326499",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order",
