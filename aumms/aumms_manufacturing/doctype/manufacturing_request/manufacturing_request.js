@@ -35,9 +35,9 @@ frappe.ui.form.on("Manufacturing  Stage", {
     });
   },
 
-  is_raw_material_from_previous_stage: function(frm, cdt, cdn) {
+  previous_stage_completed: function(frm, cdt, cdn) {
     let row = locals[cdt][cdn]
-    if (row.is_raw_material_from_previous_stage) {
+    if (row.previous_stage_completed) {
       frm.call('update_previous_stage', {idx:row.idx}).then(r=>{
         row.previous_stage = r.message
         frm.refresh_fields()

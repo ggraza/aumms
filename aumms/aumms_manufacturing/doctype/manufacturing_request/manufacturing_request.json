@@ -107,6 +107,7 @@
    "depends_on": "eval:doc.request_from ==\"Jewellery Order\"",
    "fieldname": "jewellery_order_item",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Jewellery Order Item",
    "mandatory_depends_on": "eval:doc.request_form ==\"Jewellery Order\""
   },
@@ -202,7 +203,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-04-19 09:46:06.932839",
+ "modified": "2024-04-22 09:54:21.807373",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",

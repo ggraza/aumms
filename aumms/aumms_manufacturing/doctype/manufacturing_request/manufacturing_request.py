@@ -27,9 +27,7 @@ class ManufacturingRequest(Document):
 				self.append('manufacturing_stages', {
 					'manufacturing_stage': stage.stage,
 					'required_time': stage.required_time,
-					'workstation': stage.default_workstation,
-					'allow_to_start_only_if_raw_material_available': stage.allow_to_start_only_if_raw_material_available,
-					'start_on_previous_stage_completion': stage.start_on_previous_stage_completion
+					'workstation': stage.default_workstation
 		        })
 
 	def send_notification_to_owner(self):
@@ -53,7 +51,7 @@ class ManufacturingRequest(Document):
 	def update_previous_stage(self, idx):
 		for stage in self.manufacturing_stages:
 			if stage.idx == idx:
-				if stage.is_raw_material_from_previous_stage:
+				if stage.previous_stage_completed:
 					prev_row = stage.idx - 1
 					for row in self.manufacturing_stages:
 						if row.idx == prev_row:

@@ -29,7 +29,7 @@ class RawMaterialBundle(Document):
 	            })
 				if not raw_materiel_request_exists:
 					new_raw_materiel_request = frappe.new_doc('Raw Material Request')
-					new_raw_materiel_request.raw_material_request_type = "Manufacturing Request"
+					new_raw_materiel_request.raw_material_request_type = "Raw Material Request"
 					new_raw_materiel_request.raw_material_bundle = self.name
 					new_raw_materiel_request.manufacturing_request = self.manufacturing_request
 					new_raw_materiel_request.required_date = self.item_required_date
