@@ -83,14 +83,15 @@ class ManufacturingRequest(Document):
 	        smith_email = frappe.db.get_value('Employee', stage.smith, 'user_id')
 	        new_jewellery_job_card = frappe.new_doc('Jewellery Job Card')
 	        new_jewellery_job_card.manufacturing_request = self.name
-	        new_jewellery_job_card.assign_to = stage.smith
+	        new_jewellery_job_card.smith = stage.smith
 	        new_jewellery_job_card.work_station = stage.workstation
 	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
+	        new_jewellery_job_card.raw_material_from_previous_stage_only = stage.is_raw_material_from_previous_stage_only
 	        new_jewellery_job_card.flags.ignore_mandatory = True
 	        new_jewellery_job_card.save(ignore_permissions=True)
 	        frappe.db.set_value(stage.doctype, stage.name, 'job_card_created', 1)
 	        if smith_email:
-	            add_assignment({"doctype": "Jewellery Job Card", "name": new_jewellery_job_card.name, "assign_to": [smith_email]})
+	            add_assignment({"doctype": "Jewellery Job Card", "name": new_jewellery_job_card.name, "smith": [smith_email]})
 	        frappe.msgprint("Jewellery Job Card Orders Created.", indicator="green", alert=1)
 	    else:
 	        frappe.throw(_("Job card already exists for this stage"))
