@@ -15,6 +15,7 @@
   "company",
   "assign_to",
   "work_station",
+  "status",
   "actual_time_section",
   "expected_start_date",
   "expected_tim_requiredin_min",
@@ -154,11 +155,17 @@
    "fieldname": "manufacturing_stage",
    "fieldtype": "Data",
    "label": "Manufacturing Stage"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nProcessing\nHold\nComplete"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-17 13:20:12.738304",
+ "modified": "2024-04-24 10:45:50.114361",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
