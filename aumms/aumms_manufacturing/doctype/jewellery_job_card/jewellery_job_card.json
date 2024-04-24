@@ -10,17 +10,25 @@
   "naming_series",
   "manufacturing_request",
   "manufacturing_stage",
-  "posting_date",
-  "column_break_ymuw",
   "company",
-  "assign_to",
-  "work_station",
   "status",
-  "actual_time_section",
-  "expected_start_date",
-  "expected_tim_requiredin_min",
-  "column_break_pwsq",
-  "expected_end_date",
+  "column_break_8lq7",
+  "category",
+  "type",
+  "expected_weight",
+  "purity",
+  "column_break_tgsz",
+  "posting_date",
+  "required_date",
+  "smith",
+  "work_station",
+  "raw_material_from_previous_stage_only",
+  "section_break_qjuc",
+  "job_time",
+  "duration",
+  "section_break_amcz",
+  "design_attachment",
+  "design_description",
   "tab_2_tab",
   "raw_material_item_section",
   "item_details",
@@ -58,49 +66,12 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
-   "options": "Company",
-   "reqd": 1
-  },
-  {
-   "fieldname": "assign_to",
-   "fieldtype": "Link",
-   "label": "Assign To",
-   "options": "Employee",
-   "reqd": 1
+   "options": "Company"
   },
   {
    "fieldname": "details_section",
    "fieldtype": "Section Break",
    "label": "Details"
-  },
-  {
-   "fieldname": "column_break_ymuw",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "actual_time_section",
-   "fieldtype": "Section Break",
-   "label": "Actual Time"
-  },
-  {
-   "fieldname": "expected_start_date",
-   "fieldtype": "Date",
-   "label": "Expected Start Date"
-  },
-  {
-   "fieldname": "expected_tim_requiredin_min",
-   "fieldtype": "Float",
-   "label": "Expected Tim Required(In Min)",
-   "precision": "2"
-  },
-  {
-   "fieldname": "column_break_pwsq",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "expected_end_date",
-   "fieldtype": "Date",
-   "label": "Expected End Date"
   },
   {
    "fieldname": "tab_2_tab",
@@ -157,6 +128,83 @@
    "label": "Manufacturing Stage"
   },
   {
+   "fieldname": "column_break_8lq7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Data",
+   "label": "Category"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "\nHigh\nMedium\nLow"
+  },
+  {
+   "fieldname": "expected_weight",
+   "fieldtype": "Float",
+   "label": "Expected Weight"
+  },
+  {
+   "fieldname": "purity",
+   "fieldtype": "Data",
+   "label": "Purity"
+  },
+  {
+   "fieldname": "column_break_tgsz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "required_date",
+   "fieldtype": "Date",
+   "label": "Required Date"
+  },
+  {
+   "fieldname": "smith",
+   "fieldtype": "Link",
+   "label": "Smith",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "raw_material_from_previous_stage_only",
+   "fieldtype": "Check",
+   "label": "Raw Material from Previous Stage Only",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_qjuc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "job_time",
+   "fieldtype": "Table",
+   "label": "Job Time",
+   "options": "Job Time"
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Float",
+   "label": "Duration"
+  },
+  {
+   "fieldname": "section_break_amcz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "design_attachment",
+   "fieldtype": "Attach Image",
+   "label": "Design Attachment"
+  },
+  {
+   "fieldname": "design_description",
+   "fieldtype": "Text Editor",
+   "label": "Design Description"
+  },
+  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -165,7 +213,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-24 10:45:50.114361",
+ "modified": "2024-04-24 13:10:27.931735",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
