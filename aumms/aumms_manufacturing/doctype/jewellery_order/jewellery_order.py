@@ -8,6 +8,11 @@ from frappe.model.naming import make_autoname
 class JewelleryOrder(Document):
     def on_submit(self):
         self.create_manufacturing_request()
+        self.jewellery_order_finished(finished = 1)
+
+    def on_cancel(self):
+        self.jewellery_order_finished(finished = 0) 
+
     def on_update(self):
         self.out_for_delivery_check()
     def autoname(self):
@@ -42,6 +47,7 @@ class JewelleryOrder(Document):
 	                manufacturing_request_count += 1
 	                frappe.db.set_value(item.doctype, item.name, 'requested_for_manufacturing', 1)
 	        frappe.msgprint(f"{manufacturing_request_count} Manufacturing Request Created.", indicator="green", alert=1)
+
 	    else:
 	        frappe.throw(_('Manufacturing request for Jewellery Order {0} already exists'.format(self.name)))
 
@@ -65,3 +71,14 @@ class JewelleryOrder(Document):
 	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'out_for_delivery', 1)
 	            else:
 	                frappe.db.set_value('Customer Jewellery Order', self.customer_jewellery_order, 'out_for_delivery', 0)
+
+    def jewellery_order_finished(self, finished):
+        if frappe.db.exists('Customer Jewellery Order', self.customer_jewellery_order):
+            customer_jewellery_order = frappe.get_doc('Customer Jewellery Order', self.customer_jewellery_order)
+            if customer_jewellery_order:
+                updated = False
+                for item in customer_jewellery_order.order_items:
+                    if item.item_category == self.category:
+                        item.jewellery_order_finished = finished
+                        frappe.db.set_value('Customer Jewellery Order Detail', item.name, 'jewellery_order_finished',finished)
+                        break
