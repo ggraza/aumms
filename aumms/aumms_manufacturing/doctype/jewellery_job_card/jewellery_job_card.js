@@ -21,6 +21,7 @@ let create_custom_buttons = function(frm){
     frm.add_custom_button(__("Pause"), () => {
       frm.set_value("status", "Hold");
       updateEndTime(frm);
+      calculateDuration(frm);
       frm.save();
       create_custom_buttons(frm);
     }).addClass("btn-primary");
@@ -28,6 +29,7 @@ let create_custom_buttons = function(frm){
     frm.add_custom_button(__("Done"), () => {
       frm.set_value("status", "Complete");
       updateEndTime(frm);
+      calculateDuration(frm);
       frm.save();
       create_custom_buttons(frm);
     }).addClass("btn-primary");
@@ -43,9 +45,9 @@ let create_custom_buttons = function(frm){
 
 function updateStartTime(frm) {
   const currentTime = frappe.datetime.now_datetime();
-    let row = frappe.model.add_child(frm.doc, 'Job Time', 'job_time');
-    row.start_time = currentTime;
-    frm.refresh_field("job_time");
+  let row = frappe.model.add_child(frm.doc, 'Job Time', 'job_time');
+  row.start_time = currentTime;
+  frm.refresh_field("job_time");
 }
 
 function updateEndTime(frm) {
@@ -53,6 +55,17 @@ function updateEndTime(frm) {
   frm.doc.job_time.forEach(function(row) {
     if (row.start_time && !row.end_time) {
       frappe.model.set_value(row.doctype, row.name, 'end_time', currentTime);
+    }
+  });
+}
+
+function calculateDuration(frm) {
+  frm.doc.job_time.forEach(function(row) {
+    if (row.start_time && row.end_time) {
+      const start = moment(row.start_time);
+      const end = moment(row.end_time);
+      const duration = end.diff(start, 'hours', true);
+      frappe.model.set_value(row.doctype, row.name, 'duration', duration);
     }
   });
 }
