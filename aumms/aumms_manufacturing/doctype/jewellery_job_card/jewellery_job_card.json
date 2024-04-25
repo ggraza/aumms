@@ -189,7 +189,8 @@
   {
    "fieldname": "duration",
    "fieldtype": "Float",
-   "label": "Duration"
+   "label": "Duration",
+   "precision": "3"
   },
   {
    "fieldname": "section_break_amcz",
@@ -218,7 +219,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-24 14:40:31.206719",
+ "modified": "2024-04-25 15:47:11.974094",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
