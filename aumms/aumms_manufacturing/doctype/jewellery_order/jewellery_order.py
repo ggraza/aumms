@@ -39,7 +39,7 @@ class JewelleryOrder(Document):
 	                new_manufacturing_request.expected_weight = item.weight
 	                new_manufacturing_request.purity = self.purity
 	                new_manufacturing_request.type = self.type
-	                new_manufacturing_request.quantity = self.quantity
+	                new_manufacturing_request.quantity = 1
 	                new_manufacturing_request.category = self.category
 	                new_manufacturing_request.design_description = self.design_description
 	                new_manufacturing_request.jewellery_order_item = item.name
