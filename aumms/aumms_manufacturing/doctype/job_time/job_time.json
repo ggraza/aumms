@@ -27,13 +27,14 @@
    "fieldname": "duration",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Duration"
+   "label": "Duration",
+   "precision": "3"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-24 11:56:35.199804",
+ "modified": "2024-04-25 11:29:24.981463",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Job Time",
