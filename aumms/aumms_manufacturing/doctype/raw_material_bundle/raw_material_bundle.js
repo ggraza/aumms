@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Raw Material Bundle", {
 	refresh : function(frm) {
-    frm.set_query("item_name", "raw_material_details", ()=> {
+    frm.set_query("item", "items", ()=> {
 			return {
 				filters: {
 					"custom_is_raw_material" : 1
