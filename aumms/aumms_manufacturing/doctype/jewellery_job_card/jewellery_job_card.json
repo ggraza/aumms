@@ -139,9 +139,9 @@
   },
   {
    "fieldname": "type",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Type",
-   "options": "\nHigh\nMedium\nLow"
+   "options": "Item Type"
   },
   {
    "fieldname": "expected_weight",
@@ -219,7 +219,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-25 15:47:11.974094",
+ "modified": "2024-04-29 09:58:09.809272",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
