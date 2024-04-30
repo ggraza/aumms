@@ -101,6 +101,10 @@ class ManufacturingRequest(Document):
 	        new_jewellery_job_card.smith = stage.smith
 	        new_jewellery_job_card.work_station = stage.workstation
 	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
+	        new_jewellery_job_card.type = self.type
+	        new_jewellery_job_card.category = self.category
+	        new_jewellery_job_card.purity = self.purity
+	        new_jewellery_job_card.required_date = self.required_date
 	        new_jewellery_job_card.raw_material_from_previous_stage_only = stage.is_raw_material_from_previous_stage_only
 	        new_jewellery_job_card.flags.ignore_mandatory = True
 	        new_jewellery_job_card.save(ignore_permissions=True)
