@@ -44,12 +44,13 @@ class RawMaterialBundle(Document):
 	                new_raw_material_request.insert(ignore_permissions=True)
 	                frappe.msgprint("Raw Material Request Created.", indicator="green", alert=True)
 	        else:
-	            manufacturing_request_doc = frappe.get_doc('Manufacturing Request', self.manufacturing_request) if frappe.db.exists('Manufacturing Request', self.manufacturing_request) else None
+	            manufacturing_request_doc = frappe.get_doc('Manufacturing Request', self.manufacturing_request)
 	            if manufacturing_request_doc:
 	                for stage in manufacturing_request_doc.manufacturing_stages:
 	                    if stage.manufacturing_stage == self.manufacturing_stage:
-	                        frappe.db.set_value('Manufacturing Stage', stage.name, 'raw_material_available', 1)
+	                        frappe.db.set_value('Manufacturing  Stage', stage.name, 'raw_material_available', True)
 	                        break
+
 
 	def mark_as_raw_material_bundle_created(self, created):
 		if frappe.db.exists('Manufacturing Request', self.manufacturing_request):

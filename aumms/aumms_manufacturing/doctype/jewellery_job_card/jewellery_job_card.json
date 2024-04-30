@@ -12,28 +12,34 @@
   "manufacturing_stage",
   "status",
   "details_section",
-  "company",
   "type",
   "category",
-  "raw_material_from_previous_stage_only",
-  "column_break_8lq7",
-  "expected_weight",
   "purity",
+  "uom",
+  "column_break_8lq7",
+  "company",
   "work_station",
+  "supervisor_warehouse",
+  "stage",
   "column_break_tgsz",
   "smith",
-  "posting_date",
+  "smith_warehouse",
+  "expected_weight",
+  "expected_execution_time",
+  "column_break_ojtc",
   "required_date",
+  "raw_material_from_previous_stage_only",
   "section_break_qjuc",
   "job_time",
   "duration",
   "section_break_amcz",
   "design_attachment",
   "design_description",
-  "tab_2_tab",
+  "raw_materiel_items_tab",
   "raw_material_item_section",
   "item_details",
-  "scrap_item_tab",
+  "weight",
+  "scrap_item_details_tab",
   "scrap_item_details_column",
   "table_gzos",
   "amended_from"
@@ -56,14 +62,6 @@
    "reqd": 1
   },
   {
-   "default": "Today",
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Posting Date",
-   "reqd": 1
-  },
-  {
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
@@ -73,11 +71,6 @@
    "fieldname": "details_section",
    "fieldtype": "Section Break",
    "label": "Details"
-  },
-  {
-   "fieldname": "tab_2_tab",
-   "fieldtype": "Tab Break",
-   "label": "Raw Material"
   },
   {
    "fieldname": "raw_material_item_section",
@@ -91,11 +84,6 @@
    "options": "Raw Materiel Item"
   },
   {
-   "fieldname": "scrap_item_tab",
-   "fieldtype": "Tab Break",
-   "label": "Scrap Item"
-  },
-  {
    "fieldname": "scrap_item_details_column",
    "fieldtype": "Column Break",
    "label": "Scrap Item details"
@@ -103,7 +91,7 @@
   {
    "fieldname": "table_gzos",
    "fieldtype": "Table",
-   "options": "Scrap Item Details"
+   "options": "Scrap Item Detail"
   },
   {
    "fieldname": "amended_from",
@@ -215,11 +203,64 @@
   {
    "fieldname": "column_break_kvpp",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "stage",
+   "fieldtype": "Link",
+   "label": "Stage",
+   "options": "Manufacturing  Stage"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "supervisor_warehouse",
+   "fieldtype": "Link",
+   "label": "Supervisor Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "smith_warehouse",
+   "fieldtype": "Link",
+   "label": "Smith Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "default": "Today",
+   "fieldname": "expected_execution_time",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expected Execution Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ojtc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "raw_materiel_items_tab",
+   "fieldtype": "Tab Break",
+   "label": "Raw Materiel Items",
+   "options": "Raw Materiel Item"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight"
+  },
+  {
+   "fieldname": "scrap_item_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Scrap Item Details",
+   "options": "Scrap Item Detail"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-29 09:58:09.809272",
+ "modified": "2024-04-30 09:21:13.521123",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",

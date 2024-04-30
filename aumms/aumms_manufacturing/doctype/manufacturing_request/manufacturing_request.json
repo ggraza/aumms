@@ -22,7 +22,10 @@
   "uom",
   "column_break_1l2l",
   "expected_weight",
+  "weight",
+  "column_break_izcc",
   "quantity",
+  "supervisor_warehouse",
   "finished",
   "section_break_1jdd",
   "manufacturing_stages",
@@ -107,7 +110,6 @@
    "depends_on": "eval:doc.request_from ==\"Jewellery Order\"",
    "fieldname": "jewellery_order_item",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Jewellery Order Item",
    "mandatory_depends_on": "eval:doc.request_form ==\"Jewellery Order\""
   },
@@ -189,6 +191,21 @@
   {
    "fieldname": "column_break_ky2t",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight"
+  },
+  {
+   "fieldname": "supervisor_warehouse",
+   "fieldtype": "Link",
+   "label": "Supervisor Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "column_break_izcc",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -203,7 +220,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-04-22 09:54:21.807373",
+ "modified": "2024-04-29 14:41:06.261685",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
