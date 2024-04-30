@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class ScrapItemDetails(Document):
+class ScrapItemDetail(Document):
 	pass
