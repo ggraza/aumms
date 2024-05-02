@@ -106,7 +106,6 @@ class ManufacturingRequest(Document):
 	        new_jewellery_job_card.uom = self.uom
 	        new_jewellery_job_card.type = self.type
 	        new_jewellery_job_card.category = self.category
-	        new_jewellery_job_card.smith = stage.smith
 	        new_jewellery_job_card.smith_warehouse = stage.smith_warehouse
 	        new_jewellery_job_card.expected_execution_time = stage.expected_execution_time
 	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage

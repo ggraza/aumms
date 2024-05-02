@@ -20,10 +20,11 @@ class JewelleryJobCard(Document):
             raw_material_doc = frappe.get_doc('Raw Material Bundle', {'manufacturing_request': self.manufacturing_request})
             for item in raw_material_doc.items:
                 self.append('item_details', {
-                    'item_code': item.item_name,
-                    'raw_material_id' : item.raw_material_id,
-                    'item_type': item.item_type,
-                    'required_quantity': item.quantity,
+                    'item': item.item,
+                    # 'raw_material_id' : item.raw_material_id,
+                    # 'item_type': item.item_type,
+                    'quantity': item.required_quantity,
+                    'weight':item.required_weight
                 })
 
     def mark_as_completed(self, completed):
