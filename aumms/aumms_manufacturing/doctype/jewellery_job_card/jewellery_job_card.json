@@ -9,7 +9,7 @@
   "naming_series",
   "manufacturing_request",
   "column_break_kvpp",
-  "manufacturing_stage",
+  "stage",
   "status",
   "details_section",
   "type",
@@ -20,12 +20,11 @@
   "company",
   "work_station",
   "supervisor_warehouse",
-  "stage",
+  "expected_execution_time",
   "column_break_tgsz",
   "smith",
   "smith_warehouse",
   "expected_weight",
-  "expected_execution_time",
   "column_break_ojtc",
   "required_date",
   "raw_material_from_previous_stage_only",
@@ -110,11 +109,6 @@
    "label": "Work Station",
    "options": "Workstation",
    "reqd": 1
-  },
-  {
-   "fieldname": "manufacturing_stage",
-   "fieldtype": "Data",
-   "label": "Manufacturing Stage"
   },
   {
    "fieldname": "column_break_8lq7",
@@ -260,7 +254,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-30 09:21:13.521123",
+ "modified": "2024-05-02 10:31:17.979043",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
