@@ -33,7 +33,7 @@ class JewelleryJobCard(Document):
             if manufacturing_request:
                 updated = False
                 for stage in manufacturing_request.manufacturing_stages:
-                    if stage.manufacturing_stage == self.manufacturing_stage:
+                    if stage.manufacturing_stage == self.stage:
                         stage.completed = completed
                         frappe.db.set_value('Manufacturing  Stage', stage.name, 'completed', completed)
                         manufacturing_request.mark_as_finished()
