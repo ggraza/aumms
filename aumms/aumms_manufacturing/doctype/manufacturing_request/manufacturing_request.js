@@ -35,7 +35,8 @@ frappe.ui.form.on("Manufacturing  Stage", {
     let row = locals[cdt][cdn];
     frappe.new_doc('Raw Material Bundle', {
       'manufacturing_request': frm.doc.name,
-      'manufacturing_stage' : row.manufacturing_stage,
+      'stage' : row.manufacturing_stage,
+      'manufacturing_stage' : row.name
     })
   },
 
