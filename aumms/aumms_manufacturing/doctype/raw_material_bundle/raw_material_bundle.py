@@ -64,6 +64,8 @@ def create_raw_material_request(docname):
 			})
 			new_raw_material_request.insert(ignore_permissions=True)
 			frappe.msgprint("Raw Material Request Created.", indicator="green", alert=True)
+			return new_raw_material_request 
+
 
 		else:
 			frappe.throw(_("Raw Material Request already exists for item {0}").format(raw_material.item))
