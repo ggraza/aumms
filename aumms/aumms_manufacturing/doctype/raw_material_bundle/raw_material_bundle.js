@@ -20,6 +20,10 @@ frappe.ui.form.on("Raw Material Bundle", {
 					freeze: true,
 					callback: (r) => {
 						frm.reload_doc();
+            var raw_material_request = r.message;
+            if (raw_material_request) {
+              frappe.set_route('Form', 'Raw Material Request', raw_material_request.name);
+            }
 					}
 				});
 			});
