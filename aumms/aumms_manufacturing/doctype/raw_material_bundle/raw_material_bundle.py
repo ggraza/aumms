@@ -33,7 +33,9 @@ class RawMaterialBundle(Document):
 					if stage.manufacturing_stage == self.manufacturing_stage:
 						stage.raw_material_bundle_created = created
 						frappe.db.set_value('Manufacturing  Stage', stage.name, 'raw_material_bundle_created', created)
+						frappe.db.set_value('Manufacturing  Stage', stage.name, 'raw_material_available', created)
 						break
+
 
 @frappe.whitelist()
 def create_raw_material_request(docname):
@@ -65,10 +67,3 @@ def create_raw_material_request(docname):
 
 		else:
 			frappe.throw(_("Raw Material Request already exists for item {0}").format(raw_material.item))
-	# else:
-	# 	manufacturing_request_doc = frappe.get_doc('Manufacturing Request', raw_material_bundle.manufacturing_request) if frappe.db.exists('Manufacturing Request', raw_material_bundle.manufacturing_request) else None
-	# 	if manufacturing_request_doc:
-	# 		for stage in manufacturing_request_doc.manufacturing_stages:
-	# 			if stage.manufacturing_stage == raw_material_bundle.manufacturing_stage:
-	# 				frappe.db.set_value('Manufacturing Stage', stage.name, 'raw_material_available', 1)
-	# 				break
