@@ -110,8 +110,9 @@ class ManufacturingRequest(Document):
 	        new_jewellery_job_card.smith_warehouse = stage.smith_warehouse
 	        new_jewellery_job_card.expected_execution_time = stage.expected_execution_time
 	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
+	        new_jewellery_job_card.stage = stage.manufacturing_stage
 	        new_jewellery_job_card.supervisor_warehouse = self.supervisor_warehouse
-	        new_jewellery_job_card.stage =  stage.manufacturing_stage
+	        new_jewellery_job_card.keep_metal_ledger = True
 	        new_jewellery_job_card.raw_material_from_previous_stage_only = stage.is_raw_material_from_previous_stage_only
 	        new_jewellery_job_card.flags.ignore_mandatory = True
 	        new_jewellery_job_card.save(ignore_permissions=True)
