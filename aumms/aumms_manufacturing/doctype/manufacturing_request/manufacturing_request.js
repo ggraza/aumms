@@ -37,6 +37,7 @@ frappe.ui.form.on("Manufacturing  Stage", {
       'manufacturing_request': frm.doc.name,
       'stage' : row.manufacturing_stage,
       'manufacturing_stage' : row.name,
+      'expected_execution_time' : row.required_time
     })
   },
   create_job_card: function(frm, cdt, cdn) {
@@ -49,6 +50,14 @@ frappe.ui.form.on("Manufacturing  Stage", {
     if (row.previous_stage_completed) {
       frm.call('update_previous_stage', {idx:row.idx}).then(r=>{
         row.previous_stage = r.message
+        frm.refresh_fields()
+      })
+      frm.call('update_previous_stage_product', {idx:row.idx}).then(r=>{
+        row.previous_stage_product = r.message
+        frm.refresh_fields()
+      })
+      frm.call('update_previous_stage_weight', {idx:row.idx}).then(r=>{
+        row.previous_stage_weight = r.message
         frm.refresh_fields()
       })
     }

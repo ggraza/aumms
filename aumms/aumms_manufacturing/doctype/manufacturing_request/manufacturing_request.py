@@ -4,6 +4,7 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.desk.form.assign_to import add as add_assignment
+from aumms.aumms.utils import create_notification_log
 
 class ManufacturingRequest(Document):
 
@@ -43,6 +44,7 @@ class ManufacturingRequest(Document):
 				content = f"Manufacturing Stage {stage.manufacturing_stage} is Assigned to {stage.smith}"
 				for_user = self.owner
 				create_notification_log(self.doctype, self.name, for_user, subject, content, 'Alert')
+
 
 	def mark_as_finished(self):
 		finished=1
@@ -90,6 +92,26 @@ class ManufacturingRequest(Document):
 							return row.manufacturing_stage
 
 	@frappe.whitelist()
+	def update_previous_stage_product(self, idx):
+		for stage in self.manufacturing_stages:
+			if stage.idx == idx:
+				if stage.previous_stage_completed:
+					prev_row = stage.idx - 1
+					for row in self.manufacturing_stages:
+						if row.idx == prev_row:
+							return row.product
+
+	@frappe.whitelist()
+	def update_previous_stage_weight(self, idx):
+		for stage in self.manufacturing_stages:
+			if stage.idx == idx:
+				if stage.previous_stage_completed:
+					prev_row = stage.idx - 1
+					for row in self.manufacturing_stages:
+						if row.idx == prev_row:
+							return row.weight
+
+	@frappe.whitelist()
 	def create_jewellery_job_card(self, stage_row_id):
 	    stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
 	    jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.name, 'manufacturing_stage': stage.manufacturing_stage})
@@ -107,7 +129,7 @@ class ManufacturingRequest(Document):
 	        new_jewellery_job_card.category = self.category
 	        new_jewellery_job_card.smith_warehouse = stage.smith_warehouse
 	        new_jewellery_job_card.expected_execution_time = stage.expected_execution_time
-	        new_jewellery_job_card.manufacturing_request = stage.manufacturing_stage
+	        new_jewellery_job_card.manufacturing_stage = stage.manufacturing_stage
 	        new_jewellery_job_card.stage = stage.manufacturing_stage
 	        new_jewellery_job_card.supervisor_warehouse = self.supervisor_warehouse
 	        new_jewellery_job_card.raw_material_from_previous_stage_only = stage.is_raw_material_from_previous_stage_only

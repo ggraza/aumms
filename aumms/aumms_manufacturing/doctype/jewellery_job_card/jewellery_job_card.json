@@ -8,6 +8,7 @@
  "field_order": [
   "naming_series",
   "manufacturing_request",
+  "manufacturing_stage",
   "column_break_kvpp",
   "stage",
   "status",
@@ -25,6 +26,7 @@
   "expected_weight",
   "keep_metal_ledger",
   "column_break_ojtc",
+  "uom",
   "required_date",
   "uom",
   "raw_material_from_previous_stage_only",
@@ -223,6 +225,10 @@
    "options": "Warehouse"
   },
   {
+   "fieldname": "column_break_ojtc",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "raw_materiel_items_tab",
    "fieldtype": "Tab Break",
    "label": "Raw Materiel Items",
@@ -240,25 +246,20 @@
    "options": "Scrap Item Detail"
   },
   {
-   "fieldname": "stage",
-   "fieldtype": "Link",
-   "label": "Stage",
-   "options": "Manufacturing Stage"
-  },
-  {
-   "fieldname": "column_break_ojtc",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "0",
    "fieldname": "keep_metal_ledger",
    "fieldtype": "Check",
-   "label": "Keep Metal Ledger"
+   "label": "Keep Metal ledger"
+  },
+  {
+   "fieldname": "manufacturing_stage",
+   "fieldtype": "Data",
+   "label": "Manufacturing Stage"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-03 09:40:41.587688",
+ "modified": "2024-05-03 11:54:06.129691",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",

@@ -9,12 +9,11 @@ class JewelleryJobCard(Document):
 
     def on_submit(self):
         self.mark_as_completed(completed=1)
+        self.create_metal_ledger()
+        self.create_stock_ledger()
 
     def on_cancel(self):
         self.mark_as_completed(completed=0)
-
-    def validate(self):
-        self.create_metal_ledger()
 
     def update_item_table(self):
         if frappe.db.exists('Raw Material Bundle', {'manufacturing_request': self.manufacturing_request}):
@@ -39,3 +38,41 @@ class JewelleryJobCard(Document):
                         frappe.db.set_value('Manufacturing  Stage', stage.name, 'completed', completed)
                         manufacturing_request.mark_as_finished()
                         break
+
+    def create_metal_ledger(self) :
+        if self.keep_metal_ledger:
+            # if frappe.db.exists('Metal Ledger Entry',{'voucher_type': self.doctype, 'voucher_no': self.name}):
+            for item in self.item_details:
+                new_metal_ledger = frappe.new_doc('Metal Ledger Entry')
+                new_metal_ledger.posting_date = frappe.utils.today()
+                new_metal_ledger.posting_time = frappe.utils.now()
+                new_metal_ledger.voucher_type = self.doctype
+                # new_metal_ledger.voucher_no = self.name
+                # new_metal_ledger.party_link = self.party_link
+                new_metal_ledger.item_code = item.item
+                new_metal_ledger.item_name = item.item
+                new_metal_ledger.stock_uom = self.uom
+                new_metal_ledger.item_type = self.type
+                new_metal_ledger.purity = self.purity
+                new_metal_ledger.out_qty = item.quantity
+                new_metal_ledger.balance_qty = 0
+                new_metal_ledger.insert(ignore_permissions=True)
+                frappe.msgprint("Metal Ledger Created.", indicator="green", alert=1)
+
+    def create_stock_ledger(self):
+        if self.keep_metal_ledger:
+            for item in self.item_details:
+                new_stock_ledger = frappe.new_doc('Stock Ledger Entry')
+                new_stock_ledger.posting_date = frappe.utils.today()
+                new_stock_ledger.posting_time = frappe.utils.now()
+                new_stock_ledger.voucher_type = self.doctype
+                new_stock_ledger.voucher_no = self.name
+                new_stock_ledger.item_code = item.item
+                # new_stock_ledger.item_name = item.item
+                new_stock_ledger.stock_uom = self.uom
+                new_stock_ledger.warehouse = self.smith_warehouse
+                new_stock_ledger.purity = self.purity
+                new_stock_ledger.actual_qty = item.quantity
+                new_stock_ledger.balance_qty = 0
+                new_stock_ledger.insert(ignore_permissions=True)
+                frappe.msgprint("Stock Ledger Created.", indicator="green", alert=1)
