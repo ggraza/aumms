@@ -11,6 +11,7 @@ class JewelleryJobCard(Document):
         self.mark_as_completed(completed=1)
         self.create_metal_ledger()
         self.create_stock_ledger()
+        self.update_product()
 
     def on_cancel(self):
         self.mark_as_completed(completed=0)
@@ -22,7 +23,6 @@ class JewelleryJobCard(Document):
                 self.append('item_details', {
                     'item': item.item,
                     # 'raw_material_id' : item.raw_material_id,
-                    # 'item_type': item.item_type,
                     'quantity': item.required_quantity,
                     'weight':item.required_weight
                 })
@@ -38,6 +38,18 @@ class JewelleryJobCard(Document):
                         frappe.db.set_value('Manufacturing  Stage', stage.name, 'completed', completed)
                         manufacturing_request.mark_as_finished()
                         break
+
+    def update_product(self):
+        if frappe.db.exists('Manufacturing Request', self.manufacturing_request):
+            manufacturing_request = frappe.get_doc('Manufacturing Request', self.manufacturing_request)
+            if manufacturing_request:
+                updated = False
+                for stage in manufacturing_request.manufacturing_stages:
+                    if stage.manufacturing_stage == self.stage:
+                        for item in self.item_details:
+                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'product', item.item)
+                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'weight', item.weight)
+                            break
 
     def create_metal_ledger(self) :
         if self.keep_metal_ledger:
