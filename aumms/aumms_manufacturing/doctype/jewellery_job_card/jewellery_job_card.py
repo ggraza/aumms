@@ -1,9 +1,7 @@
 # Copyright (c) 2024, efeone and contributors
 # For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
-
 
 class JewelleryJobCard(Document):
     def before_insert(self):
@@ -14,6 +12,9 @@ class JewelleryJobCard(Document):
 
     def on_cancel(self):
         self.mark_as_completed(completed=0)
+
+    def validate(self):
+        self.create_metal_ledger()
 
     def update_item_table(self):
         if frappe.db.exists('Raw Material Bundle', {'manufacturing_request': self.manufacturing_request}):

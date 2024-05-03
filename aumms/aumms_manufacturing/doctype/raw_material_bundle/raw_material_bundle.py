@@ -1,6 +1,5 @@
 # Copyright (c) 2024, efeone and contributors
 # For license information, please see license.txt
-
 import frappe
 from frappe import _
 from frappe.model.document import Document
@@ -64,7 +63,7 @@ def create_raw_material_request(docname):
 			})
 			new_raw_material_request.insert(ignore_permissions=True)
 			frappe.msgprint("Raw Material Request Created.", indicator="green", alert=True)
-			return new_raw_material_request 
+			return new_raw_material_request
 
 
 		else:
