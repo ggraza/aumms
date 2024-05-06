@@ -59,7 +59,7 @@ class JewelleryJobCard(Document):
                 new_metal_ledger.posting_date = frappe.utils.today()
                 new_metal_ledger.posting_time = frappe.utils.now()
                 new_metal_ledger.voucher_type = self.doctype
-                # new_metal_ledger.voucher_no = self.name
+                new_metal_ledger.voucher_no = self.name
                 # new_metal_ledger.party_link = self.party_link
                 new_metal_ledger.item_code = item.item
                 new_metal_ledger.item_name = item.item

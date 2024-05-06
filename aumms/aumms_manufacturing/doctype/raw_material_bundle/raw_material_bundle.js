@@ -10,6 +10,8 @@ frappe.ui.form.on("Raw Material Bundle", {
         }
       };
     });
+  },
+  on_submit: function(frm) {
     if (!frm.doc.raw_material_available) {
       frm.add_custom_button('Create Raw Material Request', () => {
 				frappe.call({

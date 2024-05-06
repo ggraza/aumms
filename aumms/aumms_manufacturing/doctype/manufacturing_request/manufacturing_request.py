@@ -33,7 +33,7 @@ class ManufacturingRequest(Document):
 			for stage in category_doc.stages:
 				self.append('manufacturing_stages', {
 					'manufacturing_stage': stage.stage,
-					'required_time': stage.required_time,
+					'expected_execution_time': stage.required_time,
 					'workstation': stage.default_workstation
 		        })
 

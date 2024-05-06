@@ -10,9 +10,9 @@ class RawMaterialBundle(Document):
 		for items in self.get("items"):
 			items.raw_material_id = f"{items.item}-{self.stage}-{items.required_weight}"
 
-	def setup(self):
+	def validate(self):
 		for item in self.items:
-			if item.available_quantity >= item.required_quantity:
+			if item.available_quantity > item.required_quantity:
 				self.raw_material_available = 1
 			else:
 				self.raw_material_available = 0
