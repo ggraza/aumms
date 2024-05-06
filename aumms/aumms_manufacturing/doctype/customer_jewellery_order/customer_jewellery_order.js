@@ -1,6 +1,6 @@
 frappe.ui.form.on("Customer Jewellery Order", {
   refresh: function(frm){
-    frm.set_query('uom',() => {
+    frm.set_query('uom','order_items',() => {
       return {
         filters: {
           "is_purity_uom": 1

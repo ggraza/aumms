@@ -9,12 +9,17 @@ class JewelleryOrder(Document):
     def on_submit(self):
         self.create_manufacturing_request()
         self.jewellery_order_finished(finished = 1)
+        self.validate_jewellery_order_items()
 
     def on_cancel(self):
         self.jewellery_order_finished(finished = 0)
 
     def on_update(self):
         self.out_for_delivery_check()
+
+    def before_insert(self):
+        self.update_jewellery_order_items()
+
     def autoname(self):
         if self.order_from == "Customer Jewellery Order":
             naming_series ='JO-CJO-' + '.####'
@@ -22,6 +27,26 @@ class JewelleryOrder(Document):
         elif self.order_from == "Jewellery Stock Request":
             naming_series ='JO-JSR-' + '.####'
             self.name = make_autoname(naming_series)
+
+    def update_jewellery_order_items(self):
+        if self.docstatus == 0:
+            current_rows = len(self.jewellery_order_items)
+            required_rows = self.quantity
+            rows_to_add = required_rows - current_rows
+            if rows_to_add > 0:
+                for _ in range(rows_to_add):
+                    self.append('jewellery_order_items', {
+                        'item': '',
+                        'weight': 0
+                    })
+            elif rows_to_add < 0:
+                self.jewellery_order_items = self.jewellery_order_items[:required_rows]
+        if not self.jewellery_order_items:
+            frappe.throw(_("Jewellery Order Items table is Mandatory."))
+
+    def validate_jewellery_order_items(self):
+        if len(self.jewellery_order_items) == 0:
+            frappe.throw(_("The Jewellery Order Items table cannot be empty."))
 
     def create_manufacturing_request(self):
 	    """Create Manufacturing Request For Jewellery Order"""

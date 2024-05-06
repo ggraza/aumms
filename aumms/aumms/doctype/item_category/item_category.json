@@ -20,12 +20,13 @@
    "fieldname": "stages",
    "fieldtype": "Table",
    "label": "Stages",
-   "options": "Manufacturing Stage Table"
+   "options": "Manufacturing Stage Table",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-17 16:00:30.565884",
+ "modified": "2024-05-06 10:32:54.453320",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Item Category",
