@@ -101,7 +101,8 @@
    "depends_on": "eval:doc.is_raw_material_from_previous_stage_only == 0",
    "fieldname": "raw_material_available",
    "fieldtype": "Check",
-   "label": "Raw Material Available"
+   "label": "Raw Material Available",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -173,7 +174,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-05-02 16:07:22.687542",
+ "modified": "2024-05-06 12:08:56.131899",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing  Stage",

@@ -45,6 +45,14 @@ frappe.ui.form.on("Manufacturing  Stage", {
       frm.refresh_fields();
     });
   },
+  weight: function(frm, cdt, cdn){
+    let row = locals[cdt][cdn];
+    calculate_weight(frm, cdt, cdn);
+  },
+  manufacturing_stages_remove: function (frm, cdt, cdn) {
+    let row = locals[cdt][cdn];
+    calculate_weight(frm)
+  },
   previous_stage_completed: function(frm, cdt, cdn) {
     let row = locals[cdt][cdn]
     if (row.previous_stage_completed) {
@@ -80,3 +88,11 @@ frappe.ui.form.on("Manufacturing  Stage", {
     }
   },
 });
+
+function calculate_weight(frm , cdt, cdn) {
+  var net_weight = 0;
+  frm.doc.manufacturing_stages.forEach(function (row) {
+    net_weight += row.weight;
+  });
+  frm.set_value("weight", net_weight);
+};
