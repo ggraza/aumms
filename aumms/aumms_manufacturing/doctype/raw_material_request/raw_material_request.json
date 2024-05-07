@@ -15,6 +15,11 @@
   "bundle_id",
   "uom",
   "required_quantity",
+  "supervisor_warehouse",
+  "section_break_9utr",
+  "required_date",
+  "item_type",
+  "purity",
   "column_break_dw7z",
   "not_available",
   "priority",
@@ -123,12 +128,39 @@
   {
    "fieldname": "column_break_dw7z",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "required_date",
+   "fieldtype": "Date",
+   "label": "Required Date"
+  },
+  {
+   "fieldname": "section_break_9utr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_type",
+   "fieldtype": "Link",
+   "label": "Item Type",
+   "options": "Item Type"
+  },
+  {
+   "fieldname": "purity",
+   "fieldtype": "Link",
+   "label": "Purity",
+   "options": "Purity"
+  },
+  {
+   "fieldname": "supervisor_warehouse",
+   "fieldtype": "Link",
+   "label": "Supervisor Warehouse",
+   "options": "Warehouse"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-06 14:32:14.681672",
+ "modified": "2024-05-07 13:06:36.599486",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Raw Material Request",

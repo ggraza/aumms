@@ -77,7 +77,6 @@ frappe.ui.form.on("Jewellery Order Item", {
   is_available: function(frm, cdt, cdn) {
     let all_finished = true;
     let total_weightage = 0;
-    let total_qty = 0;
     let childtable = frm.doc.jewellery_order_items || [];
     for (let i = 0; i < childtable.length; i++) {
       if (childtable[i].is_available) {
@@ -87,12 +86,6 @@ frappe.ui.form.on("Jewellery Order Item", {
         all_finished = false;
       }
     }
-    if (frm.doc.jewellery_order_items) {
-      total_qty = frm.doc.jewellery_order_items.filter(function(row) {
-        return row.is_available == 1;
-      }).length;
-    }
-    frm.set_value('available_item_quantity', total_qty);
     frm.set_value('finished', all_finished ? 1 : 0);
 		frm.set_value('weight_of_available_item', total_weightage);
     update_available_item_quantity(frm);

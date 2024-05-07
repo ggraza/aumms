@@ -11,21 +11,22 @@ class RawMaterialRequest(Document):
     @frappe.whitelist()
     def create_manufacturing_request(self):
         manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {'raw_material_request': self.name})
-        if not manufacturing_request_exists:
-            manufacturing_request = frappe.new_doc('Manufacturing Request')
-            manufacturing_request.request_from = 'Raw Material Request'
-            manufacturing_request.raw_material_request = self.name
-            manufacturing_request.jewellery_order = self.jewellery_order
-            # manufacturing_request.required_date = self.required_date
-            manufacturing_request.quantity = self.required_quantity
-            # manufacturing_request.total_weight = self.weight
-            # manufacturing_request.item_name = self.item_name
-            manufacturing_request.uom = self.uom
-            # manufacturing_request.type = self.item_type
-            manufacturing_request.insert(ignore_permissions=True)
-            frappe.msgprint(f"Manufacturing Request {manufacturing_request.name} created.", indicator="green", alert=1)
-        else:
-            frappe.throw(_('Manufacturing Request already exist for this {0}'.format(self.name)))
+        for item in self.raw_material_details:
+            if not manufacturing_request_exists:
+                manufacturing_request = frappe.new_doc('Manufacturing Request')
+                manufacturing_request.request_from = 'Raw Material Request'
+                manufacturing_request.raw_material_request = self.name
+                manufacturing_request.jewellery_order = self.jewellery_order
+                manufacturing_request.required_date = self.required_date
+                manufacturing_request.quantity = self.required_quantity
+                manufacturing_request.expected_weight = item.required_quantity
+                manufacturing_request.purity = self.purity
+                manufacturing_request.uom = self.uom
+                manufacturing_request.type = self.item_type
+                manufacturing_request.insert(ignore_permissions=True)
+                frappe.msgprint(f"Manufacturing Request {manufacturing_request.name} created.", indicator="green", alert=1)
+            else:
+                frappe.throw(_('Manufacturing Request already exist for this {0}'.format(self.name)))
 
     @frappe.whitelist()
     def create_purchase_order(self):
