@@ -51,6 +51,7 @@ class JewelleryOrder(Document):
     def create_manufacturing_request(self):
 	    """Create Manufacturing Request For Jewellery Order"""
 	    manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})
+	    warehouse = s_warehouse = frappe.get_single("AuMMS Settings").get("default_warehouse")
 	    if not manufacturing_request_exists:
 	        manufacturing_request_count = 0
 	        for item in self.jewellery_order_items:
@@ -69,6 +70,7 @@ class JewelleryOrder(Document):
 	                new_manufacturing_request.design_description = self.design_description
 	                new_manufacturing_request.keep_metal_ledger = True
 	                new_manufacturing_request.jewellery_order_item = item.name
+	                new_manufacturing_request.supervisor_warehouse = warehouse
 	                new_manufacturing_request.insert(ignore_permissions=True)
 	                manufacturing_request_count += 1
 	                frappe.db.set_value(item.doctype, item.name, 'requested_for_manufacturing', 1)

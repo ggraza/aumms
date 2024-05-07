@@ -42,6 +42,7 @@ frappe.ui.form.on("Customer Jewellery Order Detail", {
   qty: function (frm, cdt, cdn) {
     let d = locals[cdt][cdn];
     calculate_amount(frm, cdt, cdn);
+    calculate_totals(frm, cdt, cdn);
   },
   board_rate: function (frm, cdt, cdn) {
     let d = locals[cdt][cdn];
@@ -62,6 +63,9 @@ frappe.ui.form.on("Customer Jewellery Order Detail", {
   },
   order_items_add : function(frm, cdt, cdn){
     frm.events.update_order_item_table(frm);
+  },
+  amount: function(frm, cdt, cdn){
+    calculate_totals(frm);
   }
 });
 

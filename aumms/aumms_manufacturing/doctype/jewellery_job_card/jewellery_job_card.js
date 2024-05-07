@@ -4,6 +4,7 @@
 frappe.ui.form.on("Jewellery Job Card", {
   refresh: function(frm){
     create_custom_buttons(frm);
+    calculate_total_weight(frm);
   }
 });
 
@@ -94,3 +95,22 @@ frappe.ui.form.on("Job Time", {
     frm.set_value('duration',total_duration);
   }
 });
+
+frappe.ui.form.on('Raw Materiel Item',{
+  item_details_add : function(frm, cdt, cdn){
+    calculate_total_weight(frm);
+  },
+  item_details_remove : function(frm, cdt, cdn){
+    calculate_total_weight(frm);
+  }
+});
+
+function calculate_total_weight(frm, cdt, cdn){
+  let total_weight = 0
+  if(frm.doc.item_details){
+    frm.doc.item_details.forEach(function(d){
+      total_weight += d.weight || 0;
+    });
+  }
+  frm.set_value('weight', total_weight);
+};
