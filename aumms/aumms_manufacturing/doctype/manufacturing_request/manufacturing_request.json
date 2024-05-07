@@ -8,15 +8,15 @@
  "field_order": [
   "title",
   "request_from",
+  "raw_material_request",
   "jewellery_order_item",
   "column_break_i3eg",
   "jewellery_order",
   "manufacturing_request",
-  "raw_material_request",
   "required_date",
   "section_break_hpbr",
   "type",
-  "category",
+  "quantity",
   "posting_date",
   "posting_time",
   "column_break_ky2t",
@@ -28,7 +28,7 @@
   "weight",
   "keep_metal_ledger",
   "column_break_izcc",
-  "quantity",
+  "category",
   "supervisor_warehouse",
   "finished",
   "section_break_1jdd",
@@ -130,6 +130,7 @@
    "label": "Design Description"
   },
   {
+   "depends_on": "eval:doc.request_from == \"Jewellery Order\"",
    "fieldname": "category",
    "fieldtype": "Link",
    "label": "Category",
@@ -251,7 +252,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-05-03 14:12:21.910906",
+ "modified": "2024-05-07 12:51:18.505865",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",

@@ -9,7 +9,10 @@ from aumms.aumms.utils import create_notification_log
 class ManufacturingRequest(Document):
 
 	def autoname(self):
-		self.title = f"{self.purity}  {self.expected_weight} {self.uom}  {self.type}  {self.category}"
+		if self.request_from == "Jewellery Order":
+			self.title = f"{self.purity}  {self.expected_weight} {self.uom}  {self.type}  {self.category}"
+		elif self.request_from == "Raw Material Request" :
+			self.title = f"{self.purity}  {self.expected_weight} {self.uom}  {self.type}"
 
 	def before_insert(self):
 		self.update_manufacturing_stages()

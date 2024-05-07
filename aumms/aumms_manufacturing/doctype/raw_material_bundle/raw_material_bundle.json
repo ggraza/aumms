@@ -13,7 +13,16 @@
   "raw_material_available",
   "raw_materials_section",
   "items",
-  "amended_from"
+  "amended_from",
+  "section_break_ulxh",
+  "required_date",
+  "purity",
+  "quantity",
+  "supervisor_warehouse",
+  "column_break_bjkf",
+  "type",
+  "uom",
+  "category"
  ],
  "fields": [
   {
@@ -69,12 +78,74 @@
    "fieldtype": "Check",
    "label": "Raw Material Available",
    "read_only": 1
+  },
+  {
+   "fetch_from": "manufacturing_request.required_date",
+   "fieldname": "required_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Required Date"
+  },
+  {
+   "fieldname": "section_break_ulxh",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fetch_from": "manufacturing_request.type",
+   "fieldname": "type",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Type",
+   "options": "Item Type"
+  },
+  {
+   "fetch_from": "manufacturing_request.uom",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fetch_from": "manufacturing_request.quantity",
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "column_break_bjkf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "manufacturing_request.category",
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Category",
+   "options": "Item Category"
+  },
+  {
+   "fetch_from": "manufacturing_request.purity",
+   "fieldname": "purity",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Purity",
+   "options": "Purity"
+  },
+  {
+   "fetch_from": "manufacturing_request.supervisor_warehouse",
+   "fieldname": "supervisor_warehouse",
+   "fieldtype": "Link",
+   "label": "Supervisor Warehouse",
+   "options": "Warehouse"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-06 12:13:01.179566",
+ "modified": "2024-05-07 13:05:32.182882",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Raw Material Bundle",

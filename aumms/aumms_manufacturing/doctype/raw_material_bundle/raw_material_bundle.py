@@ -51,6 +51,11 @@ def create_raw_material_request(docname):
 			new_raw_material_request.raw_material_bundle = raw_material_bundle.name
 			new_raw_material_request.manufacturing_request = raw_material_bundle.manufacturing_request
 			new_raw_material_request.required_quantity = raw_material.required_quantity - raw_material.available_quantity
+			new_raw_material_request.required_date = raw_material_bundle.required_date
+			new_raw_material_request.uom = raw_material_bundle.uom
+			new_raw_material_request.item_type = raw_material_bundle.type
+			new_raw_material_request.purity = raw_material_bundle.purity
+			new_raw_material_request.supervisor_warehouse = raw_material_bundle.supervisor_warehouse
 			new_raw_material_request.bundle_id = raw_material.raw_material_id
 			new_raw_material_request.append('raw_material_details', {
 				'item': raw_material.item,
