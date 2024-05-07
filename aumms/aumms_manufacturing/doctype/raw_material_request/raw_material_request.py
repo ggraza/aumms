@@ -31,14 +31,14 @@ class RawMaterialRequest(Document):
     def create_purchase_order(self):
         purchase_order = frappe.new_doc('Purchase Order')
         purchase_order.supplier = self.supplier
+        for item in self.raw_material_details:
+            purchase_order.append('items', {
+                'item_code': item.item,
+                'item_name': item.item,
+                'schedule_date': self.required_date,
+                'uom' : self.uom,
+                'qty' :self.required_quantity,
 
-        purchase_order.append('items', {
-            'item_code': self.item_name,
-            'item_name': self.item_name,
-            'schedule_date': self.required_date,
-            'uom' : self.uom,
-            'qty' :self.required_quantity,
-
-        })
+            })
         purchase_order.insert(ignore_permissions=True)
         frappe.msgprint(f"Purchase Order created.", indicator="green", alert=1)
