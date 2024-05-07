@@ -3,6 +3,7 @@
 
 frappe.ui.form.on("Manufacturing Request", {
   refresh: function(frm) {
+    calculate_weight(frm)
 		frm.set_query('uom',()=>{
 			return {
 				filters: {
