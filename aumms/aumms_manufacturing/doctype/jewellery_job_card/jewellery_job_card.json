@@ -28,6 +28,7 @@
   "column_break_ojtc",
   "uom",
   "required_date",
+  "expected_execution_time",
   "raw_material_from_previous_stage_only",
   "section_break_qjuc",
   "job_time",
@@ -255,11 +256,16 @@
    "fieldname": "manufacturing_stage",
    "fieldtype": "Data",
    "label": "Manufacturing Stage"
+  },
+  {
+   "fieldname": "expected_execution_time",
+   "fieldtype": "Float",
+   "label": "Expected Execution Time"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-06 16:52:52.023375",
+ "modified": "2024-05-07 11:34:51.805182",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",

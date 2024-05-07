@@ -39,6 +39,7 @@ class RawMaterialBundle(Document):
 @frappe.whitelist()
 def create_raw_material_request(docname):
 	raw_material_bundle = frappe.get_doc("Raw Material Bundle", docname)
+	uom = s_warehouse = frappe.get_single("AuMMS Settings").get("metal_ledger_uom")
 	for raw_material in raw_material_bundle.items:
 		raw_material_request_exists = frappe.db.exists('Raw Material Request', {
 			'manufacturing_request': raw_material_bundle.manufacturing_request,
@@ -52,6 +53,7 @@ def create_raw_material_request(docname):
 			new_raw_material_request.manufacturing_request = raw_material_bundle.manufacturing_request
 			new_raw_material_request.required_quantity = raw_material.required_quantity - raw_material.available_quantity
 			new_raw_material_request.bundle_id = raw_material.raw_material_id
+			new_raw_material_request.uom = uom
 			new_raw_material_request.append('raw_material_details', {
 				'item': raw_material.item,
 				'warehouse': raw_material.warehouse,

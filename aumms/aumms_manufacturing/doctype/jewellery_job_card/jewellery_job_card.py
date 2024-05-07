@@ -53,14 +53,12 @@ class JewelleryJobCard(Document):
 
     def create_metal_ledger(self) :
         if self.keep_metal_ledger:
-            # if frappe.db.exists('Metal Ledger Entry',{'voucher_type': self.doctype, 'voucher_no': self.name}):
             for item in self.item_details:
                 new_metal_ledger = frappe.new_doc('Metal Ledger Entry')
                 new_metal_ledger.posting_date = frappe.utils.today()
                 new_metal_ledger.posting_time = frappe.utils.now()
                 new_metal_ledger.voucher_type = self.doctype
                 new_metal_ledger.voucher_no = self.name
-                # new_metal_ledger.party_link = self.party_link
                 new_metal_ledger.item_code = item.item
                 new_metal_ledger.item_name = item.item
                 new_metal_ledger.stock_uom = self.uom
