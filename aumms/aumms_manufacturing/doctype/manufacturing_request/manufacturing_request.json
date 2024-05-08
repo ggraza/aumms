@@ -198,6 +198,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.request_from == \"Jewellery Order\"",
    "fieldname": "weight",
    "fieldtype": "Float",
    "label": "Weight"
@@ -252,7 +253,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-05-07 12:51:18.505865",
+ "modified": "2024-05-07 17:34:55.175911",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",

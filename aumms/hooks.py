@@ -89,7 +89,7 @@ after_migrate = [
 fixtures = [
 	{
 		"dt": "Role",
-		"filters": [["name", "in", ["Design Analyst", "Supervisor","Smith","Head of Smith", "AuMMS Manager", "Sales Officer"]]]
+		"filters": [["name", "in", ["Design Analyst", "Supervisor","Smith","Head of Smith", "AuMMS Manager", "Sales Officer", "Sales Manager"]]]
 	},
 	{
 		"dt":"Designation",
