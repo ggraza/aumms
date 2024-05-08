@@ -19,8 +19,10 @@ class RawMaterialRequest(Document):
                 manufacturing_request.jewellery_order = self.jewellery_order
                 manufacturing_request.required_date = self.required_date
                 manufacturing_request.quantity = self.required_quantity
-                manufacturing_request.expected_weight = item.required_quantity
+                manufacturing_request.expected_weight = item.required_weight
                 manufacturing_request.purity = self.purity
+                manufacturing_request.weight =  item.required_weight
+                manufacturing_request.supervisor_warehouse = self.supervisor_warehouse
                 manufacturing_request.uom = self.uom
                 manufacturing_request.type = self.item_type
                 manufacturing_request.insert(ignore_permissions=True)
