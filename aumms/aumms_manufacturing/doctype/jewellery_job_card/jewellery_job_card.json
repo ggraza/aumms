@@ -16,10 +16,12 @@
   "type",
   "category",
   "purity",
+  "is_first_stage",
   "column_break_8lq7",
   "company",
   "work_station",
   "supervisor_warehouse",
+  "is_last_stage",
   "column_break_tgsz",
   "smith",
   "smith_warehouse",
@@ -40,6 +42,7 @@
   "raw_material_item_section",
   "item_details",
   "weight",
+  "final_product",
   "scrap_item_details_tab",
   "scrap_item_details_column",
   "table_gzos",
@@ -261,12 +264,33 @@
    "fieldname": "expected_execution_time",
    "fieldtype": "Float",
    "label": "Expected Execution Time",
-   "precision": "2"
+   "precision": "2",
+   "label": "Expected Execution Time"
+  },
+  {
+   "fieldname": "final_product",
+   "fieldtype": "Link",
+   "label": "Final Product",
+   "options": "Item"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_first_stage",
+   "fieldtype": "Check",
+   "label": "Is First Stage",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_last_stage",
+   "fieldtype": "Check",
+   "label": "Is Last Stage",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-08 09:41:41.588131",
+ "modified": "2024-05-08 16:50:35.853099",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",

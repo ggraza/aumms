@@ -12,6 +12,7 @@ class JewelleryJobCard(Document):
         self.create_metal_ledger()
         self.create_stock_ledger()
         self.update_product()
+        self.create_item()
 
     def on_cancel(self):
         self.mark_as_completed(completed=0)
@@ -66,7 +67,7 @@ class JewelleryJobCard(Document):
                 new_metal_ledger.purity = self.purity
                 new_metal_ledger.out_qty = item.quantity
                 new_metal_ledger.balance_qty = 0
-                new_metal_ledger.insert(ignore_permissions=True)
+                new_metal_ledger.insert(ignore_permissions = True)
                 frappe.msgprint("Metal Ledger Created.", indicator="green", alert=1)
 
     def create_stock_ledger(self):
@@ -78,11 +79,30 @@ class JewelleryJobCard(Document):
                 new_stock_ledger.voucher_type = self.doctype
                 new_stock_ledger.voucher_no = self.name
                 new_stock_ledger.item_code = item.item
-                # new_stock_ledger.item_name = item.item
                 new_stock_ledger.stock_uom = self.uom
                 new_stock_ledger.warehouse = self.smith_warehouse
                 new_stock_ledger.purity = self.purity
                 new_stock_ledger.actual_qty = item.quantity
                 new_stock_ledger.balance_qty = 0
-                new_stock_ledger.insert(ignore_permissions=True)
+                new_stock_ledger.insert(ignore_permissions = True)
                 frappe.msgprint("Stock Ledger Created.", indicator="green", alert=1)
+
+    def create_item(self):
+        warehouse = frappe.db.get_single_value('AuMMS Settings', 'item_group')
+        if not self.is_first_stage:
+            new_item = frappe.new_doc('AuMMS Item')
+            new_item.item_name = f"{self.purity} {self.type} {self.category} {self.expected_weight} {self.stage}"
+            new_item.item_type = self.type
+            new_item.item_group = warehouse
+            new_item.stock_uom = self.uom
+            new_item.item_category = self.category
+            new_item.purity = self.purity
+            new_item.is_stock_item = True
+            new_item.item_code = f"{self.purity} {self.type} {self.category} {self.stage} {self.expected_weight}"
+            if self.is_last_stage:
+                new_item.is_raw_material = False
+            else:
+                new_item.is_raw_material = True
+            frappe.db.set_value('Jewellery Job Card', self.name, 'final_product', new_item.item_name)
+            new_item.save(ignore_permissions=True)
+            frappe.msgprint("Item Created.", indicator="green", alert=1)

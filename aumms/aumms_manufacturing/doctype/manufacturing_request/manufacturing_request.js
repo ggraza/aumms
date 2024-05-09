@@ -18,18 +18,22 @@ frappe.ui.form.on("Manufacturing Request", {
         }
       }
     });
-    if(frm.doc.manufacturing_stages && frm.doc.manufacturing_stages.length > 0){
-      frm.doc.manufacturing_stages[0].previous_stage_completed = 1;
-      refresh_field('manufacturing_stages')
-    }
+    marked_as_previous_stage_completed(frm)
   },
   setup: function(frm) {
-    if(frm.doc.manufacturing_stages && frm.doc.manufacturing_stages.length > 0){
-      frm.doc.manufacturing_stages[0].previous_stage_completed = 1;
-      refresh_field('manufacturing_stages')
-    }
+    marked_as_previous_stage_completed(frm)
   }
 });
+
+function marked_as_previous_stage_completed(frm) {
+  if (frm.doc.manufacturing_stages && frm.doc.manufacturing_stages.length > 0) {
+    frm.doc.manufacturing_stages[0].previous_stage_completed = 1;
+    // frm.doc.manufacturing_stages[0].is_first_stage = 1;
+    // const last_index = frm.doc.manufacturing_stages.length - 1;
+    // frm.doc.manufacturing_stages[last_index].is_last_stage = 1;
+    refresh_field('manufacturing_stages');
+  }
+}
 
 frappe.ui.form.on("Manufacturing  Stage", {
   create_raw_material_bundle: function(frm, cdt , cdn) {
@@ -42,7 +46,7 @@ frappe.ui.form.on("Manufacturing  Stage", {
     })
   },
   create_job_card: function(frm, cdt, cdn) {
-    frm.call('create_jewellery_job_card', { 'stage_row_id': cdn }).then(r => {
+    frm.call('create_jewellery_job_card', { 'stage_row_id':cdn }).then(r => {
       frm.refresh_fields();
     });
   },
