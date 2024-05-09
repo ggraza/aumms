@@ -48,8 +48,8 @@ class JewelleryJobCard(Document):
                 for stage in manufacturing_request.manufacturing_stages:
                     if stage.manufacturing_stage == self.stage:
                         for item in self.item_details:
-                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'product', item.item)
-                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'weight', item.weight)
+                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'product', self.final_product)
+                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'weight', self.weight)
                             break
 
     def create_metal_ledger(self) :
