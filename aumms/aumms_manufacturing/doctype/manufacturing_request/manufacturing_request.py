@@ -95,6 +95,16 @@ class ManufacturingRequest(Document):
 							return row.manufacturing_stage
 
 	@frappe.whitelist()
+	def update_previous_stage_weight(self, idx):
+		for stage in self.manufacturing_stages:
+			if stage.idx == idx:
+				if stage.previous_stage_completed:
+					prev_row = stage.idx - 1
+					for row in self.manufacturing_stages:
+						if row.idx == prev_row:
+							return row.weight
+
+	@frappe.whitelist()
 	def create_jewellery_job_card(self, stage_row_id):
 	    first_stage, last_stage = False, False
 	    if self.manufacturing_stages:
