@@ -42,7 +42,10 @@
   "raw_material_item_section",
   "item_details",
   "weight",
-  "final_product",
+  "product_details_section",
+  "product_weight",
+  "column_break_8fhq",
+  "product",
   "scrap_item_details_tab",
   "scrap_item_details_column",
   "table_gzos",
@@ -264,14 +267,7 @@
    "fieldname": "expected_execution_time",
    "fieldtype": "Float",
    "label": "Expected Execution Time",
-   "precision": "2",
-   "label": "Expected Execution Time"
-  },
-  {
-   "fieldname": "final_product",
-   "fieldtype": "Link",
-   "label": "Final Product",
-   "options": "Item"
+   "precision": "1"
   },
   {
    "default": "0",
@@ -286,11 +282,33 @@
    "fieldtype": "Check",
    "label": "Is Last Stage",
    "read_only": 1
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8fhq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_weight",
+   "fieldtype": "Float",
+   "label": "Product Weight",
+   "precision": "1"
+  },
+  {
+   "fieldname": "product_details_section",
+   "fieldtype": "Section Break",
+   "label": "Product Details"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-08 16:50:35.853099",
+ "modified": "2024-05-09 15:25:56.603760",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",

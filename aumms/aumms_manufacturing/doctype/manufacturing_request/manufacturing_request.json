@@ -17,19 +17,16 @@
   "section_break_hpbr",
   "type",
   "quantity",
-  "posting_date",
-  "posting_time",
-  "column_break_ky2t",
   "purity",
+  "column_break_ky2t",
   "uom",
-  "party_link",
-  "column_break_1l2l",
   "expected_weight",
   "weight",
   "keep_metal_ledger",
-  "column_break_izcc",
+  "column_break_1l2l",
   "category",
   "supervisor_warehouse",
+  "product",
   "finished",
   "section_break_1jdd",
   "manufacturing_stages",
@@ -202,7 +199,8 @@
    "depends_on": "eval:doc.request_from == \"Jewellery Order\"",
    "fieldname": "weight",
    "fieldtype": "Float",
-   "label": "Weight"
+   "label": "Weight",
+   "precision": "1"
   },
   {
    "fieldname": "supervisor_warehouse",
@@ -211,36 +209,17 @@
    "options": "Warehouse"
   },
   {
-   "fieldname": "column_break_izcc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Today",
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "hidden": 1,
-   "label": "Posting Date"
-  },
-  {
-   "default": "Now",
-   "fieldname": "posting_time",
-   "fieldtype": "Time",
-   "hidden": 1,
-   "label": "Posting Time"
-  },
-  {
-   "fieldname": "party_link",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Party Link",
-   "options": "Party Link"
-  },
-  {
    "default": "0",
    "depends_on": "eval:doc.request_from == \"Jewellery Order\"",
    "fieldname": "keep_metal_ledger",
    "fieldtype": "Check",
    "label": "Keep Metal Ledger"
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "AuMMS Item"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -255,7 +234,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-05-07 17:34:55.175911",
+ "modified": "2024-05-10 13:07:45.670636",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",

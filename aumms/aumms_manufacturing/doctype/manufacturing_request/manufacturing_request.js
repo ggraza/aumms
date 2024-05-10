@@ -28,9 +28,9 @@ frappe.ui.form.on("Manufacturing Request", {
 function marked_as_previous_stage_completed(frm) {
   if (frm.doc.manufacturing_stages && frm.doc.manufacturing_stages.length > 0) {
     frm.doc.manufacturing_stages[0].previous_stage_completed = 1;
-    // frm.doc.manufacturing_stages[0].is_first_stage = 1;
-    // const last_index = frm.doc.manufacturing_stages.length - 1;
-    // frm.doc.manufacturing_stages[last_index].is_last_stage = 1;
+    frm.doc.manufacturing_stages[0].is_first_stage = 1;
+    const last_index = frm.doc.manufacturing_stages.length - 1;
+    frm.doc.manufacturing_stages[last_index].is_last_stage = 1;
     refresh_field('manufacturing_stages');
   }
 }
@@ -46,31 +46,15 @@ frappe.ui.form.on("Manufacturing  Stage", {
     })
   },
   create_job_card: function(frm, cdt, cdn) {
-    frm.call('create_jewellery_job_card', { 'stage_row_id':cdn }).then(r => {
+    frm.call('create_jewellery_job_card', { 'stage_row_id': cdn }).then(r => {
       frm.refresh_fields();
     });
-  },
-  weight: function(frm, cdt, cdn){
-    let row = locals[cdt][cdn];
-    calculate_weight(frm, cdt, cdn);
-  },
-  manufacturing_stages_remove: function (frm, cdt, cdn) {
-    let row = locals[cdt][cdn];
-    calculate_weight(frm)
   },
   previous_stage_completed: function(frm, cdt, cdn) {
     let row = locals[cdt][cdn]
     if (row.previous_stage_completed) {
       frm.call('update_previous_stage', {idx:row.idx}).then(r=>{
         row.previous_stage = r.message
-        frm.refresh_fields()
-      })
-      frm.call('update_previous_stage_product', {idx:row.idx}).then(r=>{
-        row.previous_stage_product = r.message
-        frm.refresh_fields()
-      })
-      frm.call('update_previous_stage_weight', {idx:row.idx}).then(r=>{
-        row.previous_stage_weight = r.message
         frm.refresh_fields()
       })
     }
@@ -93,11 +77,3 @@ frappe.ui.form.on("Manufacturing  Stage", {
     }
   },
 });
-
-function calculate_weight(frm , cdt, cdn) {
-  var net_weight = 0;
-  frm.doc.manufacturing_stages.forEach(function (row) {
-    net_weight += row.weight;
-  });
-  frm.set_value("weight", net_weight);
-};

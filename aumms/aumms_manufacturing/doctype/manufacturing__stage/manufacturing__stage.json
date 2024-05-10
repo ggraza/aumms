@@ -16,12 +16,13 @@
   "raw_material_available",
   "smith",
   "smith_warehouse",
+  "is_first_stage",
+  "is_last_stage",
   "custom_column_break_lwydq",
   "workstation",
   "create_job_card",
   "job_card_created",
   "completed",
-  "product",
   "weight",
   "previous_stage_product",
   "previous_stage_weight",
@@ -151,17 +152,10 @@
   },
   {
    "depends_on": "eval:doc.completed == 1",
-   "fieldname": "product",
-   "fieldtype": "Link",
-   "label": "Product",
-   "options": "Item",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.completed == 1",
    "fieldname": "weight",
    "fieldtype": "Float",
    "label": "Weight",
+   "precision": "1",
    "read_only": 1
   },
   {
@@ -178,12 +172,24 @@
    "fieldtype": "Float",
    "label": "Previous Stage Weight",
    "precision": "0"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_first_stage",
+   "fieldtype": "Check",
+   "label": "Is First Stage"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_last_stage",
+   "fieldtype": "Check",
+   "label": "Is Last Stage"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-05-08 17:27:56.569053",
+ "modified": "2024-05-10 13:01:39.150002",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing  Stage",
