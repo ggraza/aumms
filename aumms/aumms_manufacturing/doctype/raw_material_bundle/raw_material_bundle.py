@@ -38,39 +38,39 @@ class RawMaterialBundle(Document):
 
 @frappe.whitelist()
 def create_raw_material_request(docname):
-	raw_material_bundle = frappe.get_doc("Raw Material Bundle", docname)
-	uom = s_warehouse = frappe.get_single("AuMMS Settings").get("metal_ledger_uom")
-	for raw_material in raw_material_bundle.items:
-		raw_material_request_exists = frappe.db.exists('Raw Material Request', {
-			'manufacturing_request': raw_material_bundle.manufacturing_request,
-			'item': raw_material.item
-		})
+    raw_material_bundle = frappe.get_doc("Raw Material Bundle", docname)
+    uom = frappe.get_single("AuMMS Settings").get("metal_ledger_uom")
+    raw_material_request_count = 0
+    for raw_material in raw_material_bundle.items:
+        raw_material_request_exists = frappe.db.exists('Raw Material Request', {
+            'manufacturing_request': raw_material_bundle.manufacturing_request,
+            'item': raw_material.item
+        })
+        if not raw_material_request_exists:
+            new_raw_material_request = frappe.new_doc('Raw Material Request')
+            new_raw_material_request.raw_material_request_type = "Raw Material Request"
+            new_raw_material_request.raw_material_bundle = raw_material_bundle.name
+            new_raw_material_request.manufacturing_request = raw_material_bundle.manufacturing_request
+            new_raw_material_request.required_quantity = raw_material.required_quantity - raw_material.available_quantity
+            new_raw_material_request.required_date = raw_material_bundle.required_date
+            new_raw_material_request.uom = raw_material_bundle.uom
+            new_raw_material_request.item_type = raw_material_bundle.type
+            new_raw_material_request.purity = raw_material_bundle.purity
+            new_raw_material_request.supervisor_warehouse = raw_material_bundle.supervisor_warehouse
+            new_raw_material_request.bundle_id = raw_material.raw_material_id
+            new_raw_material_request.uom = uom
+            raw_material_details = {
+                'item': raw_material.item,
+                'warehouse': raw_material.warehouse,
+                'required_quantity': raw_material.required_quantity,
+                'available_quantity': raw_material.available_quantity,
+                'required_weight': raw_material.required_weight,
+                'available_weight': raw_material.available_weight,
+            }
+            new_raw_material_request.append('raw_material_details', raw_material_details)
+            new_raw_material_request.insert(ignore_permissions=True)
+            raw_material_request_count += 1
 
-		if not raw_material_request_exists:
-			new_raw_material_request = frappe.new_doc('Raw Material Request')
-			new_raw_material_request.raw_material_request_type = "Raw Material Request"
-			new_raw_material_request.raw_material_bundle = raw_material_bundle.name
-			new_raw_material_request.manufacturing_request = raw_material_bundle.manufacturing_request
-			new_raw_material_request.required_quantity = raw_material.required_quantity - raw_material.available_quantity
-			new_raw_material_request.required_date = raw_material_bundle.required_date
-			new_raw_material_request.uom = raw_material_bundle.uom
-			new_raw_material_request.item_type = raw_material_bundle.type
-			new_raw_material_request.purity = raw_material_bundle.purity
-			new_raw_material_request.supervisor_warehouse = raw_material_bundle.supervisor_warehouse
-			new_raw_material_request.bundle_id = raw_material.raw_material_id
-			new_raw_material_request.uom = uom
-			new_raw_material_request.append('raw_material_details', {
-				'item': raw_material.item,
-				'warehouse': raw_material.warehouse,
-				'required_quantity': raw_material.required_quantity,
-				'available_quantity': raw_material.available_quantity,
-				'required_weight': raw_material.required_weight,
-				'available_weight': raw_material.available_weight,
-			})
-			new_raw_material_request.insert(ignore_permissions=True)
-			frappe.msgprint("Raw Material Request Created.", indicator="green", alert=True)
-			return new_raw_material_request
-
-
-		else:
-			frappe.throw(_("Raw Material Request already exists for item {0}").format(raw_material.item))
+        else:
+            frappe.throw(_("Raw Material Request already exists for item {0}").format(raw_material.item))
+    frappe.msgprint(f"{raw_material_request_count} Manufacturing Requests Created.", indicator="green", alert=True)
