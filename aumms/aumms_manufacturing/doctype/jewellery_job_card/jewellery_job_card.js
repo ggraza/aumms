@@ -5,6 +5,9 @@ frappe.ui.form.on("Jewellery Job Card", {
   refresh: function(frm){
     create_custom_buttons(frm);
     calculate_total_weight(frm);
+    if (frm.doc.docstatus === 1) {
+      frm.remove_custom_button('Start');
+    }
   }
 });
 
@@ -43,6 +46,7 @@ let create_custom_buttons = function(frm){
     }).addClass("btn-primary");
   }
 }
+
 
 function updateStartTime(frm) {
   const currentTime = frappe.datetime.now_datetime();
