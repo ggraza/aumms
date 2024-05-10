@@ -121,7 +121,11 @@ class ManufacturingRequest(Document):
 			first_stage = self.manufacturing_stages[0].name
 			last_stage = self.manufacturing_stages[-1].name
 		stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
-		jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {'manufacturing_request': self.name, 'manufacturing_stage': stage.manufacturing_stage})
+		jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {
+			'manufacturing_request': self.name,
+			'manufacturing_stage': stage.manufacturing_stage
+		})
+		
 		if not jewellery_job_card_exists:
 			smith_email = frappe.db.get_value('Employee', stage.smith, 'user_id')
 			new_jewellery_job_card = frappe.new_doc('Jewellery Job Card')
@@ -141,6 +145,10 @@ class ManufacturingRequest(Document):
 			new_jewellery_job_card.supervisor_warehouse = self.supervisor_warehouse
 			new_jewellery_job_card.supervisor_warehouse = self.supervisor_warehouse
 			new_jewellery_job_card.raw_material_from_previous_stage_only = stage.is_raw_material_from_previous_stage_only
+			new_jewellery_job_card.append('item_details', {
+				'item': stage.previous_stage_product,
+				'weight': stage.previous_stage_weight,
+			})
 			new_jewellery_job_card.keep_metal_ledger = 1
 			if first_stage == stage_row_id:
 				new_jewellery_job_card.is_first_stage = 1
