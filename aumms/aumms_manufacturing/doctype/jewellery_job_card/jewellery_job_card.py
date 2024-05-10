@@ -99,8 +99,14 @@ class JewelleryJobCard(Document):
             new_item.purity = self.purity
             new_item.gold_weight = self.expected_weight
             new_item.is_stock_item = True
-            new_item.item_code = f"{self.purity} {self.type} {self.category} {self.stage} {self.expected_weight}"
-            frappe.db.set_value('Jewellery Job Card', self.name, 'product', new_item.item_name)
+            new_item.item_code = f"{self.purity} {self.type} {self.category} {self.expected_weight} {self.stage}"
             frappe.db.set_value('Manufacturing Request', self.manufacturing_request, 'product', new_item.item_code)
+            if self.is_last_stage:
+                new_item.is_raw_material = False
+                new_item.item_name = self.product
+                new_item.item_code = self.product
+            else:
+                new_item.is_raw_material = True
+            frappe.db.set_value('Jewellery Job Card', self.name, 'product', new_item.item_name)
             new_item.save(ignore_permissions=True)
             frappe.msgprint("Item Created.", indicator="green", alert=1)
