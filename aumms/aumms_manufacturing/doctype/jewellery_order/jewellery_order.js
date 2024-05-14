@@ -23,7 +23,12 @@ frappe.ui.form.on("Jewellery Order", {
         }
       }
     });
+    if (!frm.doc.weight_of_available_item)
+    {
+      frm.toggle_display("weight_of_available_item", false);
+    }
 		limit_item_details(frm)
+    calculate_weight(frm)
   },
   quantity: function(frm) {
     limit_item_details(frm)
@@ -37,33 +42,11 @@ frappe.ui.form.on("Jewellery Order", {
 
 frappe.ui.form.on("Jewellery Order Item", {
   weight: function(frm, cdt, cdn) {
-    let weight_of_available_item = 0;
-    let total_weight = 0;
-		if(frm.doc.jewellery_order_items){
-			frm.doc.jewellery_order_items.forEach(function(d) {
-        if (d.is_available) {
-            weight_of_available_item += d.weight || 0;
-        }
-        total_weight += d.weight || 0;
-      });
-		}
-    frm.set_value('weight_of_available_item', weight_of_available_item);
-    frm.set_value('total_weight', total_weight);
+    calculate_weight(frm);
   },
 
   jewellery_order_items_remove: function(frm) {
-    let total_weightage = 0;
-    let total_weight = 0;
-		if(frm.doc.jewellery_order_items){
-			frm.doc.jewellery_order_items.forEach(function(d) {
-        if (d.is_available) {
-            total_weightage += d.weight || 0;
-        }
-        total_weight += d.weight || 0;
-      });
-		}
-    frm.set_value('weight_of_available_item', total_weightage);
-    frm.set_value('total_weight', total_weight);
+    calculate_weight(frm);
     update_available_item_quantity(frm);
 		check_finished(frm);
   },
@@ -158,4 +141,19 @@ function check_finished(frm) {
     }
   }
   frm.set_value('finished', all_available ? 1 : 0);
+}
+
+function calculate_weight(frm, cdt,cdn) {
+  let weight_of_available_item = 0;
+  let total_weight = 0;
+  if(frm.doc.jewellery_order_items){
+    frm.doc.jewellery_order_items.forEach(function(d) {
+      if (d.is_available) {
+          weight_of_available_item += d.weight || 0;
+      }
+      total_weight += d.weight || 0;
+    });
+  }
+  frm.set_value('weight_of_available_item', weight_of_available_item);
+  frm.set_value('total_weight', total_weight);
 }

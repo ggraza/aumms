@@ -101,7 +101,7 @@ function calculate_amount(frm, cdt, cdn){
     frappe.model.set_value(cdt, cdn, 'amount_without_making_charge', 0);
   }
   if(child.making_chargein_percentage && child.amount_without_making_charge){
-    frappe.model.set_value(cdt, cdn, 'amount', child.amount_without_making_charge * (child.making_chargein_percentage/100));
+    frappe.model.set_value(cdt, cdn, 'amount', child.amount_without_making_charge + (child.making_chargein_percentage/100));
   }
   else{
     frappe.model.set_value(cdt, cdn, 'amount', 0);
