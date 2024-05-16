@@ -53,12 +53,13 @@
   {
    "fieldname": "expected_execution_timein_minutes",
    "fieldtype": "Float",
-   "label": "Expected Execution Time(In Minutes)"
+   "label": "Expected Execution Time(In Minutes)",
+   "precision": "1"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-15 12:50:06.986402",
+ "modified": "2024-05-14 15:57:29.295355",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Stage",
