@@ -13,6 +13,7 @@ class JewelleryJobCard(Document):
         self.create_stock_ledger()
         self.update_product()
         self.create_item()
+        self.update_item_name()
 
     def on_cancel(self):
         self.mark_as_completed(completed=0)
@@ -91,7 +92,7 @@ class JewelleryJobCard(Document):
         warehouse = frappe.db.get_single_value('AuMMS Settings', 'item_group')
         if self.is_first_stage:
             new_item = frappe.new_doc('AuMMS Item')
-            new_item.item_name = f"{self.purity} {self.type} {self.category} {self.expected_weight} {self.stage}"
+            new_item.item_name = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
             new_item.item_type = self.type
             new_item.item_group = warehouse
             new_item.stock_uom = self.uom
@@ -99,14 +100,34 @@ class JewelleryJobCard(Document):
             new_item.purity = self.purity
             new_item.gold_weight = self.expected_weight
             new_item.is_stock_item = True
-            new_item.item_code = f"{self.purity} {self.type} {self.category} {self.expected_weight} {self.stage}"
+            new_item.item_code = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
             frappe.db.set_value('Manufacturing Request', self.manufacturing_request, 'product', new_item.item_code)
             if self.is_last_stage:
                 new_item.is_raw_material = False
-                new_item.item_name = self.product
-                new_item.item_code = self.product
+                new_item.item_name = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
+                new_item.item_code = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
             else:
                 new_item.is_raw_material = True
             frappe.db.set_value('Jewellery Job Card', self.name, 'product', new_item.item_name)
             new_item.save(ignore_permissions=True)
             frappe.msgprint("Item Created.", indicator="green", alert=1)
+
+    def update_item_name(self):
+        if self.is_last_stage:
+            item_code = frappe.db.get_value('Manufacturing Request', self.manufacturing_request, 'product')
+            if item_code:
+                new_name = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
+                aumms_item = frappe.db.get_value('AuMMS Item', {'item_code': item_code}, 'name')
+                if aumms_item:
+                    frappe.rename_doc('AuMMS Item', aumms_item, new_name, force=True)
+                    aumms_item_doc = frappe.get_doc('AuMMS Item', new_name)
+                    aumms_item_doc.item_name = new_name
+                    aumms_item_doc.item_code = new_name
+                    aumms_item_doc.save(ignore_permissions=True)
+                frappe.rename_doc('Item', item_code, new_name, force=True)
+                item_doc = frappe.get_doc('Item', new_name)
+                item_doc.item_name = new_name
+                item_doc.item_code = new_name
+                item_doc.save(ignore_permissions=True)
+                frappe.db.set_value('Manufacturing Request', self.manufacturing_request, 'product', new_name)
+                frappe.msgprint("Item Renamed.", indicator="green", alert=1)
