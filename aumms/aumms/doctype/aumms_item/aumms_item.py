@@ -30,11 +30,11 @@ class AuMMSItem(Document):
 
 	def after_insert(self):
 		''' Method to create Item from AuMMS Item '''
-		create_or_update_item(self)
+		self.create_or_update_item()
 
 	def on_update(self):
 		''' Method to update created Item on changes of AuMMS Item '''
-		create_or_update_item(self, self.item)
+		self.create_or_update_item(self.item)
 
 	def validate_item_name(self):
 		''' Method to validate AuMMS Item Name wrt to Item Name '''
@@ -66,51 +66,51 @@ class AuMMSItem(Document):
 			if frappe.db.exists('Item', { 'item_code' : self.item_code }):
 				frappe.throw('Item already exists with Item Code `{0}`.'.format(frappe.bold(self.item_code)))
 
-def create_or_update_item(self, item=None):
-	''' Method to create or update Item from AuMMS Item '''
-	item_group = frappe.db.get_value('AuMMS Item Group', self.item_group, 'item_group')
-	if not item:
-		#Case of new Item
-		if not frappe.db.exists('Item', self.name):
-			#Creating new Item object
-			item_doc = frappe.new_doc('Item')
+	def create_or_update_item(self, item=None):
+		''' Method to create or update Item from AuMMS Item '''
+		item_group = frappe.db.get_value('AuMMS Item Group', self.item_group, 'item_group')
+		if not item:
+			#Case of new Item
+			if not frappe.db.exists('Item', self.name):
+				#Creating new Item object
+				item_doc = frappe.new_doc('Item')
+			else:
+				#Case of exception
+				return 0
 		else:
-			#Case of exception
-			return 0
-	else:
-		#Case of existing Item
-		if frappe.db.exists("Item", item):
-			#Creating existing Item object
-			item_doc = frappe.get_doc('Item', item)
-		else:
-			#Case of exception
-			return 0
+			#Case of existing Item
+			if frappe.db.exists("Item", item):
+				#Creating existing Item object
+				item_doc = frappe.get_doc('Item', item)
+			else:
+				#Case of exception
+				return 0
 
-	# Check Item Group existance and set Item Group
-	if item_group:
-		item_doc.set('item_group', item_group)
+		# Check Item Group existance and set Item Group
+		if item_group:
+			item_doc.set('item_group', item_group)
 
-	# Set values to Item from AuMMS Item
-	for aumms_item_field in aumms_item_fields:
-		item_doc.set(aumms_item_field, self.get(aumms_item_field))
+		# Set values to Item from AuMMS Item
+		for aumms_item_field in aumms_item_fields:
+			item_doc.set(aumms_item_field, self.get(aumms_item_field))
 
-	item_doc.is_aumms_item = 1
-	item_doc.custom_is_raw_material = self.is_raw_material
+		item_doc.is_aumms_item = 1
+		item_doc.custom_is_raw_material = self.is_raw_material
 
 
-	#Clear and Set UOMs to Item
-	item_doc.uoms = []
-	for uom in self.uoms:
-		row = item_doc.append('uoms')
-		row.uom = uom.uom
-		row.conversion_factor = uom.conversion_factor
+		#Clear and Set UOMs to Item
+		item_doc.uoms = []
+		for uom in self.uoms:
+			row = item_doc.append('uoms')
+			row.uom = uom.uom
+			row.conversion_factor = uom.conversion_factor
 
-	if not item:
-		# Case of new Item
-		item_doc.insert(ignore_permissions = True)
-		# Set Item Group link to AuMMS Item Group
-		frappe.db.set_value('AuMMS Item', self.name, 'item', item_doc.name)
-	elif frappe.db.exists("Item", item):
-		# case of updating existing Item
-		item_doc.save(ignore_permissions = True)
-	frappe.db.commit()
+		if not item:
+			# Case of new Item
+			# item_doc.insert(ignore_permissions = True)
+			# Set Item Group link to AuMMS Item Group
+			frappe.db.set_value('AuMMS Item', self.name, 'item', item_doc.name)
+		elif frappe.db.exists("Item", item):
+			# case of updating existing Item
+			item_doc.save(ignore_permissions = True)
+		frappe.db.commit()

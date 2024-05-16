@@ -48,7 +48,7 @@ class JewelleryJobCard(Document):
                 for stage in manufacturing_request.manufacturing_stages:
                     if stage.manufacturing_stage == self.stage:
                         for item in self.item_details:
-                            frappe.db.set_value('Manufacturing  Stage', self.manufacturing_request, 'product', item.item)
+                            # frappe.db.set_value('Manufacturing  Stage', self.manufacturing_request, 'product', item.item)
                             frappe.db.set_value('Manufacturing  Stage', stage.name, 'weight', self.product_weight)
                             frappe.db.set_value('Manufacturing Request', self.manufacturing_request, 'weight', self.product_weight)
                             break
@@ -108,8 +108,8 @@ class JewelleryJobCard(Document):
                 new_item.item_code = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
             else:
                 new_item.is_raw_material = True
-            frappe.db.set_value('Jewellery Job Card', self.name, 'product', new_item.item_name)
             new_item.save(ignore_permissions=True)
+            frappe.db.set_value('Jewellery Job Card', self.name, 'product', new_item.item_name)
             frappe.msgprint("Item Created.", indicator="green", alert=1)
 
     def update_item_name(self):
