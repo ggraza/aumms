@@ -141,7 +141,7 @@ class ManufacturingRequest(Document):
 	            new_jewellery_job_card.is_last_stage = 1
 	        new_jewellery_job_card.flags.ignore_mandatory = True
 	        new_jewellery_job_card.save(ignore_permissions=True)
-			frappe.db.set_value('Jewellery Job Card', self.manufacturing_request, 'product',self.product)
+	        frappe.db.set_value('Jewellery Job Card', self.manufacturing_request, 'product',self.product)
 	        frappe.db.set_value(stage.doctype, stage.name, 'job_card_created', 1)
 	        if smith_email:
 	            add_assignment({
