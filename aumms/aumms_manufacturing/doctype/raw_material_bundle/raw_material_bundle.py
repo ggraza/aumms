@@ -12,7 +12,7 @@ class RawMaterialBundle(Document):
 
 	def validate(self):
 		for item in self.items:
-			if item.available_quantity > item.required_quantity:
+			if item.available_quantity >= item.required_quantity:
 				self.raw_material_available = 1
 			else:
 				self.raw_material_available = 0

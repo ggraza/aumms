@@ -60,12 +60,13 @@ frappe.ui.form.on("Manufacturing  Stage", {
   previous_stage_completed: function(frm, cdt, cdn) {
     let row = locals[cdt][cdn]
     if (row.previous_stage_completed) {
-      frm.call('update_previous_stage', { idx: row.idx }).then(r => {
-        row.previous_stage = r.message;
+      update_previous_stage(frm, row.idx).then(previousStage => {
+        row.previous_stage = previousStage;
         frm.refresh_field('manufacturing_stages');
       });
-      frm.call('update_previous_stage_weight', { idx: row.idx }).then(r => {
-        row.previous_stage_weight = r.message;
+
+      update_previous_stage_weight(frm, row.idx).then(previousStageWeight => {
+        row.previous_stage_weight = previousStageWeight;
         frm.refresh_field('manufacturing_stages');
       });
     }
@@ -88,3 +89,15 @@ frappe.ui.form.on("Manufacturing  Stage", {
     }
   },
 });
+
+function update_previous_stage(frm, idx) {
+  return frm.call('update_previous_stage', { idx: idx }).then(r => {
+    return r.message;
+  });
+}
+
+function update_previous_stage_weight(frm, idx) {
+  return frm.call('update_previous_stage_weight', { idx: idx }).then(r => {
+    return r.message;
+  });
+}
