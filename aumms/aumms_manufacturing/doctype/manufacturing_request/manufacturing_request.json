@@ -216,6 +216,7 @@
    "label": "Keep Metal Ledger"
   },
   {
+   "depends_on": "eval:doc.request_from == \"Jewellery Order\"",
    "fieldname": "product",
    "fieldtype": "Link",
    "label": "Product",
@@ -234,7 +235,7 @@
    "link_fieldname": "manufacturing_request"
   }
  ],
- "modified": "2024-05-10 13:07:45.670636",
+ "modified": "2024-05-17 10:18:22.665853",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Manufacturing Request",
