@@ -3,8 +3,7 @@
 
 frappe.ui.form.on("Manufacturing Request", {
   refresh: function(frm) {
-    calculate_weight(frm)
-		frm.set_query('uom',()=>{
+    frm.set_query('uom',()=>{
 			return {
 				filters: {
 					"is_purity_uom": 1
@@ -19,6 +18,14 @@ frappe.ui.form.on("Manufacturing Request", {
       }
     });
     marked_as_previous_stage_completed(frm)
+    if(!frm.doc.product)
+    {
+      frm.toggle_display("product",false);
+    }
+    if(!frm.doc.weight && frm.doc.weight <= 0)
+    {
+      frm.toggle_display("weight",false);
+    }
   },
   setup: function(frm) {
     marked_as_previous_stage_completed(frm)
