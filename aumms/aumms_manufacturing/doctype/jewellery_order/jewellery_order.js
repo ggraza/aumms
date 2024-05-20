@@ -27,6 +27,10 @@ frappe.ui.form.on("Jewellery Order", {
     {
       frm.toggle_display("weight_of_available_item", false);
     }
+    if (!frm.doc.available_item_quantity)
+    {
+      frm.toggle_display("available_item_quantity", false);
+    }
 		limit_item_details(frm)
     calculate_weight(frm)
   },
