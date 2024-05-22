@@ -52,6 +52,8 @@ class JewelleryOrder(Document):
 	    """Create Manufacturing Request For Jewellery Order"""
 	    manufacturing_request_exists = frappe.db.exists('Manufacturing Request', {"jewellery_order": self.name})
 	    warehouse = s_warehouse = frappe.get_single("AuMMS Settings").get("default_warehouse")
+	    if not warehouse:
+	        frappe.throw(_("Please Set the Smith Warehouse in AuMMS Settings"))
 	    if not manufacturing_request_exists:
 	        manufacturing_request_count = 0
 	        for item in self.jewellery_order_items:

@@ -1,6 +1,7 @@
 # Copyright (c) 2024, efeone and contributors
 # For license information, please see license.txt
 import frappe
+from frappe import _
 from frappe.model.document import Document
 
 class JewelleryJobCard(Document):
@@ -89,12 +90,14 @@ class JewelleryJobCard(Document):
                 frappe.msgprint("Stock Ledger Created.", indicator="green", alert=1)
 
     def create_item(self):
-        warehouse = frappe.db.get_single_value('AuMMS Settings', 'item_group')
+        item_group = frappe.db.get_single_value('AuMMS Settings', 'item_group')
+        if not item_group:
+            frappe.throw(_("Please Set Item Group in AuMMS Settings"))
         if self.is_first_stage:
             new_item = frappe.new_doc('AuMMS Item')
             new_item.item_name = f"{self.purity} {self.type} {self.category} {self.product_weight} {self.stage}"
             new_item.item_type = self.type
-            new_item.item_group = warehouse
+            new_item.item_group = item_group
             new_item.stock_uom = self.uom
             new_item.item_category = self.category
             new_item.purity = self.purity

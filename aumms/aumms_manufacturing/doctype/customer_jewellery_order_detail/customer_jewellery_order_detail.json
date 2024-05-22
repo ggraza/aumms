@@ -82,8 +82,10 @@
    "read_only": 1
   },
   {
+   "fetch_from": "aumms_item.metal_ledger_uom",
    "fieldname": "stock_uom",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Stock UOM",
    "options": "UOM"
   },
@@ -133,7 +135,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-08 09:46:09.492994",
+ "modified": "2024-05-22 10:11:30.558813",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Customer Jewellery Order Detail",
