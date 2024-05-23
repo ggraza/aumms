@@ -62,9 +62,10 @@
   },
   {
    "fieldname": "manufacturing_request",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Manufacturing Request",
+   "options": "Manufacturing Request",
    "reqd": 1
   },
   {
@@ -273,6 +274,7 @@
    "default": "0",
    "fieldname": "is_first_stage",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is First Stage",
    "read_only": 1
   },
@@ -280,6 +282,7 @@
    "default": "0",
    "fieldname": "is_last_stage",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Last Stage",
    "read_only": 1
   },
@@ -309,7 +312,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-05-20 12:33:18.083701",
+ "modified": "2024-05-22 15:25:54.758031",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
  "name": "Jewellery Job Card",
