@@ -3,6 +3,9 @@
 
 frappe.ui.form.on("Manufacturing Request", {
   refresh: function(frm) {
+    if(!frm.is_new){
+      hide_add_row_button(frm);
+    }
     frm.set_query('uom',()=>{
 			return {
 				filters: {
@@ -29,7 +32,10 @@ frappe.ui.form.on("Manufacturing Request", {
   },
   setup: function(frm) {
     marked_as_previous_stage_completed(frm)
-  }
+  },
+  onload: function(frm) {
+    hide_add_row_button(frm);
+  },
 });
 
 function marked_as_previous_stage_completed(frm) {
@@ -41,6 +47,16 @@ function marked_as_previous_stage_completed(frm) {
     refresh_field('manufacturing_stages');
   }
 }
+
+function hide_add_row_button(frm) {
+    if (frm.doc.manufacturing_stages && frm.fields_dict.manufacturing_stages.grid) {
+        setTimeout(() => {
+            frm.fields_dict.manufacturing_stages.grid.wrapper.find('.grid-add-row').hide();
+            frm.fields_dict.manufacturing_stages.grid.wrapper.find('.grid-add-multiple-rows').hide();
+        }, 1000);
+    }
+}
+
 
 frappe.ui.form.on("Manufacturing  Stage", {
   create_raw_material_bundle: function(frm, cdt , cdn) {
