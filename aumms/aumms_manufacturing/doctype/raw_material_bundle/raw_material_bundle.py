@@ -31,8 +31,8 @@ class RawMaterialBundle(Document):
 				for stage in manufacturing_request.manufacturing_stages:
 					if stage.manufacturing_stage == self.stage:
 						stage.raw_material_bundle_created = created
-						frappe.db.set_value('Manufacturing  Stage', stage.name, 'raw_material_bundle_created', created)
-						frappe.db.set_value('Manufacturing  Stage', stage.name, 'raw_material_available', created)
+						frappe.db.set_value('Manufacturing Request Stage', stage.name, 'raw_material_bundle_created', created)
+						frappe.db.set_value('Manufacturing Request Stage', stage.name, 'raw_material_available', created)
 						break
 
 

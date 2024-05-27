@@ -58,7 +58,7 @@ function hide_add_row_button(frm) {
 }
 
 
-frappe.ui.form.on("Manufacturing  Stage", {
+frappe.ui.form.on("Manufacturing Request Stage", {
   create_raw_material_bundle: function(frm, cdt , cdn) {
     let row = locals[cdt][cdn];
     frappe.new_doc('Raw Material Bundle', {

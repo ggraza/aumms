@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class ManufacturingStage(Document):
+class ManufacturingRequestStage(Document):
 	pass

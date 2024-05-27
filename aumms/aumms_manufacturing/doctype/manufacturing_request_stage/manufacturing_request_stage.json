@@ -194,7 +194,7 @@
  "modified": "2024-05-22 15:05:03.943903",
  "modified_by": "Administrator",
  "module": "AuMMS Manufacturing",
- "name": "Manufacturing  Stage",
+ "name": "Manufacturing Request Stage",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [],

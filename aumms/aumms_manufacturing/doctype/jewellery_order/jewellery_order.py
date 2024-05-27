@@ -37,7 +37,7 @@ class JewelleryOrder(Document):
                 for _ in range(rows_to_add):
                     self.append('jewellery_order_items', {
                         'item': '',
-                        'weight': 0
+                        'weight': self.expected_total_weight / self.quantity
                     })
             elif rows_to_add < 0:
                 self.jewellery_order_items = self.jewellery_order_items[:required_rows]
