@@ -37,7 +37,7 @@ class JewelleryJobCard(Document):
                 for stage in manufacturing_request.manufacturing_stages:
                     if stage.manufacturing_stage == self.stage:
                         stage.completed = completed
-                        frappe.db.set_value('Manufacturing  Stage', stage.name, 'completed', completed)
+                        frappe.db.set_value('Manufacturing Request Stage', stage.name, 'completed', completed)
                         manufacturing_request.mark_as_finished()
                         break
 
@@ -49,8 +49,8 @@ class JewelleryJobCard(Document):
                 for stage in manufacturing_request.manufacturing_stages:
                     if stage.manufacturing_stage == self.stage:
                         for item in self.item_details:
-                            # frappe.db.set_value('Manufacturing  Stage', self.manufacturing_request, 'product', item.item)
-                            frappe.db.set_value('Manufacturing  Stage', stage.name, 'weight', self.product_weight)
+                            # frappe.db.set_value('Manufacturing Request Stage', self.manufacturing_request, 'product', item.item)
+                            frappe.db.set_value('Manufacturing Request Stage', stage.name, 'weight', self.product_weight)
                             frappe.db.set_value('Manufacturing Request', self.manufacturing_request, 'weight', self.product_weight)
                             break
 

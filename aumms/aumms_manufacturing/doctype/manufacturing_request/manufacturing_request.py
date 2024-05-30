@@ -110,7 +110,7 @@ class ManufacturingRequest(Document):
 	    if self.manufacturing_stages:
 	        first_stage = self.manufacturing_stages[0].name
 	        last_stage = self.manufacturing_stages[-1].name
-	    stage = frappe.get_doc('Manufacturing  Stage', stage_row_id)
+	    stage = frappe.get_doc('Manufacturing Request Stage', stage_row_id)
 	    jewellery_job_card_exists = frappe.db.exists('Jewellery Job Card', {
 	        'manufacturing_request': self.name,
 	        'manufacturing_stage': stage.manufacturing_stage
