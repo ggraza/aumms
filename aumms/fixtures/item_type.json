@@ -1,0 +1,18 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Item Type",
+  "is_purity_item": 1,
+  "item_type": "Diamond",
+  "modified": "2024-05-10 13:26:16.577821",
+  "name": "Diamond"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Item Type",
+  "is_purity_item": 1,
+  "item_type": "Gold",
+  "modified": "2024-05-07 17:02:21.803577",
+  "name": "Gold"
+ }
+]

@@ -1,0 +1,29 @@
+[
+ {
+  "amended_from": null,
+  "docstatus": 1,
+  "doctype": "Purity",
+  "modified": "2024-05-10 13:28:07.968079",
+  "name": "24k",
+  "purity": "24k",
+  "purity_percentage": 99.0
+ },
+ {
+  "amended_from": null,
+  "docstatus": 1,
+  "doctype": "Purity",
+  "modified": "2024-05-29 14:42:49.826941",
+  "name": "18k",
+  "purity": "18k",
+  "purity_percentage": 75.0
+ },
+ {
+  "amended_from": null,
+  "docstatus": 1,
+  "doctype": "Purity",
+  "modified": "2024-05-29 14:41:50.330455",
+  "name": "22k",
+  "purity": "22k",
+  "purity_percentage": 91.67
+ }
+]

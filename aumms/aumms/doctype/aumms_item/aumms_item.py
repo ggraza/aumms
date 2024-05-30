@@ -107,7 +107,7 @@ class AuMMSItem(Document):
 
 		if not item:
 			# Case of new Item
-			# item_doc.insert(ignore_permissions = True)
+			item_doc.insert(ignore_permissions = True)
 			# Set Item Group link to AuMMS Item Group
 			frappe.db.set_value('AuMMS Item', self.name, 'item', item_doc.name)
 		elif frappe.db.exists("Item", item):
