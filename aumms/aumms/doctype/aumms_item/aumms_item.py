@@ -10,6 +10,7 @@ aumms_item_fields = ['item_code', 'item_name', 'item_type', 'stock_uom', 'disabl
 
 class AuMMSItem(Document):
 	def validate(self):
+		self.validate_gold_weight()
 		''' Method to validate Item name and Item Code '''
 		"""
 		self.validate_stone_weight()
@@ -27,6 +28,9 @@ class AuMMSItem(Document):
 	def validate_stone_charge(self):
 		if not self.stone_charge and self.is_stone_item:
 			frappe.throw(_('Please Enter Stone Charge'))"""
+	def validate_gold_weight(self):
+		if not self.gold_weight and not self.has_stone:
+			frappe.throw("Gold Weight is mandatory")
 
 	def after_insert(self):
 		''' Method to create Item from AuMMS Item '''
