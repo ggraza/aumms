@@ -118,6 +118,7 @@ class ManufacturingRequest(Document):
 
 	    if not jewellery_job_card_exists:
 	        smith_email = frappe.db.get_value('Employee', stage.smith, 'user_id')
+	        print("smith_email", smith_email)
 	        new_jewellery_job_card = frappe.new_doc('Jewellery Job Card')
 	        new_jewellery_job_card.manufacturing_request = self.name
 	        new_jewellery_job_card.smith = stage.smith
@@ -144,10 +145,11 @@ class ManufacturingRequest(Document):
 	        frappe.db.set_value('Jewellery Job Card', self.manufacturing_request, 'product',self.product)
 	        frappe.db.set_value(stage.doctype, stage.name, 'job_card_created', 1)
 	        if smith_email:
+	            print("first if")
 	            add_assignment({
-	                "doctype": "Jewellery Job Card",
+	                "doctype": new_jewellery_job_card.doctype,
 	                "name": new_jewellery_job_card.name,
-	                "smith": [smith_email]
+	                "assign_to": [smith_email]
 	            })
 	        frappe.msgprint("Jewellery Job Card Created.", indicator="green", alert=1)
 	    else:
