@@ -145,9 +145,9 @@ class ManufacturingRequest(Document):
 	        frappe.db.set_value(stage.doctype, stage.name, 'job_card_created', 1)
 	        if smith_email:
 	            add_assignment({
-	                "doctype": "Jewellery Job Card",
+	                "doctype": new_jewellery_job_card.doctype,
 	                "name": new_jewellery_job_card.name,
-	                "smith": [smith_email]
+	                "assign_to": [smith_email]
 	            })
 	        frappe.msgprint("Jewellery Job Card Created.", indicator="green", alert=1)
 	    else:
