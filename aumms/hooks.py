@@ -1,4 +1,3 @@
-from . import __version__ as app_version
 
 app_name = "aumms"
 app_title = "AuMMS"
@@ -101,15 +100,15 @@ fixtures = [
 	},
 	{
 		"dt":"Workflow",
-		"filters":[["name","in",["Feasibility check"]]]
+		"filters":[["name","in",["Feasibility check", "Touch Validation Workflow", "Purchase Receipt Workflow","Hallmark Request Workflow"]]]
 	},
 	{
 		"dt":"Workflow Action Master",
-		"filters":[["name","in",["Submit for Feasibility check", "Approve", "Reject", "Submit", "Cancel"]]]
+		"filters":[["name","in",["Send for Hallmarking", "Hallmark Items Return", "Submit for Feasibility check", "Approve", "Reject", "Submit", "Cancel", "Review"]]]
 	},
 	{
 		"dt":"Workflow State",
-		"filters":[["name","in",["Draft", "Submitted for feasibility", "Feasible", "Not Feasible", "Submitted", "Cancelled"]]]
+		"filters":[["name","in",["Draft", "Submitted", "Sent for Hallmarking", "Send for Hallmarking", "Items Hallmarked", "Submitted for feasibility", "Feasible", "Not Feasible", "Submitted", "Cancelled", "Manager Approved", "Manager Rejected", "Director Approved", "Director Rejected", "Sent to Director", "Sent to Manager"]]]
 	},
 	{
 		"dt":"Custom Field",
@@ -183,6 +182,10 @@ doc_events = {
 	},
     'Work Order':{
         'after_insert' : 'aumms.aumms.doc_events.work_order.change_design_analysis_status'
+	},
+    'Stock Reconciliation': {
+		'on_submit': 'aumms.aumms.doc_events.stock_reconciliation.create_mle_against_sr',
+		'on_cancel': 'aumms.aumms.doc_events.stock_reconciliation.reverse_mle_against_sr',
 	}
 }
 
