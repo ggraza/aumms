@@ -1,6 +1,7 @@
 import frappe
 from frappe.utils import *
 from frappe import _
+from frappe.utils import getdate
 
 @frappe.whitelist()
 def get_board_rate(item_type, purity, stock_uom, date, time=None):
@@ -12,14 +13,19 @@ def get_board_rate(item_type, purity, stock_uom, date, time=None):
     else:
         filters = { 'docstatus': '1', 'item_type': item_type, 'purity': purity, 'date': getdate(date) }
 
+    print(filters)
+
     if frappe.db.exists('Board Rate', filters):
         # get board rate and board rate uom (bruom)
         board_rate, bruom = frappe.db.get_value('Board Rate', filters, ['board_rate', 'uom'])
+        print("as", board_rate, bruom)
         # return board rate if board rate uom is same as stock uom
         if bruom == stock_uom:
             return board_rate
         # else multiply the board rate with conversion factor
         else:
+            if stock_uom == "Nos" or bruom == 'Gram' or bruom == 'Nos':
+                return board_rate
             # get conversion factor value using stock_uom as from_uom and bruom as to_uom
             conversion_factor = get_conversion_factor(stock_uom, bruom)
             if conversion_factor:

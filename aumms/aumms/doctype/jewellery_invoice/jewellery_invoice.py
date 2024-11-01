@@ -57,12 +57,11 @@ class JewelleryInvoice(Document):
 			if item.amount is not None:
 				amount += item.amount
 		currency = self.currency
-		self.grand_total = amount
 		if self.disable_rounded_total:
-			self.rounded_total = amount
+			# self.rounded_total = amount
 			self.rounding_adjustment = 0
 		else:
-			self.rounded_total = round(amount)
+			self.rounded_total = round(self.grand_total)
 			self.rounding_adjustment = self.rounded_total - amount
 		self.in_words = money_in_words(self.rounded_total, currency)
 		self.outstanding_amount = self.rounded_total - self.paid_amount
@@ -152,6 +151,12 @@ def create_sales_order(source_name, sales_taxes_and_charges_template , target_do
 				},
 			},
 		}, target_doc, set_missing_values)
+	# Setting the discount amount
+	try:
+	    Jewellery = frappe.get_doc("Jewellery Invoice", source_name)
+	    target_doc.discount_amount = abs(Jewellery.rounding_adjustment)
+	except Exception as e:
+		frappe.log_error("ERROR OCCURED", e)
 	target_doc.submit()
 	frappe.msgprint(('Sales Order created'), indicator="green", alert=1)
 	frappe.db.commit()
@@ -412,8 +417,10 @@ def get_board_rate(old_item, transaction_date):
 	# Fetch the boardrate from the 'Board Rate' doctype
 	board_rate = frappe.db.get_value('Board Rate', {'old_item': old_item, 'valid_from': ('<=', transaction_date)},
 									 'board_rate', order_by='valid_from desc', as_dict=True)
+	print(board_rate)
 
 	return {'board_rate': board_rate}
+
 
 @frappe.whitelist()
 def create_delivery_note(source_name, jewellery_invoice, target_doc=None):
@@ -494,3 +501,38 @@ def get_sales_taxes_and_charges_details(sales_taxes_and_charges_template, total_
 			total_taxes_and_charges += tax_amount
 
 	return custom_sales_taxes_and_charges
+
+
+@frappe.whitelist()
+def get_making_charge(item_code):
+    """
+    Fetches the making_charge for a given item_code from the AuMMS Item doctype.
+    """
+    if item_code:
+        
+        making_charge = frappe.db.get_value('AuMMS Item', {'item_code': item_code}, 'making_charge')
+        return making_charge if making_charge else 0
+    return 0
+
+
+
+# def before_save(self):
+# 	self.update_making_charge()
+
+# def update_making_charge(self):
+# 	try:
+# 		for item in self.items:
+# 			if item.item_code:
+# 				item.making_charge = get_making_charge(item.item_code)
+# 	except Exception as e:
+# 		frappe.log_error("This error occured -> ",e)			
+
+# def get_making_charge(item_code):
+#     """
+#     Fetches the making_charge for a given item_code from the AuMMS Item doctype.
+#     """
+#     if item_code:
+        
+#         making_charge = frappe.db.get_value('AuMMS Item', {'item_code': item_code}, 'making_charge')
+#         return making_charge if making_charge else 0
+#     return 0

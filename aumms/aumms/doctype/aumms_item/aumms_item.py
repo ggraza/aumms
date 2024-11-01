@@ -5,6 +5,7 @@ import json
 
 import frappe
 from frappe.model.document import Document
+from frappe.utils import getdate
 
 # Fields used to map AuMMS Item to Item
 aumms_item_fields = [
@@ -171,19 +172,41 @@ def create_opening_stock_from_list(item_list_json):
     return "Opening stock creation has been enqueued."
 
 
+
+
 def create_opening_stock(item_list):
-    for item in item_list:
+    warehouse = frappe.db.exists("Warehouse", {"name": ["like", "%Stores%"]})
+    account = frappe.db.exists("Account", {"name": ["like", "%Temporary Opening%"]})
+
+    
+    current_date = getdate()
+
+    for item_name in item_list:
+        
+        aumms_item = frappe.get_doc("AuMMS Item", item_name)
+        
+        board_rate = frappe.db.get_value('Board Rate', 
+                                          {
+                                              'item_type': aumms_item.item_type,
+                                              'purity': aumms_item.purity,
+                                              'date': current_date  
+                                          },
+                                          'board_rate')
+        
         try:
             doc = frappe.new_doc("Stock Reconciliation")
             doc.purpose = "Opening Stock"
-            doc.expense_account = "Temporary Opening - A"
+            doc.expense_account = account
+            
+            doc.date = current_date
+            
             doc.append(
                 "items",
                 {
-                    "item_code": item,
-                    "warehouse": "Stores - A",
-                    "qty": 5,
-                    "valuation_rate": 10000000,
+                    "item_code": aumms_item.item_code,  
+                    "warehouse": warehouse,
+                    "qty": 1,
+                    "valuation_rate": board_rate * aumms_item.gold_weight if board_rate else 0,  
                 },
             )
             doc.insert(ignore_permissions=True)
