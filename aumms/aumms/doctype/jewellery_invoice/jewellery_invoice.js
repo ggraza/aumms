@@ -224,7 +224,7 @@ frappe.ui.form.on('Jewellery Invoice Item', {
                     let stone_details = r.message.stone_details;  
                     
                     $.each(stone_details, function(index, row) {
-                        let child = frm.add_child('custom_stone_detail_');
+                        let child = frm.add_child('stone_details');
                         child.item_code = d.item_code;
                         child.item_name = row.item_name;
                         child.stone_type = row.stone_type;
@@ -232,7 +232,7 @@ frappe.ui.form.on('Jewellery Invoice Item', {
                         child.stone_charge = row.stone_charge;
                     });
 
-                    frm.refresh_field('custom_stone_detail_');
+                    frm.refresh_field('stone_details');
                 }
             }
         });
@@ -849,11 +849,11 @@ function calculate_discount_and_total(frm, cdt, cdn) {
   frappe.model.set_value(cdt, cdn, 'custom_discount_final', discounted_amount);
 
   // Calculate and set the total discounted amount
-  let total = frm.doc.custom_stone_detail_.reduce((sum, r) => 
+  let total = frm.doc.stone_details.reduce((sum, r) => 
     sum + flt(r.stone_charge) * (1 - flt(r.discount) / 100), 0);
     
   frm.set_value('custom_discount_final', total);
-  frm.refresh_fields(['custom_stone_detail_', 'custom_discount_final']);
+  frm.refresh_fields(['stone_details', 'custom_discount_final']);
 }
 
 
