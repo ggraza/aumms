@@ -516,23 +516,31 @@ def get_making_charge(item_code):
 
 
 
-# def before_save(self):
-# 	self.update_making_charge()
+@frappe.whitelist()
+def get_pricing_rule_and_items(customer):
+    """Fetches the discount percentage and items from Pricing Rule Doctype based on Customer"""
+    
+    pricing_rule = frappe.db.get_list(
+        "Pricing Rule",
+        filters={"customer": customer, "disable": 0},
+        fields=["name", "discount_percentage"],
+        limit=1
+    )
 
-# def update_making_charge(self):
-# 	try:
-# 		for item in self.items:
-# 			if item.item_code:
-# 				item.making_charge = get_making_charge(item.item_code)
-# 	except Exception as e:
-# 		frappe.log_error("This error occured -> ",e)			
+    if pricing_rule:
+        pricing_rule_name = pricing_rule[0].name
+        discount_percentage = pricing_rule[0].discount_percentage
 
-# def get_making_charge(item_code):
-#     """
-#     Fetches the making_charge for a given item_code from the AuMMS Item doctype.
-#     """
-#     if item_code:
-        
-#         making_charge = frappe.db.get_value('AuMMS Item', {'item_code': item_code}, 'making_charge')
-#         return making_charge if making_charge else 0
-#     return 0
+        rule_items = frappe.get_all(
+            "Pricing Rule Item Code",
+            filters={"parent": pricing_rule_name},
+            fields=["item_code"]
+        )
+
+        # Return the discount percentage and the list of item codes
+        return {
+            "discount_percentage": discount_percentage,
+            "rule_items": rule_items
+        }
+    
+    return {}

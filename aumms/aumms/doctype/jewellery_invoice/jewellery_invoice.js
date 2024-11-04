@@ -32,22 +32,7 @@ frappe.ui.form.on('Jewellery Invoice', {
       })
     }
   },
-  // validate: function(frm){
-  //   set_totals(frm);
-  // },
-    
-   // edit by aj
 
-  // disable_rounded_total: function(frm){
-  //   if(frm.doc.disable_rounded_total){
-  //     frm.set_value('rounding_adjustment', 0);
-  //   }
-  //   else{
-  //     frm.set_value('rounded_total', Math.round(frm.doc.grand_total));
-  //     frm.set_value('rounding_adjustment', frm.doc.rounded_total - frm.doc.grand_total);
-  //   }
-  //   frm.set_value('rounded_total', frm.doc.grand_total+frm.doc.rounding_adjustment);
-  // },
   delivery_date: function(frm){
     if(frm.doc.delivery_date){
       set_missing_delivery_dates(frm);
@@ -99,7 +84,6 @@ frappe.ui.form.on('Jewellery Invoice', {
 }
 });
 
-//  edited by aj
 frappe.ui.form.on('Old Jewellery Item', {
   item_code: function(frm, cdt, cdn) {
     let d = locals[cdt][cdn];
@@ -157,112 +141,8 @@ frappe.ui.form.on('Old Jewellery Item', {
   }
 });
 
-//  aj
 
 frappe.ui.form.on('Jewellery Invoice Item', {
-//  item_code: function(frm, cdt, cdn){
-//   console.log("here-1");
-//   let d = locals[cdt][cdn];
-//     if (d.item_code){
-//       if(frm.doc.delivery_date){
-//         frappe.model.set_value(d.doctype, d.name, 'delivery_date', frm.doc.delivery_date);
-//       }
-//       if (d.is_purity_item){
-//         frappe.call({
-//           // Method for fetching  gold_weight, making_charge_percentage, making_charge & board_rate
-//           method: 'aumms.aumms.doc_events.sales_order.get_item_details',
-//           args: {
-//             'item_code': d.item_code,
-//             'item_type': d.item_type,
-//             'date': frm.doc.transaction_date,
-//             'purity': d.purity,
-//             'stock_uom': d.stock_uom
-//           },
-//           callback: function(r) {
-//             if (r.message){
-//               frappe.model.set_value(d.doctype, d.name, 'gold_weight', r.message['gold_weight']);
-//               frappe.model.set_value(d.doctype, d.name, 'stone_weight', r.message['stone_weight']);
-//               frappe.model.set_value(d.doctype, d.name, 'net_weight', r.message['net_weight']);
-//               frappe.model.set_value(d.doctype, d.name, 'stone_charge', r.message['stone_charge']);
-//               frappe.model.set_value(d.doctype, d.name, 'making_charge_percentage', r.message['making_charge_percentage']);
-//               frappe.model.set_value(d.doctype, d.name, 'is_fixed_making_charge', r.message['making_charge']);
-//               frappe.model.set_value(d.doctype, d.name, 'board_rate', r.message['board_rate']);
-//               frappe.model.set_value(d.doctype, d.name, 'making_charge_based_on', r.message['making_charge_based_on']);
-//               frappe.model.set_value(d.doctype, d.name, 'making_charge_percentage', r.message['making_charge_percentage']);
-//               frappe.model.set_value(d.doctype, d.name, 'amount_with_out_making_charge', r.message['gold_weight'] * r.message['board_rate']);
-//               frappe.model.set_value(d.doctype, d.name, 'net_amount_with_out_making_charge', (r.message['gold_weight'] * r.message['board_rate']) + r.message['stone_charge']);
-//               if (r.message['making_charge']){
-//                 frappe.model.set_value(d.doctype, d.name, 'making_charge', r.message['making_charge']);
-//               }
-//               else {
-//                 //set making_charge if it's percentage
-//                 frappe.model.set_value(d.doctype, d.name, 'making_charge', (d.amount_with_out_making_charge)*(d.making_charge_percentage * 0.01));
-//               }
-//               frappe.model.set_value(d.doctype, d.name, 'rate', (d.net_amount_with_out_making_charge + d.making_charge)/d.gold_weight);
-//               frm.refresh_field('items');
-//             }
-//           }
-//         })
-//       }
-//     }
-
-
-    // code to fetch stone details aj
-// },
-  item_code: function(frm, cdt, cdn) {
-    let d = locals[cdt][cdn];
-    
-    if (d.item_code) {
-        frappe.call({
-            method: "frappe.client.get",
-            args: {
-                doctype: "AuMMS Item",
-                name: d.item_code  
-            },
-            callback: function(r) {
-                if (r.message) {
-                    let stone_details = r.message.stone_details;  
-                    
-                    $.each(stone_details, function(index, row) {
-                        let child = frm.add_child('stone_details');
-                        child.item_code = d.item_code;
-                        child.item_name = row.item_name;
-                        child.stone_type = row.stone_type;
-                        child.stone_weight = row.stone_weight;
-                        child.stone_charge = row.stone_charge;
-                    });
-
-                    frm.refresh_field('stone_details');
-                }
-            }
-        });
-    }
-},
-  // item_code: function(frm, cdt, cdn) {
-  //   let d = locals[cdt][cdn];  
-    
-  //   if (d.item_code) {
-  //     frappe.db.get_list('Stone Details', {
-  //           fields: ['item_name', 'stone_type', 'stone_weight', 'stone_charge'],
-  //           filters: {
-  //               parent: d.item_code  
-  //           }
-  //       }).then(records => {
-            
-  //           records.forEach(record => {
-                
-  //               let child = frm.add_child('custom_stone_detail_');
-  //               child.item_name = record.item_name;
-  //               child.stone_type = record.stone_type;
-  //               child.stone_weight = record.stone_weight;
-  //               child.stone_charge = record.stone_charge;
-  //           });
-
-  //           frm.refresh_field('custom_stone_detail_');
-  //       });
-  //   }
-
-  
 
   gold_weight: function(frm, cdt, cdn){
     let d = locals[cdt][cdn];
@@ -443,19 +323,6 @@ let set_filters = function(frm){
   });
 }
 
-// let set_totals = function(frm){
-//   let total = 0;
-//   if(frm.doc.items){
-//     frm.doc.items.forEach((child) => {
-//       if(child.amount){
-//         total = total + child.amount;
-//       }
-//     });
-//   }
-//   frm.set_value('grand_total', total);
-//   frm.set_value('rounded_total', total);
-//   frm.refresh_fields();
-// }
 
 let set_net_weight_and_amount = function(frm) {
   let total_old_gold_weight = 0;
@@ -499,41 +366,6 @@ let set_net_weight_and_amount = function(frm) {
 }
 
 
-// let set_net_weight_and_amount = function(frm){
-//   let total_old_gold_weight = 0;
-//   let total_gold_weight = 0;
-//   let total_old_gold_amount = 0;
-//   let total_gold_amount = 0;
-//   let balance_amount = 0;
-//   if(frm.doc.items){
-//     frm.doc.items.forEach((child) => {
-//       if(child.gold_weight){
-//         total_gold_weight = total_gold_weight + child.gold_weight;
-//       }
-//       if(child.amount){
-//         total_gold_amount = total_gold_amount + child.amount;
-//       }
-//     });
-//   }
-//   if(frm.doc.transaction_type!='Sales' && frm.doc.old_jewellery_items){
-//     frm.doc.old_jewellery_items.forEach((child) => {
-//       if(child.weight){
-//         total_old_gold_weight = total_old_gold_weight + child.weight;
-//       }
-//       if(child.amount){
-//         total_old_gold_amount = total_old_gold_amount + child.amount;
-//       }
-//     });
-//   }
-//   balance_amount = total_gold_amount - total_old_gold_amount
-//   frm.set_value('total_gold_weight', total_gold_weight);
-//   frm.set_value('total_gold_amount', total_gold_amount);
-//   frm.set_value('total_old_gold_weight', total_old_gold_weight);
-//   frm.set_value('total_old_gold_amount', total_old_gold_amount);
-//   frm.set_value('balance_amount', balance_amount);
-//   frm.refresh_fields();
-// }
-
 let set_missing_delivery_dates = function(frm){
   if(frm.doc.items){
     frm.doc.items.forEach((child) => {
@@ -564,13 +396,6 @@ let create_custom_buttons = function(frm){
         });
     }, 'Create');
   }
-  // if (frm.doc.sales_invoice && !frm.doc.metal_ledger_entry){
-  //   frappe.call('aumms.aumms.aumms.utils.create_metal_ledger_entries', {
-  //     doc : frm.doc.sales_invoice
-  //   }).then(r => {
-  //     frm.reload_doc();
-  //   });
-  // }
 
   if(frm.doc.sales_invoice && !frm.doc.delivery_note && !frm.doc.delivered){
     frm.add_custom_button('Delivery Note', () => {
@@ -735,7 +560,7 @@ let get_customer_advances= function(frm){
 
 
 
-// code to fetch the Item details by aj
+// code to fetch the Item details
 
 frappe.ui.form.on('Jewellery Invoice Item', {
   item_code: function(frm, cdt, cdn) {
@@ -813,26 +638,6 @@ frappe.ui.form.on('Jewellery Invoice Item', {
   }
 });
 
-//fetching making_charge
-function fetch_and_set_making_charge(frm, d) {
-  frappe.call({
-    method: "aumms.aumms.doctype.jewellery_invoice.jewellery_invoice.get_making_charge",
-    args: {
-      item_code: d.item_code
-    },
-    callback: function(r) {
-      if (r.message) {
-        frappe.model.set_value(d.doctype, d.name, 'making_charge', r.message);
-        console.log(r.message, 'Fetched making_charge');
-        
-      }
-      frm.refresh_field('items');
-    }
-  });
-};
-
-
-// code by aj
 // discount
 
 frappe.ui.form.on('Stone Detals - 2', {
@@ -857,7 +662,7 @@ function calculate_discount_and_total(frm, cdt, cdn) {
 }
 
 
-// code to set Grand Total by aj
+// code to set Grand Total 
 
 frappe.ui.form.on('Jewellery Invoice', {
   items: {
@@ -876,13 +681,147 @@ function calculate_total(frm) {
   let total_amount = 0;
   let discount = frm.doc.custom_discount_final || 0;
 
-  // Sum up for all items in the table
   frm.doc.items.forEach(function(item) {
       total_amount += (item.board_rate || 0) * (item.gold_weight || 0) + (item.making_charge || 0);
   });
+  console.log(total_amount);
+  
 
   frm.set_value('grand_total', total_amount + discount);
   frm.set_value('rounded_total', grand_total)
 
 }
 
+
+
+//  code for stone details and discount
+frappe.ui.form.on('Jewellery Invoice Item', {
+  item_code: function(frm, cdt, cdn) {
+      let row = locals[cdt][cdn];
+      if (!row.item_code) return;
+      
+      fetch_and_add_stone_details(frm, row);
+  }
+});
+
+// Fetch stone details from AuMMS Item
+function fetch_and_add_stone_details(frm, row) {
+  frappe.call({
+      method: "frappe.client.get",
+      args: {
+          doctype: "AuMMS Item",
+          name: row.item_code  
+      },
+      callback: function(r) {
+          if (!r.message) {
+              frappe.msgprint('No item details found');
+              return;
+          }
+
+          let stone_details = r.message.stone_details || [];
+          add_stone_details_to_table(frm, row.item_code, stone_details);
+          
+          if (frm.doc.customer) {
+              apply_pricing_rules(frm);
+          }
+      }
+  });
+}
+
+// Add stone details to child table
+function add_stone_details_to_table(frm, item_code, stone_details) {
+  
+  stone_details.forEach(function(row) {
+      let child = frm.add_child('stone_details');
+      child.item_code = item_code;
+      child.item_name = row.item_name;
+      child.stone_type = row.stone_type;
+      child.stone_weight = row.stone_weight;
+      child.stone_charge = row.stone_charge;
+  });
+
+  frm.refresh_field('stone_details');
+}
+
+// Apply pricing rules based on customer
+function apply_pricing_rules(frm) {
+  frappe.call({
+      method: "aumms.aumms.doctype.jewellery_invoice.jewellery_invoice.get_pricing_rule_and_items",
+      args: {
+          customer: frm.doc.customer
+      },
+      callback: function(r) {
+          if (!r.message) return;
+
+          let discount_percentage = r.message.discount_percentage;
+          let rule_items = r.message.rule_items || [];
+
+          update_stone_discounts(frm, discount_percentage, rule_items);
+      }
+  });
+}
+
+// Update discounts for matching stones
+function update_stone_discounts(frm, discount_percentage, rule_items) {
+  frm.doc.stone_details.forEach(function(stone) {
+      let matched_item = rule_items.find(function(item) {
+          return item.item_code === stone.item_name;
+      });
+      
+      if (matched_item) {
+          frappe.model.set_value(
+              stone.doctype, 
+              stone.name, 
+              'discount', 
+              discount_percentage
+          );
+      }
+  });
+
+  frm.refresh_field('stone_details');
+}
+
+
+
+
+
+//  fetch making charge
+frappe.ui.form.on('Jewellery Invoice Item', {
+  item_code: function(frm, cdt, cdn) {
+      let row = locals[cdt][cdn];
+      if (!row.item_code) {
+          frappe.msgprint('Please select an Item Code');
+          return;
+      }
+      
+      fetch_and_set_making_charge(frm, row);
+  }
+});
+
+function fetch_and_set_making_charge(frm, row) {
+  frappe.call({
+      method: "aumms.aumms.doctype.jewellery_invoice.jewellery_invoice.get_making_charge",
+      args: {
+          item_code: row.item_code
+      },
+      callback: function(r) {
+          if (!r.message) {
+              return;
+          }
+
+          update_making_charge(frm, row, r.message);
+      },
+  });
+}
+
+// Update the making charge in the row
+function update_making_charge(frm, row, making_charge) {
+  frappe.model.set_value(
+      row.doctype, 
+      row.name, 
+      'making_charge', 
+      making_charge
+  );
+  
+  frm.refresh_field('items');
+}
