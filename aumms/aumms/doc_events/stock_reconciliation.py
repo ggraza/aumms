@@ -38,13 +38,15 @@ def insert_metal_ledger_entry(
 		),
 		"amount": item.amount if not is_reversal else -item.amount,
 		"incoming_rate" if not is_reversal else "outgoing_rate": item.valuation_rate,
+		"entry_type": "Opening Stock" if doc.purpose == 'Opening Stock' else None
 	}
+
 
 	frappe.get_doc(fields).insert(ignore_permissions=1)
 
 
 def process_metal_ledger(doc, is_reversal=False):
-	if not doc.custom_keep_metal_ledger:
+	if not doc.keep_metal_ledger:
 		return
 
 	ledger_created = False

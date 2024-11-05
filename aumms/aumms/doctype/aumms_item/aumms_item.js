@@ -237,3 +237,62 @@ let calculate_stone_weight_and_charge = function(frm){
   frm.set_value('stone_weight', stone_weight);
   frm.set_value('stone_charge', stone_charge);
 }
+
+
+//  Button to create Stock reconciliation
+///////
+
+frappe.ui.form.on('AuMMS Item', {
+  refresh: function(frm) {
+          frm.page.set_primary_action(__('Create'), function() {
+              // Remove any existing "Create Opening Stock" button
+              frm.remove_custom_button('Create Opening Stock');
+
+              // Add "Create Opening Stock" button
+              frm.add_custom_button(__('Create Opening Stock'), function() {
+                  // Open a dialog to select the Board Rate
+                  let dialog = new frappe.ui.Dialog({
+                      title: __('Select Board Rate'),
+                      fields: [
+                          {
+                              label: __('Board Rate'),
+                              fieldname: 'board_rate',
+                              fieldtype: 'Link',
+                              options: 'Board Rate',
+                              reqd: true
+                          }
+                      ],
+                      primary_action_label: __('Create Opening Stock'),
+                      primary_action: function(data) {
+                          dialog.hide();  // Hide dialog after selection
+                          
+                          // Call the server-side function to create the opening stock
+                          frappe.call({
+                              method: 'aumms.aumms.doctype.aumms_item.aumms_item.create_opening_stock',
+                              args: {
+                                  item_list: frm.doc.name,
+                                  board_rate: data.board_rate
+                              },
+                              freeze: true,
+                              freeze_message: __('Creating Opening Stock...'),
+                              callback: function(r) {
+                                  if (!r.exc) {
+                                      frappe.msgprint({
+                                          title: __('Success'),
+                                          message: __('Opening Stock Created Successfully: <a href="/app/stock-reconciliation/{0}">{1}</a>', 
+                                              [r.message, r.message]),
+                                          indicator: 'green'
+                                      });
+                                      frm.reload_doc();
+                                  }
+                              }
+                          });
+                      }
+                  });
+
+                  dialog.show();
+              });
+          });
+    
+  }
+});

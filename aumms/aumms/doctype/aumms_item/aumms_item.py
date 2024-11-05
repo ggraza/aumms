@@ -63,8 +63,8 @@ class AuMMSItem(Document):
     def after_insert(self):
         """Method to create Item from AuMMS Item"""
         self.create_or_update_item()
-        if self.create_opening_stock:
-            create_opening_stock([self.name])
+        # if self.create_opening_stock:
+            # create_opening_stock([self.name])
 
     def on_update(self):
         """Method to update created Item on changes of AuMMS Item"""
@@ -173,44 +173,48 @@ def create_opening_stock_from_list(item_list_json):
 
 
 
-
-def create_opening_stock(item_list):
+@frappe.whitelist()
+def create_opening_stock(item_list, board_rate=None):
+    # Retrieve the first available Warehouse and Account
     warehouse = frappe.db.exists("Warehouse", {"name": ["like", "%Stores%"]})
     account = frappe.db.exists("Account", {"name": ["like", "%Temporary Opening%"]})
 
-    
+    if not warehouse or not account:
+        frappe.throw("Required Warehouse or Account not found.")
+
     current_date = getdate()
+    
+    aumms_item = frappe.get_doc("AuMMS Item", item_list)
 
-    for item_name in item_list:
-        
-        aumms_item = frappe.get_doc("AuMMS Item", item_name)
-        
-        board_rate = frappe.db.get_value('Board Rate', 
-                                          {
-                                              'item_type': aumms_item.item_type,
-                                              'purity': aumms_item.purity,
-                                              'date': current_date  
-                                          },
-                                          'board_rate')
-        
-        try:
-            doc = frappe.new_doc("Stock Reconciliation")
-            doc.purpose = "Opening Stock"
-            doc.expense_account = account
-            
-            doc.date = current_date
-            
-            doc.append(
-                "items",
-                {
-                    "item_code": aumms_item.item_code,  
-                    "warehouse": warehouse,
-                    "qty": 1,
-                    "valuation_rate": board_rate * aumms_item.gold_weight if board_rate else 0,  
-                },
-            )
-            doc.insert(ignore_permissions=True)
-            doc.submit()
+    # Fetch the actual board rate value using the `board_rate` field from the selected Board Rate document
+    if board_rate:
+        board_rate_value = frappe.db.get_value("Board Rate", board_rate, "board_rate")
+        board_rate = float(board_rate_value) if board_rate_value else 0
+    else:
+        board_rate = 0
 
-        except Exception as e:
-            frappe.log_error(e)
+    try:
+        # Create new Stock Reconciliation document
+        doc = frappe.new_doc("Stock Reconciliation")
+        doc.purpose = "Opening Stock"
+        doc.expense_account = account
+        doc.date = current_date
+
+        # Append item details with the retrieved board_rate
+        doc.append(
+            "items",
+            {
+                "item_code": aumms_item.item_code,
+                "warehouse": warehouse,
+                "qty": 1,
+                "valuation_rate": board_rate * aumms_item.gold_weight,
+            },
+        )
+        
+        # Insert and submit the Stock Reconciliation document
+        doc.insert(ignore_permissions=True)
+        return doc.name  # Return the name for success message link
+
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Opening Stock Creation Error")
+        frappe.throw("An error occurred while creating the Opening Stock: {0}").format(str(e))

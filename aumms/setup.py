@@ -1,5 +1,15 @@
 import frappe
 from frappe import _
+from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
+
+
+def after_install():
+    #Creating AuMMS specific custom fields
+    create_custom_fields(get_stock_reconciliation_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_metal_ledger_custom_fields(), ignore_validate=True)
+
+def after_migrate():
+    after_install()
 
 def is_setup_completed():
     if frappe.db.get_single_value("System Settings", "setup_complete"):
@@ -77,3 +87,36 @@ def create_department_for_smith():
         department_doc.is_group = 1
         department_doc.insert(ignore_permissions = True)
         frappe.db.commit()
+
+
+
+def get_stock_reconciliation_custom_fields():
+    '''
+    Custom fields that need to be added to the Stock Reconciliation Doctype
+    '''
+    return {
+        "Stock Reconciliation": [
+            {
+                "fieldname": "keep_metal_ledger",
+                "fieldtype": "Check",
+                "label": "Keep Metal Ledger",
+                "insert_after": "purpose"
+            }
+        ]
+    }
+
+def get_metal_ledger_custom_fields():
+    '''
+    Custom fields that need to be added to the Metal Ledger Entry Doctype
+    '''
+    return {
+        "Metal Ledger Entry": [
+            {
+            "fieldname": "entry_type",
+            "fieldtype": "Data",
+            "label": "Entry Type",
+            "insert_after": "voucher_type",
+            "read_only":1
+            }
+        ]
+    }
