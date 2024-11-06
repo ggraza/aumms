@@ -14,12 +14,6 @@ class JewelleryReceipt(Document):
 			item_code_parts = [self.item_category, str(item_detail.gold_weight)]
 
 			if item_detail.has_stone:
-				# if item_detail.single_stone:
-				# 	item_code_parts.extend([item_detail.stone, str(item_detail.stone_weight)])
-				# elif item_detail.multi_stone:
-				# 	stones = item_detail.stones.split(',') if item_detail.stones else []
-				# 	for stone in stones:
-				# 		item_code_parts.append(stone)
 				for stone in self.item_wise_stone_details:
 					item_code_parts.append(stone.stone)
 
@@ -100,22 +94,9 @@ class JewelleryReceipt(Document):
 			purchase_receipt.submit()
 			frappe.msgprint('Purchase Receipt created.', indicator="green", alert=1)
 
-		# except frappe.DuplicateEntryError as e:
-		#     # Handle duplicate entry error
-		#     frappe.msgprint(f'Duplicate entry error: {e}', indicator="red", alert=1)
-		# except Exception as ex:
-		#     # Handle other exceptions
-		#     frappe.msgprint(f'Error: {ex}', indicator="red", alert=1)
 
 	def calculate_item_details(self):
 		for item_detail in self.get("item_details"):
-			# if item_detail.single_stone:
-			# 	if item_detail.stone_weight:
-			# 		item_detail.net_weight = item_detail.gold_weight + item_detail.stone_weight
-			# 		if item_detail.unit_stone_charge:
-			# 			item_detail.stone_charge = item_detail.unit_stone_charge * item_detail.stone_weight
-			# else:
-			# 	item_detail.net_weight = item_detail.gold_weight
 			if self.board_rate:
 				if item_detail.has_stone:
 					item_detail.amount_without_making_charge = (item_detail.gold_weight * self.board_rate) + item_detail.stone_charge

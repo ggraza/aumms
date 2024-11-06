@@ -240,7 +240,6 @@ let calculate_stone_weight_and_charge = function(frm){
 
 
 //  Button to create Stock reconciliation
-///////
 
 frappe.ui.form.on('AuMMS Item', {
   refresh: function(frm) {

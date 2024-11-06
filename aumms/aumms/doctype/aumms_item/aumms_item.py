@@ -63,8 +63,6 @@ class AuMMSItem(Document):
     def after_insert(self):
         """Method to create Item from AuMMS Item"""
         self.create_or_update_item()
-        # if self.create_opening_stock:
-            # create_opening_stock([self.name])
 
     def on_update(self):
         """Method to update created Item on changes of AuMMS Item"""
@@ -175,7 +173,10 @@ def create_opening_stock_from_list(item_list_json):
 
 @frappe.whitelist()
 def create_opening_stock(item_list, board_rate=None):
-    # Retrieve the first available Warehouse and Account
+    """
+    Function to create Opening Stock 
+    """
+
     warehouse = frappe.db.exists("Warehouse", {"name": ["like", "%Stores%"]})
     account = frappe.db.exists("Account", {"name": ["like", "%Temporary Opening%"]})
 
@@ -194,13 +195,11 @@ def create_opening_stock(item_list, board_rate=None):
         board_rate = 0
 
     try:
-        # Create new Stock Reconciliation document
         doc = frappe.new_doc("Stock Reconciliation")
         doc.purpose = "Opening Stock"
         doc.expense_account = account
         doc.date = current_date
 
-        # Append item details with the retrieved board_rate
         doc.append(
             "items",
             {
@@ -211,9 +210,9 @@ def create_opening_stock(item_list, board_rate=None):
             },
         )
         
-        # Insert and submit the Stock Reconciliation document
+        
         doc.insert(ignore_permissions=True)
-        return doc.name  # Return the name for success message link
+        return doc.name  
 
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "Opening Stock Creation Error")
