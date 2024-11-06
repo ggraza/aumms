@@ -101,7 +101,7 @@ def create_metal_ledger_entries(doc, method=None):
                 fields['stock_uom'] = item.weight_uom
                 fields['purity'] = aumms_item_doc.purity
                 fields['purity_percentage'] = aumms_item_doc.purity_percentage
-                fields['board_rate'] = item.rate
+                fields['board_rate'] = item.board_rate
                 fields['batch_no'] = item.batch_no
                 fields['item_type'] = aumms_item_doc.item_type
                 # get balance qty of the item for this party

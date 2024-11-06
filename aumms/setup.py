@@ -7,6 +7,7 @@ def after_install():
     #Creating AuMMS specific custom fields
     create_custom_fields(get_stock_reconciliation_custom_fields(), ignore_validate=True)
     create_custom_fields(get_metal_ledger_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_purchase_receipt_custom_fields(), ignore_validate=True)
 
 def after_migrate():
     after_install()
@@ -118,5 +119,43 @@ def get_metal_ledger_custom_fields():
             "insert_after": "voucher_type",
             "read_only":1
             }
+        ]
+    }
+
+
+def get_purchase_receipt_custom_fields():
+    '''
+    Custom fields that need to be added to the Purchase Receipt Doctype
+    '''
+    return {
+        "Purchase Receipt":[
+
+        ],
+        "Purchase Receipt Item" : [
+            {
+            "fieldname": "board_rate",
+            "fieldtype": "Data",
+            "label": "Board Rate",
+            "insert_after": "amount"
+            },
+            {
+            "fieldname": "stone_weight",
+            "fieldtype": "Data",
+            "label": "Stone Weight",
+            "insert_after": "is_free_item"
+            },
+            {
+            "fieldname": "stone_charge",
+            "fieldtype": "Data",
+            "label": "Stone Charge",
+            "insert_after": "stone_weight"
+            },
+            {
+            "fieldname": "making_charge",
+            "fieldtype": "Data",
+            "label": "Making Charge",
+            "insert_after": "board_rate"
+            }
+
         ]
     }
