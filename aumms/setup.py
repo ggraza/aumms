@@ -8,6 +8,8 @@ def after_install():
     create_custom_fields(get_stock_reconciliation_custom_fields(), ignore_validate=True)
     create_custom_fields(get_metal_ledger_custom_fields(), ignore_validate=True)
     create_custom_fields(get_purchase_receipt_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_sales_invoice_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_jewellery_invoice_custom_fields(), ignore_validate=True)
 
 def after_migrate():
     after_install()
@@ -157,5 +159,49 @@ def get_purchase_receipt_custom_fields():
             "insert_after": "board_rate"
             }
 
+        ]
+    }
+
+
+def get_sales_invoice_custom_fields():
+    '''
+    Custom fields that need to be added to the Sales Invoice Doctype
+    '''
+    return {
+        "Sales Invoice": [
+            
+        ],
+        "Sales Invoice Item": [
+            {
+                "fieldname": "board_rate",
+                "fieldtype": "Data",
+                "label": "Board Rate",
+                "insert_after": "amount"
+            }
+        ]
+    }
+
+
+def get_jewellery_invoice_custom_fields():
+    return {
+        "Jewellery Invoice": [
+            {
+                "fieldname": "discounts",
+                "fieldtype": "Section Break",
+                "label": "Discounts",
+                "insert_after": "stone_details"
+            },
+            {
+                "fieldname": "discount_amount",
+                "fieldtype": "Data",
+                "label": "Discount Amount",
+                "insert_after": "discounts"
+            },
+            {
+                "fieldname": "discount_column_break",
+                "fieldtype": "Column Break",
+                "label": "",
+                "insert_after": "discount_amount"
+            }
         ]
     }

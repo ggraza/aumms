@@ -406,14 +406,14 @@
    "fieldname": "stone_details",
    "fieldtype": "Table",
    "label": "Stone Details",
-   "options": "Stone Detals - 2"
+   "options": "Stone Details - 2"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-02 10:57:46.369218",
+ "modified": "2024-11-08 15:09:59.576364",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Jewellery Invoice",

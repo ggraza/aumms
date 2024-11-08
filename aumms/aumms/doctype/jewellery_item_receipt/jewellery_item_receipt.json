@@ -24,6 +24,7 @@
   "amount_without_making_charge",
   "amount",
   "hallmarked",
+  "is_sales_item",
   "huid",
   "section_break_lkhd",
   "has_stone",
@@ -221,12 +222,18 @@
    "fieldtype": "Data",
    "label": "HUID",
    "mandatory_depends_on": "eval: doc.hallmarked"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_sales_item",
+   "fieldtype": "Check",
+   "label": "Is Sales Item"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-08-31 11:10:52.640578",
+ "modified": "2024-11-07 14:25:09.197843",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Jewellery Item Receipt",

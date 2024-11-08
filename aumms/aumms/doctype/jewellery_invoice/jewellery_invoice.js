@@ -638,28 +638,67 @@ frappe.ui.form.on('Jewellery Invoice Item', {
   }
 });
 
-// discount
+// // discount
 
-frappe.ui.form.on('Stone Detals - 2', {
+// frappe.ui.form.on('Stone Detals - 2', {
+//   discount: function(frm, cdt, cdn) {
+//     calculate_discount_and_total(frm, cdt, cdn);
+//   }
+// });
+
+// function calculate_discount_and_total(frm, cdt, cdn) {
+//   let row = locals[cdt][cdn];
+//   let discounted_amount = flt(row.stone_charge) * (1 - flt(row.discount) / 100);
+
+//   // Update the row's final discounted amount
+//   frappe.model.set_value(cdt, cdn, 'custom_discount_final', discounted_amount);
+
+//   // Calculate and set the total discounted amount
+//   let total = frm.doc.stone_details.reduce((sum, r) => 
+//     sum + flt(r.stone_charge) * (1 - flt(r.discount) / 100), 0);
+    
+//   frm.set_value('custom_discount_final', total);
+//   frm.refresh_fields(['stone_details', 'custom_discount_final']);
+// }
+
+
+frappe.ui.form.on('Stone Details - 2', {
   discount: function(frm, cdt, cdn) {
+      calculate_discount_and_total(frm, cdt, cdn);
+  },
+  stone_weight: function(frm, cdt, cdn) {
     calculate_discount_and_total(frm, cdt, cdn);
   }
+
 });
 
 function calculate_discount_and_total(frm, cdt, cdn) {
   let row = locals[cdt][cdn];
-  let discounted_amount = flt(row.stone_charge) * (1 - flt(row.discount) / 100);
+  let final_amount;
+  
+  if (row.discount && flt(row.discount) !== 0) {
+      final_amount = flt(row.stone_charge) * (1 - flt(row.discount) / 100);
+  } else {
+      final_amount = flt(row.stone_charge);
+  }
 
-  // Update the row's final discounted amount
-  frappe.model.set_value(cdt, cdn, 'custom_discount_final', discounted_amount);
+  // Update the row's final amount
+  frappe.model.set_value(cdt, cdn, 'custom_discount_final', final_amount);
 
-  // Calculate and set the total discounted amount
-  let total = frm.doc.stone_details.reduce((sum, r) => 
-    sum + flt(r.stone_charge) * (1 - flt(r.discount) / 100), 0);
-    
+  // Calculate total by checking each row
+  let total = frm.doc.stone_details.reduce((sum, r) => {
+      if (r.discount && flt(r.discount) !== 0) {
+          return sum + flt(r.stone_charge) * (1 - flt(r.discount) / 100);
+      } else {
+          return sum + flt(r.stone_charge);
+      }
+  }, 0);
+
   frm.set_value('custom_discount_final', total);
   frm.refresh_fields(['stone_details', 'custom_discount_final']);
 }
+
+
 
 
 // code to set Grand Total 
@@ -674,6 +713,9 @@ frappe.ui.form.on('Jewellery Invoice', {
   },
   custom_discount_final: function(frm) {
       calculate_total(frm);
+  },
+  total_gold_amount: function(frm) {
+    calculate_total(frm);
   }
 });
 
@@ -744,6 +786,7 @@ function add_stone_details_to_table(frm, item_code, stone_details) {
 }
 
 // Apply pricing rules based on customer
+
 function apply_pricing_rules(frm) {
   frappe.call({
       method: "aumms.aumms.doctype.jewellery_invoice.jewellery_invoice.get_pricing_rule_and_items",
@@ -751,31 +794,34 @@ function apply_pricing_rules(frm) {
           customer: frm.doc.customer
       },
       callback: function(r) {
-          if (!r.message) return;
+          let discount_percentage = 0;
+          let rule_items = [];
 
-          let discount_percentage = r.message.discount_percentage;
-          let rule_items = r.message.rule_items || [];
+          if (r.message) {
+              discount_percentage = r.message.discount_percentage || 0;
+              rule_items = r.message.rule_items || [];
+          }
 
           update_stone_discounts(frm, discount_percentage, rule_items);
       }
   });
 }
 
-// Update discounts for matching stones
+// Update discounts 
 function update_stone_discounts(frm, discount_percentage, rule_items) {
   frm.doc.stone_details.forEach(function(stone) {
+
       let matched_item = rule_items.find(function(item) {
           return item.item_code === stone.item_name;
       });
       
-      if (matched_item) {
-          frappe.model.set_value(
-              stone.doctype, 
-              stone.name, 
-              'discount', 
-              discount_percentage
-          );
-      }
+      // Apply discount if matched; otherwise, set discount to 0
+      frappe.model.set_value(
+          stone.doctype, 
+          stone.name, 
+          'discount', 
+          matched_item ? discount_percentage : 0
+      );
   });
 
   frm.refresh_field('stone_details');
@@ -824,4 +870,39 @@ function update_making_charge(frm, row, making_charge) {
   );
   
   frm.refresh_field('items');
+}
+
+
+// code for discounted amount
+
+frappe.ui.form.on("Jewellery Invoice", {
+  refresh: function(frm) {
+    calculate_discounted_stone_charge_and_print(frm);
+  }
+});
+
+frappe.ui.form.on("Stone Details - 2", {
+  stone_charge: function(frm, cdt, cdn) {
+    calculate_discounted_stone_charge_and_print(frm);
+  },
+  stone_details_add: function(frm) {
+    calculate_discounted_stone_charge_and_print(frm);
+  },
+  custom_discount_final: function(frm) {
+    calculate_discounted_stone_charge_and_print(frm);
+  }
+});
+
+function calculate_discounted_stone_charge_and_print(frm) {
+  let total_stone_charge = 0;
+
+  if (frm.doc.stone_details && frm.doc.stone_details.length) {
+    frm.doc.stone_details.forEach(row => {
+      let stone_charge = row.stone_charge || 0;
+      total_stone_charge += stone_charge ;
+    });
+  }
+  let discount = total_stone_charge - frm.doc.custom_discount_final;
+
+  frm.set_value("discount_amount", discount);
 }

@@ -529,7 +529,7 @@ def get_pricing_rule_and_items(customer):
 
     if pricing_rule:
         pricing_rule_name = pricing_rule[0].name
-        discount_percentage = pricing_rule[0].discount_percentage
+        discount_percentage = pricing_rule[0].discount_percentage if pricing_rule[0].discount_percentage else 0
 
         rule_items = frappe.get_all(
             "Pricing Rule Item Code",
@@ -544,3 +544,4 @@ def get_pricing_rule_and_items(customer):
         }
     
     return {}
+

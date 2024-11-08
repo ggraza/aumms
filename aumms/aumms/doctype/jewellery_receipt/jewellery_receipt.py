@@ -46,6 +46,7 @@ class JewelleryReceipt(Document):
 			aumms_item.gold_weight = item_detail.gold_weight
 			aumms_item.item_category = item_detail.item_category
 			aumms_item.is_purchase_item = 1
+			aumms_item.is_sales_item = 1 if item_detail.is_sales_item else 0
 
 			if item_detail.hallmarked:
 				aumms_item.hallmarked = 1
