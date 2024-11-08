@@ -640,28 +640,6 @@ frappe.ui.form.on('Jewellery Invoice Item', {
 
 // // discount
 
-// frappe.ui.form.on('Stone Detals - 2', {
-//   discount: function(frm, cdt, cdn) {
-//     calculate_discount_and_total(frm, cdt, cdn);
-//   }
-// });
-
-// function calculate_discount_and_total(frm, cdt, cdn) {
-//   let row = locals[cdt][cdn];
-//   let discounted_amount = flt(row.stone_charge) * (1 - flt(row.discount) / 100);
-
-//   // Update the row's final discounted amount
-//   frappe.model.set_value(cdt, cdn, 'custom_discount_final', discounted_amount);
-
-//   // Calculate and set the total discounted amount
-//   let total = frm.doc.stone_details.reduce((sum, r) => 
-//     sum + flt(r.stone_charge) * (1 - flt(r.discount) / 100), 0);
-    
-//   frm.set_value('custom_discount_final', total);
-//   frm.refresh_fields(['stone_details', 'custom_discount_final']);
-// }
-
-
 frappe.ui.form.on('Stone Details - 2', {
   discount: function(frm, cdt, cdn) {
       calculate_discount_and_total(frm, cdt, cdn);
