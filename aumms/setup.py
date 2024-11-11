@@ -10,6 +10,7 @@ def after_install():
     create_custom_fields(get_purchase_receipt_custom_fields(), ignore_validate=True)
     create_custom_fields(get_sales_invoice_custom_fields(), ignore_validate=True)
     create_custom_fields(get_jewellery_invoice_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_sales_order_custom_fields(), ignore_validate=True)
 
 def after_migrate():
     after_install()
@@ -202,6 +203,26 @@ def get_jewellery_invoice_custom_fields():
                 "fieldtype": "Column Break",
                 "label": "",
                 "insert_after": "discount_amount"
+            }
+        ]
+    }
+
+
+
+def get_sales_order_custom_fields():
+    '''
+    Custom fields that need to be added to the Sales Order Doctype
+    '''
+    return {
+        "Sales Order": [
+            
+        ],
+        "Sales Order Item": [
+            {
+                "fieldname": "board_rate",
+                "fieldtype": "Data",
+                "label": "Board Rate",
+                "insert_after": "amount"
             }
         ]
     }
