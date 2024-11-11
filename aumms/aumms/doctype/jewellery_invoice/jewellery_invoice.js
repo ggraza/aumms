@@ -880,7 +880,7 @@ function calculate_discounted_stone_charge_and_print(frm) {
       total_stone_charge += stone_charge ;
     });
   }
-  let discount = total_stone_charge - frm.doc.custom_discount_final;
+  let discount = total_stone_charge - frm.doc.custom_discount_final || 0;
 
   frm.set_value("discount_amount", discount);
 }
