@@ -74,17 +74,20 @@ doctype_js = {
 # ------------
 
 # before_install = "aumms.install.before_install"
-# after_install = [
-# 		'aumms.setup.setup_aumms_defaults'
-# 	]
+
+
+after_install = [
+		'aumms.setup.setup_aumms_defaults',
+        'aumms.setup.after_install'
+	]
 
 after_migrate = [
 		'aumms.setup.setup_aumms_defaults',
 		'aumms.aumms.utils.increase_precision',
-        'aumms.setup.after_install'
+        'aumms.setup.after_migrate'
+       
 	]
 
-after_migrate = "aumms.setup.after_migrate"
 
 # Uninstallation
 # ------------
