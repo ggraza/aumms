@@ -1,7 +1,6 @@
 import frappe
 from frappe.model.document import Document
 
-
 class JewelleryReceipt(Document):
 
 	def autoname(self):
@@ -13,7 +12,8 @@ class JewelleryReceipt(Document):
 
 			if item_detail.has_stone:
 				for stone in self.item_wise_stone_details:
-					item_code_parts.append(stone.stone)
+					if stone.reference == item_detail.idx:
+						item_code_parts.append(stone.stone)		
 
 			item_detail.item_code = ' '.join(item_code_parts)
 
@@ -52,14 +52,16 @@ class JewelleryReceipt(Document):
 				aumms_item.hallmarked = 1
 				aumms_item.huid = item_detail.huid
 
+			# Add only the relevant stone details based on the reference
 			if item_detail.has_stone:
 				for stone in self.item_wise_stone_details:
-					aumms_item.append("stone_details", {
-						"stone_weight": stone.stone_weight,
-						"stone_charge": stone.rate * stone.stone_weight,
-						"item_name": stone.stone,
-						"stone_type": stone.stone
-					})
+					if stone.reference == item_detail.idx: 
+						aumms_item.append("stone_details", {
+							"stone_weight": stone.stone_weight,
+							"stone_charge": stone.rate * stone.stone_weight,
+							"item_name": stone.stone,
+							"stone_type": stone.stone
+						})
 
 			aumms_item.insert(ignore_permissions=True)
 			frappe.msgprint('AuMMS Item Created.', indicator="green", alert=1)
