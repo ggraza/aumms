@@ -1,5 +1,19 @@
 import frappe
 from frappe import _
+from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
+
+
+def after_install():
+    #Creating AuMMS specific custom fields
+    create_custom_fields(get_stock_reconciliation_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_metal_ledger_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_purchase_receipt_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_sales_invoice_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_jewellery_invoice_custom_fields(), ignore_validate=True)
+    create_custom_fields(get_sales_order_custom_fields(), ignore_validate=True)
+
+def after_migrate():
+    after_install()
 
 def is_setup_completed():
     if frappe.db.get_single_value("System Settings", "setup_complete"):
@@ -77,3 +91,138 @@ def create_department_for_smith():
         department_doc.is_group = 1
         department_doc.insert(ignore_permissions = True)
         frappe.db.commit()
+
+
+
+def get_stock_reconciliation_custom_fields():
+    '''
+    Custom fields that need to be added to the Stock Reconciliation Doctype
+    '''
+    return {
+        "Stock Reconciliation": [
+            {
+                "fieldname": "keep_metal_ledger",
+                "fieldtype": "Check",
+                "label": "Keep Metal Ledger",
+                "insert_after": "purpose"
+            }
+        ]
+    }
+
+def get_metal_ledger_custom_fields():
+    '''
+    Custom fields that need to be added to the Metal Ledger Entry Doctype
+    '''
+    return {
+        "Metal Ledger Entry": [
+            {
+            "fieldname": "entry_type",
+            "fieldtype": "Data",
+            "label": "Entry Type",
+            "insert_after": "voucher_type",
+            "read_only":1
+            }
+        ]
+    }
+
+
+def get_purchase_receipt_custom_fields():
+    '''
+    Custom fields that need to be added to the Purchase Receipt Doctype
+    '''
+    return {
+        "Purchase Receipt":[
+
+        ],
+        "Purchase Receipt Item" : [
+            {
+            "fieldname": "board_rate",
+            "fieldtype": "Data",
+            "label": "Board Rate",
+            "insert_after": "amount"
+            },
+            {
+            "fieldname": "stone_weight",
+            "fieldtype": "Data",
+            "label": "Stone Weight",
+            "insert_after": "is_free_item"
+            },
+            {
+            "fieldname": "stone_charge",
+            "fieldtype": "Data",
+            "label": "Stone Charge",
+            "insert_after": "stone_weight"
+            },
+            {
+            "fieldname": "making_charge",
+            "fieldtype": "Data",
+            "label": "Making Charge",
+            "insert_after": "board_rate"
+            }
+
+        ]
+    }
+
+
+def get_sales_invoice_custom_fields():
+    '''
+    Custom fields that need to be added to the Sales Invoice Doctype
+    '''
+    return {
+        "Sales Invoice": [
+            
+        ],
+        "Sales Invoice Item": [
+            {
+                "fieldname": "board_rate",
+                "fieldtype": "Data",
+                "label": "Board Rate",
+                "insert_after": "amount"
+            }
+        ]
+    }
+
+
+def get_jewellery_invoice_custom_fields():
+    return {
+        "Jewellery Invoice": [
+            {
+                "fieldname": "discounts",
+                "fieldtype": "Section Break",
+                "label": "Discounts",
+                "insert_after": "stone_details"
+            },
+            {
+                "fieldname": "discount_amount",
+                "fieldtype": "Data",
+                "label": "Discount Amount",
+                "insert_after": "discounts"
+            },
+            {
+                "fieldname": "discount_column_break",
+                "fieldtype": "Column Break",
+                "label": "",
+                "insert_after": "discount_amount"
+            }
+        ]
+    }
+
+
+
+def get_sales_order_custom_fields():
+    '''
+    Custom fields that need to be added to the Sales Order Doctype
+    '''
+    return {
+        "Sales Order": [
+            
+        ],
+        "Sales Order Item": [
+            {
+                "fieldname": "board_rate",
+                "fieldtype": "Data",
+                "label": "Board Rate",
+                "insert_after": "amount"
+            }
+        ]
+    }

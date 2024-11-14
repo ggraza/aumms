@@ -1,6 +1,7 @@
 import frappe
 from frappe.utils import *
 from frappe import _
+from frappe.utils import getdate
 
 @frappe.whitelist()
 def get_board_rate(item_type, purity, stock_uom, date, time=None):
@@ -12,14 +13,19 @@ def get_board_rate(item_type, purity, stock_uom, date, time=None):
     else:
         filters = { 'docstatus': '1', 'item_type': item_type, 'purity': purity, 'date': getdate(date) }
 
+    print(filters)
+
     if frappe.db.exists('Board Rate', filters):
         # get board rate and board rate uom (bruom)
         board_rate, bruom = frappe.db.get_value('Board Rate', filters, ['board_rate', 'uom'])
+        print("as", board_rate, bruom)
         # return board rate if board rate uom is same as stock uom
         if bruom == stock_uom:
             return board_rate
         # else multiply the board rate with conversion factor
         else:
+            if stock_uom == "Nos" or bruom == 'Gram' or bruom == 'Nos':
+                return board_rate
             # get conversion factor value using stock_uom as from_uom and bruom as to_uom
             conversion_factor = get_conversion_factor(stock_uom, bruom)
             if conversion_factor:
@@ -68,7 +74,7 @@ def create_metal_ledger_entries(doc, method=None):
         'voucher_type': doc.doctype,
         'voucher_no': doc.name,
         'company': company,
-        'party_link': doc.party_link
+        # 'party_link': doc.party_link
     }
 
     # set party type and party in fields if doctype is Purchase Receipt
@@ -86,30 +92,32 @@ def create_metal_ledger_entries(doc, method=None):
         # declare ledger_created as false
         ledger_created = 0
         for item in doc.items:
+            
+                aumms_item_doc = frappe.get_doc("AuMMS Item", item.item_code)
 
                 # set item details in fields
                 fields['item_code'] = item.item_code
                 fields['item_name'] = item.item_name
-                fields['stock_uom'] = item.stock_uom
-                fields['purity'] = item.purity
-                fields['purity_percentage'] = item.purity_percentage
-                fields['board_rate'] = item.rate
+                fields['stock_uom'] = item.weight_uom
+                fields['purity'] = aumms_item_doc.purity
+                fields['purity_percentage'] = aumms_item_doc.purity_percentage
+                fields['board_rate'] = item.board_rate
                 fields['batch_no'] = item.batch_no
-                fields['item_type'] = item.item_type
+                fields['item_type'] = aumms_item_doc.item_type
                 # get balance qty of the item for this party
                 filters = {
-                    'item_type': item.item_type,
-                    'purity': item.purity,
-                    'stock_uom': item.stock_uom,
-                    'party_link': doc.party_link,
+                    'item_type': aumms_item_doc.item_type,
+                    'purity': aumms_item_doc.purity,
+                    'stock_uom': item.weight_uom,
+                    # 'party_link': doc.party_link,
                     'is_cancelled': 0
                     }
                 balance_qty = frappe.db.get_value('Metal Ledger Entry', filters, 'balance_qty')
 
                 if doc.doctype == 'Purchase Receipt':
                     # update balance_qty
-                    balance_qty = balance_qty+item.stock_qty if balance_qty else item.stock_qty
-                    fields['in_qty'] = item.stock_qty
+                    balance_qty = balance_qty+item.total_weight if balance_qty else item.total_weight
+                    fields['in_qty'] = item.total_weight
                     fields['outgoing_rate'] = item.rate
                     fields['balance_qty'] = balance_qty
                     fields['amount'] = -item.amount

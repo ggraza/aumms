@@ -1,4 +1,3 @@
-from . import __version__ as app_version
 
 app_name = "aumms"
 app_title = "AuMMS"
@@ -75,14 +74,21 @@ doctype_js = {
 # ------------
 
 # before_install = "aumms.install.before_install"
-# after_install = [
-# 		'aumms.setup.setup_aumms_defaults'
-# 	]
+
+
+after_install = [
+		'aumms.setup.setup_aumms_defaults',
+        'aumms.setup.after_install'
+	]
 
 after_migrate = [
 		'aumms.setup.setup_aumms_defaults',
-		'aumms.aumms.utils.increase_precision'
+		'aumms.aumms.utils.increase_precision',
+        'aumms.setup.after_migrate'
+       
 	]
+
+
 # Uninstallation
 # ------------
 
@@ -183,6 +189,10 @@ doc_events = {
 	},
     'Work Order':{
         'after_insert' : 'aumms.aumms.doc_events.work_order.change_design_analysis_status'
+	},
+    'Stock Reconciliation': {
+		'on_submit': 'aumms.aumms.doc_events.stock_reconciliation.create_mle_against_sr',
+		'on_cancel': 'aumms.aumms.doc_events.stock_reconciliation.reverse_mle_against_sr',
 	}
 }
 

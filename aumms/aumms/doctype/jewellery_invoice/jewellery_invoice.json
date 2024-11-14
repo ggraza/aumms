@@ -20,6 +20,7 @@
   "old_jewellery_items",
   "items_section",
   "items",
+  "stone_details",
   "section_break_ypbyf",
   "total_old_gold_weight",
   "total_gold_weight",
@@ -400,13 +401,19 @@
    "fieldtype": "Link",
    "label": "Sales Taxes and Charges Template",
    "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "stone_details",
+   "fieldtype": "Table",
+   "label": "Stone Details",
+   "options": "Stone Details - 2"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-02-03 11:58:01.263231",
+ "modified": "2024-11-08 15:09:59.576364",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Jewellery Invoice",
