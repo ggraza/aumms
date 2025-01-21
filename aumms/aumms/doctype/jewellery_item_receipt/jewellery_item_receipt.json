@@ -54,7 +54,7 @@
    "fieldname": "gold_weight",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Gold Weight",
+   "label": "Net Weight",
    "precision": "3",
    "reqd": 1
   },
@@ -68,7 +68,7 @@
   {
    "fieldname": "net_weight",
    "fieldtype": "Float",
-   "label": "Net Weight",
+   "label": "Total Weight",
    "read_only": 1
   },
   {
@@ -233,7 +233,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-11-07 14:25:09.197843",
+ "modified": "2025-01-20 12:56:15.072112",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Jewellery Item Receipt",
