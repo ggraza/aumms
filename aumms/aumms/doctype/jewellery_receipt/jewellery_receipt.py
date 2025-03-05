@@ -4,22 +4,36 @@ from frappe.model.document import Document
 class JewelleryReceipt(Document):
 
 	def autoname(self):
-		"""
-		Set the autoname for the document based on the specified format.
-		"""
-		for item_detail in self.get("item_details"):
-			item_code_parts = [self.item_category, str(item_detail.gold_weight)]
+	    """
+	    Set a unique item code by checking existing AuMMS Items and current item details.
+	    """
+	    existing_item_codes = frappe.get_all("AuMMS Item", pluck="item_code")
 
-			if item_detail.has_stone:
-				for stone in self.item_wise_stone_details:
-					if stone.reference == item_detail.idx:
-						item_code_parts.append(stone.stone)		
+	    for idx, item_detail in enumerate(self.get("item_details"), start=1):
 
-			item_detail.item_code = ' '.join(item_code_parts)
+	        item_code_parts = [self.item_category, str(item_detail.gold_weight)]
 
+	        if item_detail.has_stone:
+	            for stone in self.item_wise_stone_details:
+	                if stone.reference == item_detail.idx:
+	                    item_code_parts.append(stone.stone)
+
+	        base_item_code = "-".join(item_code_parts)
+
+	        unique_item_code = base_item_code
+	        counter = 1
+
+	        while unique_item_code in existing_item_codes or any(
+	            row.item_code == unique_item_code for row in self.get("item_details") if row != item_detail
+	        ):
+	            counter += 1
+	            unique_item_code = f"{base_item_code}-{counter}"
+
+	        item_detail.item_code = unique_item_code
+			
 	def validate(self):
 		self.validate_date()
-  
+
 	def before_save(self):
 		total_gold_weight = 0
 		for item in self.item_details:
@@ -61,7 +75,7 @@ class JewelleryReceipt(Document):
 			# Add only the relevant stone details based on the reference
 			if item_detail.has_stone:
 				for stone in self.item_wise_stone_details:
-					if stone.reference == item_detail.idx: 
+					if stone.reference == item_detail.idx:
 						aumms_item.append("stone_details", {
 							"stone_weight": stone.stone_weight,
 							"stone_charge": stone.rate * stone.stone_weight,
