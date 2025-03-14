@@ -30,7 +30,7 @@ class JewelleryReceipt(Document):
 	            unique_item_code = f"{base_item_code}-{counter}"
 
 	        item_detail.item_code = unique_item_code
-			
+
 	def validate(self):
 		self.validate_date()
 
@@ -90,6 +90,7 @@ class JewelleryReceipt(Document):
 		purchase_receipt = frappe.new_doc('Purchase Receipt')
 		purchase_receipt.supplier = self.supplier
 		purchase_receipt.keep_metal_ledger = 1
+		purchase_receipt.company = self.company
 
 		for item_detail in self.get("item_details"):
 			purchase_receipt.append('items', {
