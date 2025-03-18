@@ -19,6 +19,7 @@
   "date",
   "quantity",
   "total_gold_weight",
+  "company",
   "section_break_vxux",
   "item_details",
   "item_wise_stone_details",
@@ -137,12 +138,18 @@
    "label": "Total Gold Weight",
    "precision": "2",
    "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-13 15:28:43.982739",
+ "modified": "2025-03-14 11:28:36.902712",
  "modified_by": "Administrator",
  "module": "AuMMS",
  "name": "Jewellery Receipt",
