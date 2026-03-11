@@ -1,0 +1,20 @@
+[project]
+name = "aumms"
+authors = [
+    { name = "efeone", email = "info@efeone.com"}
+]
+description = "AuMMS (Gold Manufacturing Management System) is a comprehensive software solution designed to streamline and optimize the operations of gold manufacturing businesses. It offers a range of features and tools to manage various aspects of the manufacturing process, including inventory management, production planning, quality control, and financial tracking. With AuMMS, gold manufacturers can enhance efficiency, reduce costs, and improve overall productivity while ensuring compliance with industry standards and regulations."
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
+dependencies = [
+    # "frappe~=15.0.0" # Installed and managed by bench.
+]
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+# These dependencies are only installed when developer mode is enabled
+[tool.bench.dev-dependencies]
+# package_name = "~=1.1.0"
