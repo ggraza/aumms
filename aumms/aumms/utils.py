@@ -1,7 +1,6 @@
 import frappe
-from frappe.utils import *
 from frappe import _
-from frappe.utils import getdate
+from frappe.utils import *
 
 @frappe.whitelist()
 def get_board_rate(item_type, purity, stock_uom, date, time=None):
@@ -13,28 +12,25 @@ def get_board_rate(item_type, purity, stock_uom, date, time=None):
     else:
         filters = { 'docstatus': '1', 'item_type': item_type, 'purity': purity, 'date': getdate(date) }
 
-    print(filters)
-
     if frappe.db.exists('Board Rate', filters):
-        # get board rate and board rate uom (bruom)
-        board_rate, bruom = frappe.db.get_value('Board Rate', filters, ['board_rate', 'uom'])
-        print("as", board_rate, bruom)
+        # get board rate and board rate uom (br_uom)
+        board_rate, br_uom = frappe.db.get_value('Board Rate', filters, ['board_rate', 'uom'])
         # return board rate if board rate uom is same as stock uom
-        if bruom == stock_uom:
+        if br_uom == stock_uom:
             return board_rate
         # else multiply the board rate with conversion factor
         else:
-            if stock_uom == "Nos" or bruom == 'Gram' or bruom == 'Nos':
+            if stock_uom == "Nos" or br_uom == 'Gram' or br_uom == 'Nos':
                 return board_rate
-            # get conversion factor value using stock_uom as from_uom and bruom as to_uom
-            conversion_factor = get_conversion_factor(stock_uom, bruom)
+            # get conversion factor value using stock_uom as from_uom and br_uom as to_uom
+            conversion_factor = get_conversion_factor(stock_uom, br_uom)
             if conversion_factor:
                 board_rate *= conversion_factor
                 return board_rate
             else:
                 # message to user about set conversion factor value
                 frappe.throw(
-                    _('Please set Conversion Factor for {0} to {1}'.format(stock_uom, bruom))
+                    _('Please set Conversion Factor for {0} to {1}'.format(stock_uom, br_uom))
                 )
     else:
         # message to user about set Today's Board Rate value
