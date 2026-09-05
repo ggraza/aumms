@@ -2,7 +2,9 @@ import frappe
 from frappe import _
 
 @frappe.whitelist()
-def check_is_purity(doc, method):#frappe throw for purty item
+def check_is_purity(doc, method):
+    return
+    # Byppased the the check for now
     if frappe.db.exists('Item', {'name':doc.item_code }):
         is_purity = frappe.db.get_value('Item', {'name':doc.item_code }, 'is_purity_item')
         if is_purity:
