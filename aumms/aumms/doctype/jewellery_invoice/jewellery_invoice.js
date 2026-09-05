@@ -704,12 +704,11 @@ function calculate_total(frm) {
   frm.doc.items.forEach(function(item) {
       total_amount += (item.board_rate || 0) * (item.gold_weight || 0) + (item.making_charge || 0);
   });
-  console.log(total_amount);
-  
 
-  frm.set_value('grand_total', total_amount + discount);
-  frm.set_value('rounded_total', grand_total)
+  let grand_total = total_amount + discount;
 
+  frm.set_value('grand_total', grand_total);
+  frm.set_value('rounded_total', frm.doc.disable_rounded_total ? grand_total : Math.round(grand_total));
 }
 
 
@@ -852,12 +851,6 @@ function update_making_charge(frm, row, making_charge) {
 
 
 // code for discounted amount
-
-frappe.ui.form.on("Jewellery Invoice", {
-  refresh: function(frm) {
-    calculate_discounted_stone_charge_and_print(frm);
-  }
-});
 
 frappe.ui.form.on("Stone Details - 2", {
   stone_charge: function(frm, cdt, cdn) {

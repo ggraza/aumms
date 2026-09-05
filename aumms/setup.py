@@ -194,7 +194,7 @@ def get_jewellery_invoice_custom_fields():
             },
             {
                 "fieldname": "discount_amount",
-                "fieldtype": "Data",
+                "fieldtype": "Currency",
                 "label": "Discount Amount",
                 "insert_after": "discounts"
             },

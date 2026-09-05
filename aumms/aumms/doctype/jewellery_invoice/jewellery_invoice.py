@@ -153,8 +153,8 @@ def create_sales_order(source_name, sales_taxes_and_charges_template , target_do
 		}, target_doc, set_missing_values)
 	# Setting the discount amount
 	try:
-	    Jewellery = frappe.get_doc("Jewellery Invoice", source_name)
-	    target_doc.discount_amount = abs(Jewellery.rounding_adjustment)
+		Jewellery = frappe.get_doc("Jewellery Invoice", source_name)
+		target_doc.discount_amount = abs(Jewellery.rounding_adjustment)
 	except Exception as e:
 		frappe.log_error("ERROR OCCURED", e)
 	target_doc.submit()
@@ -223,6 +223,9 @@ def create_purchase_receipt(source_name, supplier, target_doc=None):
 				"field_map":{
 					'transaction_date':'posting_date'
 				},
+				# discount_amount is a custom field here and holds a sales side stone charge
+				# discount, so it must not be mapped to the Purchase Receipt
+				"field_no_map": ['discount_amount'],
 			},
 			"Old Jewellery Item": {
 				"doctype": "Purchase Receipt Item",
